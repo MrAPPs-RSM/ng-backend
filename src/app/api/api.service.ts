@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response} from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { config } from '../app.config';
+
 @Injectable()
 export class ApiService {
 
-    baseUrl = 'api/backend/';
+    config = config.env === 'dev' ? config.api.dev : config.api.prod;
 
     constructor(private _http: Http) {
     }
 
-    protected composeUrl(url) {
-        return this.baseUrl + url;
+    protected composeUrl(apiKey) {
+        return this.config.baseUrl + this.config.api[apiKey];
     }
 
-    public get(url) {
+    public get(url): Observable<any> {
         return this._http
             .get(this.composeUrl(url))
             .map(this.extractData)
@@ -41,6 +43,4 @@ export class ApiService {
         console.error(errMsg);
         return Observable.throw(errMsg);
     }
-
-
 }

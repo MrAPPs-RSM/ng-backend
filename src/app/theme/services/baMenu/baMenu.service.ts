@@ -4,11 +4,12 @@ import * as _ from 'lodash';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ApiService } from '../../../api/api.service';
+import { config } from '../../../app.config';
 
 @Injectable()
 export class BaMenuService {
   menuItems = new BehaviorSubject<any[]>([]);
-  apiUrl = 'menu';
+  apiKey = 'menu';
 
   protected _currentMenuItem = {};
 
@@ -17,19 +18,47 @@ export class BaMenuService {
 
   public loadMenu() {
 
-    this._apiService.get(this.apiUrl)
-        .subscribe(
-            data => {
+    this._apiService.get(this.apiKey)
+      .subscribe(
+        data => {
+          // Creating sidebar
+          let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data));
+          this.menuItems.next(convertedRoutes);
+          // Updating routes
+          this.updateRoutes(data);
+        },
+        error => {
+          // This error might never happen, but in case redirect to login
+          this._router.navigateByUrl('login');
+        }
+      );
+  }
 
-              let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data));
-              this.menuItems.next(convertedRoutes);
+  public updateRoutes(data: any[]){
 
-            },
-            error => {
-                // This error might never happens, but in case redirect to login
-                this._router.navigateByUrl('login');
-            }
-        );
+    let routerConfig = this._router.config;
+    let pages = routerConfig[2].children;
+
+    data[0].children.map(function (item) {
+      for (let i = 0; i < pages.length; i++){
+
+        if (pages[i].path === config.moduleTypes[item.type]) {
+
+          let page = {
+            path: item.path,
+            loadChildren: pages[i].loadChildren,
+            data: item.params
+          };
+
+          pages.push(page);
+          break;
+        }
+      }
+    });
+
+    routerConfig[2].children = pages;
+
+    this._router.resetConfig(routerConfig);
   }
 
   public convertRoutesToMenus(routes: Routes): any[] {
@@ -37,7 +66,7 @@ export class BaMenuService {
     return this._skipEmpty(items);
   }
 
-  public getCurrentItem():any {
+  public getCurrentItem(): any {
     return this._currentMenuItem;
   }
 
@@ -87,7 +116,7 @@ export class BaMenuService {
   }
 
   protected _convertObjectToItem(object, parent?: any): any {
-    let item:any = {};
+    let item: any = {};
     if (object.data && object.data.menu) {
       // this is a menu object
       item = object.data.menu;
@@ -123,7 +152,7 @@ export class BaMenuService {
   protected _prepareItem(object: any): any {
     if (!object.skip) {
       object.target = object.target || '';
-      object.pathMatch = object.pathMatch  || 'full';
+      object.pathMatch = object.pathMatch || 'full';
       return this._selectItem(object);
     }
 
@@ -131,7 +160,8 @@ export class BaMenuService {
   }
 
   protected _selectItem(object: any): any {
-    object.selected = this._router.isActive(this._router.createUrlTree(object.route.paths), object.pathMatch === 'full');
+    object.selected = this._router.isActive(
+      this._router.createUrlTree(object.route.paths), object.pathMatch === 'full');
     return object;
   }
 }

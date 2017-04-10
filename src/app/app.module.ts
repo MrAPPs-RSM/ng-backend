@@ -12,12 +12,12 @@ import {ENV_PROVIDERS} from './environment';
 import {routing} from './app.routing';
 
 // App is our top level component
-import {App} from './app.component';
-import {AppState, InternalStateType} from './app.service';
-import {GlobalState} from './global.state';
-import {NgaModule} from './theme/nga.module';
-import {PagesModule} from './pages/pages.module';
-import {ApiService} from './api/api.service';
+import { App } from './app.component';
+import { AppState, InternalStateType } from './app.service';
+import { GlobalState } from './global.state';
+import { NgaModule } from './theme/nga.module';
+import { PagesModule } from './pages/pages.module';
+import { ApiService } from './api/api.service';
 
 // Application wide providers
 const APP_PROVIDERS = [

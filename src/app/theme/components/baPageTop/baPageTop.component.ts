@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
-import {GlobalState} from '../../../global.state';
+import { GlobalState } from '../../../global.state';
 
 import 'style-loader!./baPageTop.scss';
 
@@ -10,10 +10,11 @@ import 'style-loader!./baPageTop.scss';
 })
 export class BaPageTop {
 
-  public isScrolled:boolean = false;
-  public isMenuCollapsed:boolean = false;
+  public title: string = 'NgBackend';
+  public isScrolled: boolean = false;
+  public isMenuCollapsed: boolean = false;
 
-  constructor(private _state:GlobalState) {
+  constructor(private _state: GlobalState) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
