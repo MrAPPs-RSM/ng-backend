@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -11,20 +11,66 @@ import { config } from '../app.config';
 export class ApiService {
 
     config = config.env === 'dev' ? config.api.dev : config.api.prod;
+    headers = new Headers({ 'Content-Type': 'application/json' });
+    options = new RequestOptions({ headers: this.headers });
 
     constructor(private _http: Http) {
     }
 
-    protected composeUrl(apiKey) {
-        return this.config.baseUrl + this.config.api[apiKey];
+    protected composeUrl(apiEndpoint: string) {
+        return this.config.baseUrl + this.config.api[apiEndpoint];
     }
 
-    public get(url): Observable<any> {
+    /**
+     * GET request
+     * @param apiEndpoint
+     * @returns {Observable<R>}
+     */
+    public get(apiEndpoint: string): Observable<any> {
         return this._http
-            .get(this.composeUrl(url))
+            .get(this.composeUrl(apiEndpoint))
             .map(this.extractData)
             .catch(this.handleError);
     };
+
+    /**
+     * POST request
+     * @param apiEndpoint
+     * @returns {Observable<R>}
+     */
+    public post(apiEndpoint: string): Observable<any> {
+
+        return this._http
+            .post(this.composeUrl(apiEndpoint), this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    /**
+     * PUT request
+     * @param apiEndpoint
+     * @returns {Observable<R>}
+     */
+    public put(apiEndpoint: string): Observable<any> {
+
+        return this._http
+            .put(this.composeUrl(apiEndpoint), this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    /**
+     * DELETE request
+     * @param apiEndpoint
+     * @returns {Observable<R>}
+     */
+    public delete(apiEndpoint: string): Observable<any> {
+
+        return this._http
+            .delete(this.composeUrl(apiEndpoint), this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
 
     protected extractData(res: Response) {
         return res.json() || {};

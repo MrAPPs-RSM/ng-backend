@@ -7,7 +7,6 @@ import { routing } from './list.routing';
 
 
 import { List } from './list.component';
-import { ListService } from './list.service';
 
 @NgModule({
     imports: [
@@ -21,7 +20,6 @@ import { ListService } from './list.service';
         List
     ],
     providers: [
-        ListService
     ]
 })
 export class ListModule {

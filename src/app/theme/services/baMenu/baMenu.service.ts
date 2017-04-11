@@ -27,7 +27,7 @@ export class BaMenuService {
             },
             error => {
               // This error might never happen, but in case redirect to login
-              this._router.navigateByUrl('login');
+              this._router.navigate(['login']);
             }
         );
   }
@@ -88,11 +88,11 @@ export class BaMenuService {
 
   protected _convertObjectToItem(object, parent?: any): any {
     let item: any = {};
-    if (object.data && object.data.menu) {
+    if (object.params && object.params.menu) {
       // this is a menu object
-      item = object.data.menu;
+      item = object.params.menu;
       item.route = object;
-      delete item.route.data.menu;
+      delete item.route.params.menu;
     } else {
       item.route = object;
       item.skip = true;

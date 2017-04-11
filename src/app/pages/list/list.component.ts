@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { ListService } from './list.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import 'style-loader!./list.scss';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../../api/api.service';
 
 @Component({
   selector: 'smart-tables',
@@ -12,43 +12,39 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class List {
 
-  query: string = '';
-
   settings = {
+    mode: 'external',
+    noDataMessage: 'Loading...',
+    actions: {
+      position: 'right'
+    },
     add: {
-      addButtonContent: '<i class="ion-ios-plus-outline"></i>',
-      createButtonContent: '<i class="ion-checkmark"></i>',
-      cancelButtonContent: '<i class="ion-close"></i>',
+      addButtonContent: '<i class="ion-ios-plus-outline"></i>'
     },
     edit: {
-      editButtonContent: '<i class="ion-edit"></i>',
-      saveButtonContent: '<i class="ion-checkmark"></i>',
-      cancelButtonContent: '<i class="ion-close"></i>',
+      editButtonContent: '<i class="ion-edit"></i>'
     },
     delete: {
-      deleteButtonContent: '<i class="ion-trash-a"></i>',
-      confirmDelete: true
+      deleteButtonContent: '<i class="ion-trash-a"></i>'
     },
     columns: {}
   };
 
-  data: LocalDataSource = new LocalDataSource();
+  source: LocalDataSource = new LocalDataSource();
 
   params: {}; // Params from server
 
-  constructor(protected route: ActivatedRoute, protected service: ListService) {
+  constructor(protected _router: Router, protected _route: ActivatedRoute, protected _apiService: ApiService) {
 
-    this.params = route.snapshot.data;
+    this.params = _route.snapshot.data;
 
     // Set table structure
-    this.settings.columns = this.params.columns;
+    this.settings.columns = this.params.table.columns;
 
-    this.service.setApiKey(this.params.name);
-
-    this.service.getData()
+    this._apiService.get(this.params.api.endpoint)
         .subscribe(
             data => {
-              this.data.load(data);
+              this.source.load(data);
             },
             error => {
               console.log(error); // TODO
@@ -56,9 +52,29 @@ export class List {
         );
   }
 
-  onDeleteConfirm(event): void {
+  onCreate(): void {
+    this._router.navigate(['pages/users/create']);
+  }
+
+  onEdit(event): void {
+    this._router.navigate(['pages/users/edit/' + event.data.id]);
+  }
+
+  onDelete(event): void {
+
+    // TODO: add custom dialog
     if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
+
+      this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
+          .subscribe(
+              res => {
+                event.confirm.resolve();
+              },
+              error => {
+                console.log(error); // TODO
+                event.confirm.reject();
+              }
+          );
     } else {
       event.confirm.reject();
     }

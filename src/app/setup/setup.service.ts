@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class SetupService {
-    apiKey = 'setup';
+    apiEndpoint = 'setup';
 
     constructor(private _router: Router, private _apiService: ApiService) {
     }
 
     public setup(): Observable<any> {
-        return this._apiService.get(this.apiKey);
+        return this._apiService.get(this.apiEndpoint);
     }
 
     public updateRoutes(data: any[]){
@@ -32,8 +32,9 @@ export class SetupService {
 
                             if (pages[j].path === config.moduleTypes[child.type]) {
 
+                                let path = child.path === 'edit' ? child.path + '/:id' : child.path;
                                 let childPage = {
-                                    path: item.path + '/' + child.path,
+                                    path: item.path + '/' + path,
                                     loadChildren: pages[j].loadChildren,
                                     data: child.params
                                 };
@@ -64,7 +65,9 @@ export class SetupService {
         });
 
         // Deleting default pages from config
-        pages.splice(1, 2);
+        pages.splice(1, 3);
+
+        console.log(pages);
 
         routerConfig[2].children = pages;
 

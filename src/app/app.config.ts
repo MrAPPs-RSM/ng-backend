@@ -5,7 +5,7 @@ export let config = {
             baseUrl: 'http://beta.json-generator.com/api/json/get/',
             api: {
                 setup: 'E1utOUgTG',
-                users: '',
+                users: '4yHf-YBTz',
             }
         },
         prod: {
@@ -19,7 +19,8 @@ export let config = {
     moduleTypes: {
         dashboard: 'dashboard',
         group: 'group',
-        list: 'list'
+        list: 'list',
+        form: 'form'
     }
 };
 
