@@ -3,62 +3,33 @@ import { Router, Routes } from '@angular/router';
 import * as _ from 'lodash';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ApiService } from '../../../api/api.service';
-import { config } from '../../../app.config';
+import { SetupService } from '../../../setup/setup.service';
 
 @Injectable()
 export class BaMenuService {
   menuItems = new BehaviorSubject<any[]>([]);
-  apiKey = 'menu';
 
   protected _currentMenuItem = {};
 
-  constructor(private _router: Router, private _apiService: ApiService) {
+  constructor(private _router: Router, private _setupService: SetupService) {
   }
 
   public loadMenu() {
 
-    this._apiService.get(this.apiKey)
-      .subscribe(
-        data => {
-          // Creating sidebar
-          let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data));
-          this.menuItems.next(convertedRoutes);
-          // Updating routes
-          this.updateRoutes(data);
-        },
-        error => {
-          // This error might never happen, but in case redirect to login
-          this._router.navigateByUrl('login');
-        }
-      );
-  }
-
-  public updateRoutes(data: any[]){
-
-    let routerConfig = this._router.config;
-    let pages = routerConfig[2].children;
-
-    data[0].children.map(function (item) {
-      for (let i = 0; i < pages.length; i++){
-
-        if (pages[i].path === config.moduleTypes[item.type]) {
-
-          let page = {
-            path: item.path,
-            loadChildren: pages[i].loadChildren,
-            data: item.params
-          };
-
-          pages.push(page);
-          break;
-        }
-      }
-    });
-
-    routerConfig[2].children = pages;
-
-    this._router.resetConfig(routerConfig);
+    this._setupService.setup()
+        .subscribe(
+            data => {
+              // Creating sidebar
+              let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data));
+              this.menuItems.next(convertedRoutes);
+              // Updating routes
+              this._setupService.updateRoutes(data);
+            },
+            error => {
+              // This error might never happen, but in case redirect to login
+              this._router.navigateByUrl('login');
+            }
+        );
   }
 
   public convertRoutesToMenus(routes: Routes): any[] {

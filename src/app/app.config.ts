@@ -4,20 +4,21 @@ export let config = {
         dev: {
             baseUrl: 'http://beta.json-generator.com/api/json/get/',
             api: {
-                menu: 'E1utOUgTG',
+                setup: 'E1utOUgTG',
                 users: '',
             }
         },
         prod: {
             baseUrl: 'api/backend/',
             api: {
-                menu: 'menu',
+                setup: 'setup',
                 users: 'users'
             }
         }
     },
     moduleTypes: {
         dashboard: 'dashboard',
+        group: 'group',
         list: 'list'
     }
 };
