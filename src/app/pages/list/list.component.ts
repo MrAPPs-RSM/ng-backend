@@ -4,7 +4,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 
 import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../api/api.service';
+import { ApiService } from '../../api';
 
 @Component({
   selector: 'smart-tables',
@@ -32,16 +32,16 @@ export class List {
 
   source: LocalDataSource = new LocalDataSource();
 
-  params: {}; // Params from server
+  params: any = {}; // Setup params
 
   constructor(protected _router: Router, protected _route: ActivatedRoute, protected _apiService: ApiService) {
 
-    this.params = _route.snapshot.data;
+    this.params = this._route.snapshot.data;
 
     // Set table structure
     this.settings.columns = this.params.table.columns;
 
-    this._apiService.get(this.params.api.endpoint)
+    this._apiService.get(this.params.api.name)
         .subscribe(
             data => {
               this.source.load(data);
@@ -62,21 +62,19 @@ export class List {
 
   onDelete(event): void {
 
-    // TODO: add custom dialog
+    // TODO: add a cool dialog
     if (window.confirm('Are you sure you want to delete?')) {
 
-      this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
+      this._apiService.delete(this.params.api.name + '/' + event.data.id)
           .subscribe(
               res => {
                 event.confirm.resolve();
               },
               error => {
                 console.log(error); // TODO
-                event.confirm.reject();
+                event.confirm.resolve();
               }
           );
-    } else {
-      event.confirm.reject();
     }
   }
 }

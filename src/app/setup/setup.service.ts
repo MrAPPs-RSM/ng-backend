@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 
 import { config } from '../app.config';
-import { ApiService } from '../api/api.service';
+import { ApiService } from '../api';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class SetupService {
-    apiEndpoint = 'setup';
+
+    private apiName: string = 'setup';
 
     constructor(private _router: Router, private _apiService: ApiService) {
     }
 
     public setup(): Observable<any> {
-        return this._apiService.get(this.apiEndpoint);
+        return this._apiService.get(this.apiName);
     }
 
     public updateRoutes(data: any[]){
@@ -66,8 +67,6 @@ export class SetupService {
 
         // Deleting default pages from config
         pages.splice(1, 3);
-
-        console.log(pages);
 
         routerConfig[2].children = pages;
 

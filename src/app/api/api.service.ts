@@ -17,57 +17,54 @@ export class ApiService {
     constructor(private _http: Http) {
     }
 
-    protected composeUrl(apiEndpoint: string) {
-        return this.config.baseUrl + this.config.api[apiEndpoint];
+    protected composeUrl(apiName: string) {
+        return this.config.baseUrl + this.config.api[apiName];
     }
 
     /**
      * GET request
-     * @param apiEndpoint
+     * @param apiName
      * @returns {Observable<R>}
      */
-    public get(apiEndpoint: string): Observable<any> {
+    public get(apiName: string): Observable<any> {
         return this._http
-            .get(this.composeUrl(apiEndpoint))
+            .get(this.composeUrl(apiName))
             .map(this.extractData)
             .catch(this.handleError);
     };
 
     /**
      * POST request
-     * @param apiEndpoint
+     * @param apiName
      * @returns {Observable<R>}
      */
-    public post(apiEndpoint: string): Observable<any> {
-
+    public post(apiName: string): Observable<any> {
         return this._http
-            .post(this.composeUrl(apiEndpoint), this.options)
+            .post(this.composeUrl(apiName), this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     /**
      * PUT request
-     * @param apiEndpoint
+     * @param apiName
      * @returns {Observable<R>}
      */
-    public put(apiEndpoint: string): Observable<any> {
-
+    public put(apiName: string): Observable<any> {
         return this._http
-            .put(this.composeUrl(apiEndpoint), this.options)
+            .put(this.composeUrl(apiName), this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     /**
      * DELETE request
-     * @param apiEndpoint
+     * @param apiName
      * @returns {Observable<R>}
      */
-    public delete(apiEndpoint: string): Observable<any> {
-
+    public delete(apiName: string): Observable<any> {
         return this._http
-            .delete(this.composeUrl(apiEndpoint), this.options)
+            .delete(this.composeUrl(apiName), this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -84,7 +81,7 @@ export class ApiService {
             const err = body.error || JSON.stringify(body);
             errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
         } else {
-            errMsg = error['message'] ? error['message'] : error.toString();
+            errMsg = error['message'] ? error['message'] : String(error);
         }
         console.error(errMsg);
         return Observable.throw(errMsg);

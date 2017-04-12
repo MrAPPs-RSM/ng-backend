@@ -3,7 +3,7 @@ import { Router, Routes } from '@angular/router';
 import * as _ from 'lodash';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { SetupService } from '../../../setup/setup.service';
+import { SetupService } from '../../../setup';
 
 @Injectable()
 export class BaMenuService {
@@ -88,7 +88,7 @@ export class BaMenuService {
 
   protected _convertObjectToItem(object, parent?: any): any {
     let item: any = {};
-    if (object.params && object.params.menu) {
+    if (object.params && object.params.menu && object.params.menu.sidebar === true) {
       // this is a menu object
       item = object.params.menu;
       item.route = object;

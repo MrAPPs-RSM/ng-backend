@@ -37,7 +37,10 @@ export class BaMenu {
   public selectMenuAndNotify(): void {
     if (this.menuItems) {
       this.menuItems = this._service.selectMenuItem(this.menuItems);
-      this._state.notifyDataChanged('menu.activeLink', this._service.getCurrentItem());
+      let currentItem = this._service.getCurrentItem();
+      if (currentItem.sidebar === true) {
+        this._state.notifyDataChanged('menu.activeLink', currentItem);
+      }
     }
   }
 
