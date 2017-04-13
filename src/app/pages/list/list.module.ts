@@ -5,7 +5,6 @@ import { NgaModule } from '../../theme/nga.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { routing } from './list.routing';
 
-
 import { List } from './list.component';
 
 @NgModule({
@@ -14,7 +13,7 @@ import { List } from './list.component';
         FormsModule,
         NgaModule,
         routing,
-        Ng2SmartTableModule,
+        Ng2SmartTableModule
     ],
     declarations: [
         List

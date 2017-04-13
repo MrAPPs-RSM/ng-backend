@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 
-import { LocalDataSource } from 'ng2-smart-table';
-
 import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../api';
+import { ApiService, ServerDataSource } from '../../api';
 
 @Component({
   selector: 'smart-tables',
@@ -27,29 +25,29 @@ export class List {
     delete: {
       deleteButtonContent: '<i class="ion-trash-a"></i>'
     },
-    columns: {}
+    columns: {},
+    pager: {
+      perPage: 10
+    }
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  source: ServerDataSource;
 
   params: any = {}; // Setup params
 
   constructor(protected _router: Router, protected _route: ActivatedRoute, protected _apiService: ApiService) {
 
     this.params = this._route.snapshot.data;
-
-    // Set table structure
     this.settings.columns = this.params.table.columns;
 
-    this._apiService.get(this.params.api.name)
-        .subscribe(
-            data => {
-              this.source.load(data);
-            },
-            error => {
-              console.log(error); // TODO
-            }
-        );
+    this.loadData();
+  }
+
+  loadData(): void {
+    this.source = new ServerDataSource(
+        this._apiService.getHttp(),
+        this._apiService.getComposedUrl(this.params.api.name)
+    );
   }
 
   onCreate(): void {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -31,7 +31,7 @@ export class ApiService {
             .get(this.composeUrl(apiName))
             .map(this.extractData)
             .catch(this.handleError);
-    };
+    }
 
     /**
      * POST request
@@ -85,5 +85,13 @@ export class ApiService {
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
+    }
+
+    public getHttp(): Http {
+        return this._http;
+    }
+
+    public getComposedUrl(apiName: string): string {
+        return this.composeUrl(apiName);
     }
 }
