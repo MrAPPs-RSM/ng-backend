@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { BaMenuService } from '../theme';
 
@@ -6,7 +6,7 @@ import { BaMenuService } from '../theme';
     selector: 'pages',
     templateUrl: './pages.html'
 })
-export class Pages {
+export class Pages implements OnInit {
 
     constructor(private _menuService: BaMenuService) {
     }

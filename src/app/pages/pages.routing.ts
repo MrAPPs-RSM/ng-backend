@@ -20,7 +20,10 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
-      { path: 'list', loadChildren: 'app/pages/list/list.module#ListModule' },
+      {
+        path: 'list',
+        loadChildren: 'app/pages/list/list.module#ListModule'
+      },
       { path: 'form', loadChildren: 'app/pages/form/form.module#FormModule' }
     ]
   }

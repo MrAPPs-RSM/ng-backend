@@ -24,11 +24,12 @@ export class ApiService {
     /**
      * GET request
      * @param apiName
+     * @param composeUrl
      * @returns {Observable<R>}
      */
-    public get(apiName: string): Observable<any> {
+    public get(apiName: string, composeUrl: boolean): Observable<any> {
         return this._http
-            .get(this.composeUrl(apiName))
+            .get(composeUrl === true ? this.composeUrl(apiName) : apiName)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -36,11 +37,12 @@ export class ApiService {
     /**
      * POST request
      * @param apiName
+     * @param composeUrl
      * @returns {Observable<R>}
      */
-    public post(apiName: string): Observable<any> {
+    public post(apiName: string, composeUrl: boolean): Observable<any> {
         return this._http
-            .post(this.composeUrl(apiName), this.options)
+            .post(composeUrl === true ? this.composeUrl(apiName) : apiName, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -48,11 +50,12 @@ export class ApiService {
     /**
      * PUT request
      * @param apiName
+     * @param composeUrl
      * @returns {Observable<R>}
      */
-    public put(apiName: string): Observable<any> {
+    public put(apiName: string, composeUrl: boolean): Observable<any> {
         return this._http
-            .put(this.composeUrl(apiName), this.options)
+            .put(composeUrl === true ? this.composeUrl(apiName) : apiName, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -60,11 +63,12 @@ export class ApiService {
     /**
      * DELETE request
      * @param apiName
+     * @param composeUrl
      * @returns {Observable<R>}
      */
-    public delete(apiName: string): Observable<any> {
+    public delete(apiName: string, composeUrl: boolean): Observable<any> {
         return this._http
-            .delete(this.composeUrl(apiName), this.options)
+            .delete(composeUrl === true ? this.composeUrl(apiName) : apiName, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }

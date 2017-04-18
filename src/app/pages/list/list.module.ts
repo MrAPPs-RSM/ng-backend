@@ -6,6 +6,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { routing } from './list.routing';
 
 import { List } from './list.component';
+import { ListResolver } from './services';
+import { BooleanRender } from './views';
 
 @NgModule({
     imports: [
@@ -15,10 +17,13 @@ import { List } from './list.component';
         routing,
         Ng2SmartTableModule
     ],
+    entryComponents: [BooleanRender],
     declarations: [
-        List
+        List,
+        BooleanRender
     ],
     providers: [
+        ListResolver
     ]
 })
 export class ListModule {

@@ -20,10 +20,10 @@ export class BaThemeConfig {
             danger: '#e85656',
         };
         this._baConfig.changeColors({
-            default: '#4e4e55',
-            defaultText: '#e2e2e2',
-            border: '#dddddd',
-            borderDark: '#aaaaaa',
+            default: '#ffffff',
+            defaultText: '#666666',
+            border: '#d6d6d6',
+            borderDark: '#959595',
 
             primary: colorScheme.primary,
             info: colorScheme.info,

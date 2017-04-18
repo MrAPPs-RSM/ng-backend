@@ -14,7 +14,7 @@ export class SetupService {
     }
 
     public setup(): Observable<any> {
-        return this._apiService.get(this.apiName);
+        return this._apiService.get(this.apiName, true);
     }
 
     public updateRoutes(data: any[]){
@@ -32,14 +32,12 @@ export class SetupService {
                         for (let j = 0; j < pages.length; j++){
 
                             if (pages[j].path === config.moduleTypes[child.type]) {
-
                                 let path = child.path === 'edit' ? child.path + '/:id' : child.path;
                                 let childPage = {
                                     path: item.path + '/' + path,
                                     loadChildren: pages[j].loadChildren,
                                     data: child.params
                                 };
-
                                 pages.push(childPage);
                                 break;
                             }
