@@ -13,9 +13,6 @@ export class List implements OnInit {
     settings = {
         mode: 'external',
         noDataMessage: 'No data found',
-        actions: {
-            position: 'right'
-        },
         add: {
             addButtonContent: '<i class="ion-ios-plus-outline green"></i>'
         },
@@ -25,6 +22,7 @@ export class List implements OnInit {
         delete: {
             deleteButtonContent: '<i class="ion-trash-a red"></i>'
         },
+        actions: {},
         columns: {},
         pager: {
             perPage: 10
@@ -39,7 +37,8 @@ export class List implements OnInit {
 
     ngOnInit() {
         this.params = this._route.snapshot.data;
-        this.settings.columns = this.params.columns;
+        this.settings.actions = this.params.table.actions;
+        this.settings.columns = this.params.table.columns;
         this.loadData();
     }
 

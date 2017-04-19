@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 import { ApiService } from '../../../api';
 import { List }  from '../list.component';
-import { listTypes } from '../list.types';
+import { listConfig } from '../list.config';
 import { BooleanRender } from '../views';
 
 @Injectable()
@@ -18,15 +18,15 @@ export class ListResolver implements Resolve<List> {
 
     loadColumns(params: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            let columns = params.columns;
             let requests = [];
-            for (let key in columns) {
-                if (columns.hasOwnProperty(key)) {
+            for (let key in params.columns) {
+                if (params.columns.hasOwnProperty(key)) {
 
-                    switch (columns[key].type) {
-                        case listTypes.boolean: {
-                            columns[key].type = listTypes.custom;
-                            columns[key].renderComponent = BooleanRender;
+                    /** Rendering view cells correctly  */
+                    switch (params.columns[key].type) {
+                        case listConfig.types.BOOLEAN: {
+                            params.columns[key].type = listConfig.types.CUSTOM;
+                            params.columns[key].renderComponent = BooleanRender;
                         }
                             break;
                         default: {
@@ -35,11 +35,12 @@ export class ListResolver implements Resolve<List> {
                     }
 
                     let filterPromise = new Promise((pResolve, pReject) => {
-                        if (columns[key].hasOwnProperty('filter')) {
-                            let filter = columns[key].filter;
+                        if (params.columns[key].hasOwnProperty('filter')) {
+                            let filter = params.columns[key].filter;
                             if (filter !== false) {
+                                /** Rendering filters correctly  */
                                 switch (filter.type) {
-                                    case listTypes.list: {
+                                    case listConfig.filters.LIST: { // TODO: table doesn't load filter list
                                         if (filter.config.hasOwnProperty('dataEndpoint')) {
                                             this._apiService
                                                 .get(filter.config.dataEndpoint, false)
@@ -58,6 +59,13 @@ export class ListResolver implements Resolve<List> {
                                         }
                                     }
                                         break;
+                                    case listConfig.filters.CHECKBOX: {
+                                        filter.config = {
+                                            true: 1,
+                                            false: 0
+                                        };
+                                    }
+                                        break;
                                     default: {
                                     }
                                         break;
@@ -72,7 +80,7 @@ export class ListResolver implements Resolve<List> {
 
             Promise.all(requests)
                 .then(function () {
-                    resolve(columns);
+                    resolve(params);
                 })
                 .catch(function (error) {
                     reject(error);

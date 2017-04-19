@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 
 
 @Component({
     templateUrl: './boolean.html'
 })
-export class BooleanRender implements ViewCell, OnInit {
+export class BooleanRender implements ViewCell {
 
     renderValue: boolean;
 
@@ -14,5 +14,4 @@ export class BooleanRender implements ViewCell, OnInit {
     ngOnInit() {
         this.renderValue = (this.value === '1' || this.value === 1 || this.value === 'true' || this.value === true);
     }
-
 }
