@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, ServerDataSource } from '../../api';
 
 @Component({
-    selector: 'smart-tables',
+    selector: 'list',
     templateUrl: './list.html',
 })
 export class List implements OnInit {

@@ -1,30 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { GlobalState } from '../../global.state';
 import { ActivatedRoute } from '@angular/router';
 
+import { FormLoaderService } from './services/form-loader.service';
+
 @Component({
-  selector: 'form',
+  selector: '',
   templateUrl: './form.html'
 })
-export class Form {
 
+export class Form implements OnInit{
+
+  fields: any = {};
   params: any = {}; // Setup params
   id: number;
 
-  constructor(protected _route: ActivatedRoute, protected _state: GlobalState) {
+  public form: FormGroup;
+  payLoad = '';
 
+  constructor(
+      protected _route: ActivatedRoute,
+      protected _state: GlobalState,
+      protected _loaderService: FormLoaderService) {
+  }
+
+  ngOnInit() {
     this.params = this._route.snapshot.data;
-    let urlParams = this._route.snapshot.params;
+    this.checkEditOrCreate();
+    this.fields = this.params.form.fields;
+    this.form = this._loaderService.createFormGroup(this.fields);
+  }
 
+  checkEditOrCreate(): void {
+    let urlParams = this._route.snapshot.params;
     // Check if edit or create
     if (urlParams && urlParams['id']) {
       this.id = urlParams['id'];
-      this.updatePageTitle(this.params.menu.title + ' ' + this.id);
+      this._state.notifyDataChanged('menu.activeLink', {title: this.params.menu.title + ' ' + this.id});
+
+      // TODO call API get/id here to populate form
     }
-
   }
 
-  updatePageTitle(title: string): void {
-    this._state.notifyDataChanged('menu.activeLink', {title: title});
+  onSubmit() {
+    this.payLoad = JSON.stringify(this.form.value);
   }
+
+
 }

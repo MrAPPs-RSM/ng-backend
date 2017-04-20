@@ -1,1 +1,31 @@
-<h1>TODO</h1>
+<div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+        <div class="row">
+            <div *ngFor="let field of fields">
+
+                <div [ngSwitch]="field.type">
+                    <input-text
+                            *ngSwitchCase="'text'"
+                            [form]="form"
+                            [field]="field">
+                    </input-text>
+                </div>
+
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary btn-raised" [disabled]="!form.valid">Save</button>
+            </div>
+        </div>
+
+    </form>
+
+    <div *ngIf="payLoad" class="row">
+        <strong>Saved the following values</strong><br>{{payLoad}}
+    </div>
+</div>

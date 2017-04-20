@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '',
         component: List,
         resolve: {
-            columns: ListResolver
+            table: ListResolver
         }
     }
 ];
