@@ -77,22 +77,22 @@ The response must be a JSON array following some rules:
 ```json
 [
   {
-    "path": "pages", // Sidebar father component, required
-    "children": [ // Now list all the components you want to have on the sidebar
+    "path": "pages",
+    "children": [ 
       {
-        "path": "url-path", // The URL path you want the component to have
-        "type": "dashboard/group/list/form", // Component type, they are defined in app.config.ts
-        "params": { // Params of the component
+        "path": "url-path", 
+        "type": "dashboard/group/list/form",
+        "params": {
           "menu": {
-            "title": "Dashboard", // Sidebar title
-            "icon": "ion-android-home", // Sidebar icon 
-            "sidebar": true, // Show / Not show the component in the sidebar
-            "selected": false, // Component selected when ngBackend starts
-            "expanded": false, // Only if type == group
-            "order": 0 // Position of the component
+            "title": "Dashboard",
+            "icon": "ion-android-home",
+            "sidebar": true, 
+            "selected": false, 
+            "expanded": false,
+            "order": 0 
           },
           "api": {
-            "name": "api-name" // It must be defined in app.config.ts
+            "name": "api-name" 
           }
         }
       }
@@ -138,7 +138,7 @@ dashboard, and a group that contains a list and a form
         },
         "children": [
           {
-            "path": "list", //Since it's a group, the path will be /users/list
+            "path": "list", 
             "type": "list",
             "params": {
              "menu": {

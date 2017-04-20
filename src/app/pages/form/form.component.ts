@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { GlobalState } from '../../global.state';
 import { ActivatedRoute } from '@angular/router';
 
+import { formConfig } from './form.config';
 import { FormLoaderService } from './services/form-loader.service';
 
 @Component({
@@ -12,11 +13,12 @@ import { FormLoaderService } from './services/form-loader.service';
 
 export class Form implements OnInit{
 
-  fields: any = {};
   params: any = {}; // Setup params
   id: number;
 
-  public form: FormGroup;
+  formConfig: any = {};
+  fields: any = {};
+  form: FormGroup;
   payLoad = '';
 
   constructor(
@@ -26,6 +28,7 @@ export class Form implements OnInit{
   }
 
   ngOnInit() {
+    this.formConfig = formConfig;
     this.params = this._route.snapshot.data;
     this.checkEditOrCreate();
     this.fields = this.params.form.fields;

@@ -5,11 +5,19 @@
             <div *ngFor="let field of fields">
 
                 <div [ngSwitch]="field.type">
+
                     <input-text
-                            *ngSwitchCase="'text'"
+                            *ngSwitchCase="formConfig.INPUT_TEXT"
                             [form]="form"
                             [field]="field">
                     </input-text>
+
+                    <check-box
+                            *ngSwitchCase="formConfig.CHECKBOX"
+                            [form]="form"
+                            [field]="field">
+                    </check-box>
+
                 </div>
 
             </div>

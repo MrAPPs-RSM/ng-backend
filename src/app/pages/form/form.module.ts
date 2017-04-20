@@ -5,7 +5,7 @@ import { NgaModule } from '../../theme/nga.module';
 import { routing } from './form.routing';
 
 import { Form } from './form.component';
-import { InputText } from './components';
+import { InputText, CheckBox } from './components';
 import { FormLoaderService } from './services';
 
 @NgModule({
@@ -17,7 +17,8 @@ import { FormLoaderService } from './services';
     ],
     declarations: [
         Form,
-        InputText
+        InputText,
+        CheckBox
     ],
     providers: [
         FormLoaderService

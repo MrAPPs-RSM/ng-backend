@@ -45,6 +45,8 @@ export class FormLoaderService {
                 field.value || null,
                 validators.length > 0 ? Validators.compose(validators) : null
             );
+
+            console.log(group[field.key]);
         });
         return new FormGroup(group);
     }
