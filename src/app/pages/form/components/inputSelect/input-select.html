@@ -1,0 +1,27 @@
+<div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
+
+    <label>{{field.label}}</label>
+    <span *ngIf="field.validators.required">*</span>
+    <button *ngIf="showClearButton" class="btn btn-primary btn-icon btn-xs"
+            (click)="clearValue()">
+        <span *ngIf="field.multiple && value.length > 1">Clear all</span>
+        <i class="ion-close"></i>
+    </button>
+
+    <div class="form-group" [class]="isValid ? 'has-success' : 'has-error'">
+        <ng-select
+                #ngSelect
+                [multiple]="field.multiple"
+                [items]="items"
+                (data)="refreshValue($event)"
+                (selected)="selected($event)"
+                (removed)="removed($event)"
+                (typed)="typed($event)"
+                placeholder="{{field.placeholder}}"
+                [formControlName]="field.key">
+        </ng-select>
+    </div>
+
+    <!-- Others -->
+    <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
+</div>

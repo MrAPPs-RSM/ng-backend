@@ -8,6 +8,7 @@ import { FormLoaderService } from './services/form-loader.service';
 
 @Component({
   selector: '',
+  styleUrls: ['./form.scss'],
   templateUrl: './form.html'
 })
 
@@ -33,6 +34,17 @@ export class Form implements OnInit{
     this.checkEditOrCreate();
     this.fields = this.params.form.fields;
     this.form = this._loaderService.createFormGroup(this.fields);
+
+    this.ngOnChange();
+  }
+
+  ngOnChange() {
+    this.form.valueChanges
+        .subscribe(data => {
+          console.log(this.form.controls['select']);
+          this.payLoad = JSON.stringify(this.form.value);
+        }
+    );
   }
 
   checkEditOrCreate(): void {
@@ -47,8 +59,7 @@ export class Form implements OnInit{
   }
 
   onSubmit() {
-    this.payLoad = JSON.stringify(this.form.value);
+    // this.payLoad = JSON.stringify(this.form.value);
   }
-
 
 }

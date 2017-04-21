@@ -41,12 +41,28 @@ export class FormLoaderService {
                 });
             }
 
-            group[field.key] = new FormControl(
-                field.value || null,
-                validators.length > 0 ? Validators.compose(validators) : null
-            );
+            switch (field.type) {
 
-            console.log(group[field.key]);
+                case formConfig.types.CHECKBOX: {
+                    group[field.key] = new FormControl({value: null, disabled: field.disabled}, null);
+                }
+                    break;
+                case formConfig.types.INPUT_EMAIL: {
+                    validators.push(Validators.pattern(formConfig.patterns.EMAIL));
+                    group[field.key] = new FormControl(
+                        field.value || null,
+                        Validators.compose(validators)
+                    );
+                }
+                    break;
+                default: {
+                    group[field.key] = new FormControl(
+                        field.value || null,
+                        validators.length > 0 ? Validators.compose(validators) : null
+                    );
+                }
+                    break;
+            }
         });
         return new FormGroup(group);
     }

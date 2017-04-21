@@ -7,16 +7,28 @@
                 <div [ngSwitch]="field.type">
 
                     <input-text
-                            *ngSwitchCase="formConfig.INPUT_TEXT"
+                            *ngSwitchCase="formConfig.types.INPUT_TEXT"
                             [form]="form"
                             [field]="field">
                     </input-text>
 
-                    <check-box
-                            *ngSwitchCase="formConfig.CHECKBOX"
+                    <input-email
+                            *ngSwitchCase="formConfig.types.INPUT_EMAIL"
+                            [form]="form"
+                            [field]="field">
+                    </input-email>
+
+                   <check-box
+                            *ngSwitchCase="formConfig.types.CHECKBOX"
                             [form]="form"
                             [field]="field">
                     </check-box>
+
+                    <input-select
+                            *ngSwitchCase="formConfig.types.INPUT_SELECT"
+                            [form]="form"
+                            [field]="field">
+                    </input-select>
 
                 </div>
 
@@ -34,6 +46,6 @@
     </form>
 
     <div *ngIf="payLoad" class="row">
-        <strong>Saved the following values</strong><br>{{payLoad}}
+        <strong>Form Values:</strong><br>{{payLoad}}
     </div>
 </div>

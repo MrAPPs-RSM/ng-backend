@@ -1,9 +1,12 @@
 <div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
-  <label class="checkbox-inline custom-checkbox nowrap">
-    <input type="checkbox"
-           [checked]=field.checked
-           [disabled]="field.disabled"
-    >
-    <span>{{field.label}}</span>
-  </label>
+    <div class="form-group">
+        <label class="checkbox-inline custom-checkbox nowrap">
+            <input type="checkbox"
+                   id="{{field.key}}"
+                   formControlName="{{field.key}}"
+                   [checked]=field.checked
+            >
+            <span>{{field.label}}</span>
+        </label>
+    </div>
 </div>
