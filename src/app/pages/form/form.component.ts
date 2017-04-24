@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { formConfig } from './form.config';
 import { FormLoaderService } from './services/form-loader.service';
+import { ApiService } from '../../api';
 
 @Component({
   selector: '',
@@ -15,7 +16,7 @@ import { FormLoaderService } from './services/form-loader.service';
 export class Form implements OnInit{
 
   params: any = {}; // Setup params
-  id: number;
+  id: number = null;
 
   formConfig: any = {};
   fields: any = {};
@@ -25,7 +26,8 @@ export class Form implements OnInit{
   constructor(
       protected _route: ActivatedRoute,
       protected _state: GlobalState,
-      protected _loaderService: FormLoaderService) {
+      protected _loaderService: FormLoaderService,
+      protected _apiService: ApiService) {
   }
 
   ngOnInit() {
@@ -41,14 +43,15 @@ export class Form implements OnInit{
   ngOnChange() {
     this.form.valueChanges
         .subscribe(data => {
-          console.log(this.form.controls['select']);
           this.payLoad = JSON.stringify(this.form.value);
         }
     );
   }
 
   checkEditOrCreate(): void {
+
     let urlParams = this._route.snapshot.params;
+
     // Check if edit or create
     if (urlParams && urlParams['id']) {
       this.id = urlParams['id'];
@@ -59,7 +62,28 @@ export class Form implements OnInit{
   }
 
   onSubmit() {
-    // this.payLoad = JSON.stringify(this.form.value);
+    if (this.id !== null) {
+      this._apiService.post(
+          this.params.api.name,
+          this.payLoad,
+          true,
+          '/' + this.id
+      )
+          .subscribe(
+              data => {},
+              error => {}
+          );
+    } else {
+      this._apiService.put(
+          this.params.api.name,
+          this.payLoad,
+          true
+      )
+          .subscribe(
+              data => {},
+              error => {}
+          );
+    }
   }
 
 }

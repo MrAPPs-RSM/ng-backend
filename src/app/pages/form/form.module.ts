@@ -3,10 +3,22 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 import { SelectModule } from 'ng2-select';
+import { MyDatePickerModule } from 'mydatepicker';
+import { MyDateRangePickerModule } from 'mydaterangepicker';
+
 import { routing } from './form.routing';
 
 import { Form } from './form.component';
-import { InputText, InputEmail, CheckBox, InputSelect } from './components';
+
+import {
+    Text,
+    Email,
+    CheckBox,
+    Select,
+    DatePicker,
+    DateRangePicker
+} from './components';
+
 import { FormLoaderService } from './services';
 
 @NgModule({
@@ -15,14 +27,18 @@ import { FormLoaderService } from './services';
         ReactiveFormsModule,
         NgaModule,
         SelectModule,
+        MyDatePickerModule,
+        MyDateRangePickerModule,
         routing
     ],
     declarations: [
         Form,
-        InputText,
-        InputEmail,
+        Text,
+        Email,
         CheckBox,
-        InputSelect
+        Select,
+        DatePicker,
+        DateRangePicker
     ],
     providers: [
         FormLoaderService

@@ -14,9 +14,6 @@
                 [multiple]="field.multiple"
                 [items]="items"
                 (data)="refreshValue($event)"
-                (selected)="selected($event)"
-                (removed)="removed($event)"
-                (typed)="typed($event)"
                 placeholder="{{field.placeholder}}"
                 [formControlName]="field.key">
         </ng-select>

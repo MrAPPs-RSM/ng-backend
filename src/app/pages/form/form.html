@@ -7,28 +7,40 @@
                 <div [ngSwitch]="field.type">
 
                     <input-text
-                            *ngSwitchCase="formConfig.types.INPUT_TEXT"
+                            *ngSwitchCase="formConfig.types.TEXT"
                             [form]="form"
                             [field]="field">
                     </input-text>
 
                     <input-email
-                            *ngSwitchCase="formConfig.types.INPUT_EMAIL"
+                            *ngSwitchCase="formConfig.types.EMAIL"
                             [form]="form"
                             [field]="field">
                     </input-email>
 
-                   <check-box
+                   <checkbox
                             *ngSwitchCase="formConfig.types.CHECKBOX"
                             [form]="form"
                             [field]="field">
-                    </check-box>
+                    </checkbox>
 
-                    <input-select
-                            *ngSwitchCase="formConfig.types.INPUT_SELECT"
+                    <ui-select
+                            *ngSwitchCase="formConfig.types.SELECT"
                             [form]="form"
                             [field]="field">
-                    </input-select>
+                    </ui-select>
+
+                    <date-picker
+                            *ngSwitchCase="formConfig.types.DATE"
+                            [form]="form"
+                            [field]="field">
+                    </date-picker>
+
+                    <date-range-picker
+                            *ngSwitchCase="formConfig.types.DATE_RANGE"
+                            [form]="form"
+                            [field]="field">
+                    </date-range-picker>
 
                 </div>
 

@@ -1,6 +1,8 @@
-export * from './inputText';
-export * from './inputEmail';
-export * from './checkBox';
-export * from './inputSelect';
+export * from './text';
+export * from './email';
+export * from './checkbox';
+export * from './select';
+export * from './datePicker';
+export * from './dateRangePicker';
 
 

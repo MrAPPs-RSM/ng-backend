@@ -1,9 +1,11 @@
 export let formConfig = {
     types: {
-        INPUT_TEXT: 'text',
-        INPUT_EMAIL: 'email',
+        TEXT: 'text',
+        EMAIL: 'email',
         CHECKBOX: 'checkbox',
-        INPUT_SELECT: 'select'
+        SELECT: 'select',
+        DATE: 'date',
+        DATE_RANGE: 'date_range'
     },
     validators: {
         REQUIRED: 'required',

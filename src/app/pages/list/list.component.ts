@@ -62,7 +62,7 @@ export class List implements OnInit {
         // TODO: add a cool dialog
         if (window.confirm('Are you sure you want to delete?')) {
 
-            this._apiService.delete(this.params.api.name + '/' + event.data.id, true)
+            this._apiService.delete(this.params.api.name, true, '/' + event.data.id)
                 .subscribe(
                     res => {
                         event.confirm.resolve();
