@@ -72,37 +72,25 @@ export let config = {
 
 To create the sidebar, you have to define a **setup** apiName in app.config.ts.
 NgBackend will start making a *GET* request to the defined endpoint.
-The response must be a JSON array following some rules:
 
-```json
-[
-  {
-    "path": "pages",
-    "children": [ 
-      {
-        "path": "url-path", 
-        "type": "dashboard/group/list/form",
-        "params": {
-          "menu": {
-            "title": "Dashboard",
-            "icon": "ion-android-home",
-            "sidebar": true, 
-            "selected": false, 
-            "expanded": false,
-            "order": 0 
-          },
-          "api": {
-            "name": "api-name" 
-          }
-        }
-      }
-    ]
-  }
-]
-```
+**Options**
 
-Here is an example of a /setup response that creates a sidebar with a 
-dashboard, and a group that contains a list and a form
+| Name                 | Type    | Required | Description                                                                                                                                                                       |
+|----------------------|---------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| path                 | string  | yes      | Url path that page must match (i.e. dashboard => www.mywebsite.com/dashboard)                                                                                                     |
+| type                 | string  | yes      | Defines which type of component the page must load. (**dashboard**,** list**, **form**). It's also possibile to define a **group** type to create multi-level menu in the sidebar |
+| params               | Object  | yes      | Component params                                                                                                                                                                  |
+| params.menu          | Object  | yes      | Options related with the menu                                                                                                                                                     |
+| params.menu.title    | string  | yes      | Title that will be displayed in the sidebar menu and as page title                                                                                                                |
+| params.menu.icon     | string  | no       | Icon that will be displayed in the sidebar menu. (All icons available [here](http://ionicons.com/)                                                                                |
+| params.menu.sidebar  | boolean | yes      | Show/hide page in the sidebar menu                                                                                                                                                |
+| params.menu.selected | boolean | no       | Defines if the page must be selected when page loads                                                                                                                              |
+| params.menu.expanded | boolean | no       | Only if type = **group**, defines if the sub-menu of the group must be expanded when page loads                                                                                   |
+| params.menu.order    | number  | no       | Defines the order in which menu items will be displayed                                                                                                                           |
+| api                  | Object  | yes      | Object that defines api parameters for the component                                                                                                                              |
+| api.name             | string  | yes      | Api name defined in app.config.ts                                                                                                                                                 |
+
+Example:
 
 ```json
 [
@@ -132,55 +120,35 @@ dashboard, and a group that contains a list and a form
             "icon": "ion-person",
             "sidebar": true,
             "selected": false,
-            "expanded": false,
+            "expanded": true,
             "order": 100
           }
         },
         "children": [
           {
-            "path": "list", 
+            "path": "list",
             "type": "list",
             "params": {
-             "menu": {
-               "title": "Users list",
-               "sidebar": true
-             },
-             "api": {
-              "name": "users"
-             },
-             "table": {
-               "columns": {
-                "id": {
-                  "title": "ID",
-                  "type": "number"
-                },
-                "firstName": {
-                  "title": "First Name",
-                  "type": "string"
-                },
-                "lastName": {
-                  "title": "Last Name",
-                  "type": "string"
-                },
-                "age": {
-                  "title": "Age",
-                  "type": "number"
-                }
+              "menu": {
+                "title": "Users list",
+                "sidebar": true
+              },
+              "api": {
+                "name": "users"
               }
-             }
             }
           },
           {
             "path": "create",
             "type": "form",
             "params": {
-             "menu": {
-               "title": "Create user",
-               "sidebar": true
-             },
-             "api": {
-              "name": "users"
-             }
+              "menu": {
+                "title": "Create user",
+                "sidebar": true
+              },
+              "api": {
+                "name": "users"
+              }
             }
           },
           {
@@ -188,8 +156,8 @@ dashboard, and a group that contains a list and a form
             "type": "form",
             "params": {
               "menu": {
-                "title": "Create user",
-                "sidebar": true
+                "title": "Edit user",
+                "sidebar": false
               },
               "api": {
                 "name": "users"
@@ -204,9 +172,9 @@ dashboard, and a group that contains a list and a form
 ```
 
 
-#Components
+## Components
 
-##List (table)
+### List
 
 To create a list page, you must define the structure in the setup JSON.
 
@@ -235,7 +203,7 @@ To create a list page, you must define the structure in the setup JSON.
 | filter.config.selectText   | string          | no       | Select placeholder where no value is selected                                                                                                        |
 | filter.config.dataEndpoint | string          | no       | Data endpoint (full url) to call to retrieve data to populate select options                                                                         |
 
-Here's an example of a JSON
+Example
 
 ```json
 {
@@ -309,6 +277,9 @@ Here's an example of a JSON
    }
 }
 ```
+
+## Forms
+
 
 
 
