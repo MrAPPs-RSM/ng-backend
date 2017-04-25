@@ -12,13 +12,12 @@ export class DateRangePicker implements OnInit{
     @Input() form: FormGroup;
     @Input() field: any = {};
 
-    options: IMyOptions = {
-        dateFormat: 'dd/mm/yyyy'
-    };
+    options: IMyOptions = {};
 
     constructor() {}
 
     ngOnInit() {
+        this.options.dateFormat = this.field.dateFormat;
         if (this.field.value) {
             this.setDateRange(this.field.value);
         }
