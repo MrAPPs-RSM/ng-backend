@@ -280,6 +280,143 @@ Example
 
 ## Forms
 
+To create a form page, you must define the structure in the setup JSON.
+
+**Form params**
+
+| Name                 | Type    | Required | Description                                                                                                                                                                       |
+|----------------------|---------|----------|------------
+| fields               | Array   | yes      | Array that contains all the fields that the form must render    
+
+**Field params**   
+
+| Name                 | Type            | Required | Available values                                                         | Description                                                                             |
+|----------------------|-----------------|----------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| type                 | string          | yes      | **text**, **email**, **checkbox**,  **select**, **date**, **date_range** | Defines the input type of the form field                                                |
+| key                  | string          | yes      |                                                                          | Key that identifies that field in the form                                              |
+| label                | string          | yes      |                                                                          | Label                                                                                   |
+| placeholder          | string          | no       |                                                                          | Placeholder                                                                             |
+| value                | string | number | no       |                                                                          | Input value                                                                             |
+| description          | string          | no       |                                                                          | Description of the field                                                                |
+| class                | string          | no       |                                                                          | Css class of the field                                                                  |
+| validators           | Object          | no       |                                                                          | Object that handle controls to evaluate the field in the form                           |
+| validators.required  | boolean         | no       | true, false                                                              | Defines if that field is required or not                                                |
+| validators.minLength | number          | no       |                                                                          | Only available for type text and email, defines a minLength                             |
+| validators.maxLength | number          | no       |                                                                          | Only available for type text and email, defines a maxLength                             |
+| validator.pattern    | string          | no       |                                                                          | Only available for type text and email, defines a pattern that input value must respect |     
+
+Example
+
+```json
+{
+   "path": "create",
+   "type": "form",
+   "params": {
+      "menu": {
+         "title": "Create user",
+         "sidebar": true
+      },
+      "api": {
+         "name": "users"
+      },
+      "form": {
+         "fields": [
+            {
+               "type": "text",
+               "key": "firstName",
+               "label": "First name",
+               "placeholder": "Insert first name here...",
+               "class": "col-sm-6",
+               "validators": {
+                  "required": true
+               }
+            },
+            {
+               "type": "text",
+               "key": "lastName",
+               "label": "Last name",
+               "placeholder": "Insert last name here...",
+               "class": "col-sm-6",
+               "validators": {
+                  "required": true
+               }
+            },
+            {
+               "type": "email",
+               "key": "email",
+               "label": "Email",
+               "placeholder": "Insert email here...",
+               "class": "col-sm-12",
+               "validators": {
+                  "required": true
+               }
+            },
+            {
+               "type": "checkbox",
+               "key": "checkbox",
+               "label": "Checkbox test",
+               "class": "col-sm-12",
+               "checked": true,
+               "disabled": false
+            },
+            {
+               "type": "select",
+               "key": "select",
+               "label": "Select a city",
+               "placeholder": "No city selected",
+               "class": "col-sm-12",
+               "options": [
+                  {
+                     "id": 1,
+                     "text": "Amsterdam"
+                  },
+                  {
+                     "id": 2,
+                     "text": "Bradford"
+                  },
+                  {
+                     "id": 3,
+                     "text": "Dortmund"
+                  },
+                  {
+                     "id": 4,
+                     "text": "Marseille"
+                  }
+               ],
+               "multiple": false,
+               "validators": {
+                  "required": true
+               }
+            },
+            {
+               "type": "date",
+               "key": "date",
+               "value": "12/06/2018",
+               "label": "Select a date",
+               "class": "col-sm-12",
+               "validators": {
+                  "required": true
+               }
+            },
+            {
+               "type": "date_range",
+               "key": "date_range",
+               "value": {
+                  "startDate": "12/07/2012",
+                  "endDate": "12/07/2017"
+               },
+               "label": "Select a date range",
+               "class": "col-sm-12",
+               "validators": {
+                  "required": true
+               }
+            }
+         ]
+      }
+   }
+}
+```
+
 
 
 
