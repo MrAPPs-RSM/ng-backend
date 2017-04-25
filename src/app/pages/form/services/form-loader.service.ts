@@ -49,12 +49,32 @@ export class FormLoaderService {
                         group[field.key] = new FormControl({value: null, disabled: field.disabled}, null);
                     }
                         break;
-                    case formConfig.types.INPUT_EMAIL: {
+                    case formConfig.types.EMAIL: {
                         validators.push(Validators.pattern(formConfig.patterns.EMAIL));
                         group[field.key] = new FormControl(
                             field.value || null,
                             Validators.compose(validators)
                         );
+                    }
+                        break;
+                    case formConfig.types.PASSWORD: {
+                        if (field.hasOwnProperty('confirm')) {
+                            // Create password standard control
+                            group[field.key] = new FormControl(
+                                null,
+                                validators.length > 0 ? Validators.compose(validators) : null
+                            );
+                            // Create password confirm control
+                            group[field['confirm'].key] = new FormControl(
+                                null,
+                                validators.length > 0 ? Validators.compose(validators) : null
+                            );
+                        } else {
+                            group[field.key] = new FormControl(
+                                field.value || null,
+                                validators.length > 0 ? Validators.compose(validators) : null
+                            );
+                        }
                     }
                         break;
                     default: {

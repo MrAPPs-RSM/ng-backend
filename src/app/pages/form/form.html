@@ -57,11 +57,15 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary btn-raised" [disabled]="!form.valid">Save</button>
+                <button type="submit" class="btn btn-primary btn-raised" [disabled]="!isFormValid">Save</button>
             </div>
         </div>
 
     </form>
+
+    <div class="row">
+        <strong>Form valid:</strong><br>{{isFormValid}}
+    </div>
 
     <div *ngIf="payLoad" class="row">
         <strong>Form Values:</strong><br>{{payLoad}}

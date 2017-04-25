@@ -20,7 +20,10 @@ import {
     DateRangePicker
 } from './components';
 
-import { FormLoaderService } from './services';
+import {
+    FormLoaderService,
+    FormHelperService
+} from './services';
 
 @NgModule({
     imports: [
@@ -43,7 +46,8 @@ import { FormLoaderService } from './services';
         DateRangePicker
     ],
     providers: [
-        FormLoaderService
+        FormLoaderService,
+        FormHelperService
     ]
 })
 export class FormModule {

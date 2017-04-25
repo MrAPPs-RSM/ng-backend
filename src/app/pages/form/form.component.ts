@@ -4,7 +4,7 @@ import { GlobalState } from '../../global.state';
 import { ActivatedRoute } from '@angular/router';
 
 import { formConfig } from './form.config';
-import { FormLoaderService } from './services/form-loader.service';
+import { FormLoaderService, FormHelperService } from './services';
 import { ApiService } from '../../api';
 
 @Component({
@@ -38,6 +38,10 @@ export class Form implements OnInit{
     this.form = this._loaderService.createFormGroup(this.fields);
 
     this.ngOnChange();
+  }
+
+  get isFormValid() {
+    return FormHelperService.isValid(this.form, this.fields);
   }
 
   ngOnChange() {
