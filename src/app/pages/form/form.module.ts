@@ -13,6 +13,7 @@ import { Form } from './form.component';
 import {
     Text,
     Email,
+    Password,
     CheckBox,
     Select,
     DatePicker,
@@ -35,6 +36,7 @@ import { FormLoaderService } from './services';
         Form,
         Text,
         Email,
+        Password,
         CheckBox,
         Select,
         DatePicker,

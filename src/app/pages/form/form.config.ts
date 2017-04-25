@@ -2,6 +2,7 @@ export let formConfig = {
     types: {
         TEXT: 'text',
         EMAIL: 'email',
+        PASSWORD: 'password',
         CHECKBOX: 'checkbox',
         SELECT: 'select',
         DATE: 'date',

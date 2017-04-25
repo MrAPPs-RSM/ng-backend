@@ -18,6 +18,12 @@
                             [field]="field">
                     </input-email>
 
+                    <input-password
+                            *ngSwitchCase="formConfig.types.PASSWORD"
+                            [form]="form"
+                            [field]="field">
+                    </input-password>
+
                    <checkbox
                             *ngSwitchCase="formConfig.types.CHECKBOX"
                             [form]="form"
