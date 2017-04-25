@@ -3,6 +3,7 @@ export let formConfig = {
         TEXT: 'text',
         EMAIL: 'email',
         PASSWORD: 'password',
+        NUMBER: 'number',
         CHECKBOX: 'checkbox',
         SELECT: 'select',
         DATE: 'date',
@@ -12,10 +13,9 @@ export let formConfig = {
         REQUIRED: 'required',
         MIN_LENGTH: 'minLength',
         MAX_LENGTH: 'maxLength',
-        PATTERN: 'pattern'
-    },
-    patterns: {
-        EMAIL: /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i
+        PATTERN: 'pattern',
+        MIN: 'min',
+        MAX: 'max'
     }
 };
 

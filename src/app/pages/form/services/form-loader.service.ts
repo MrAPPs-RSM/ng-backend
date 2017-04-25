@@ -2,6 +2,7 @@ import { Injectable }   from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formConfig } from './../form.config';
 import { isNullOrUndefined } from 'util';
+import { CustomValidators } from './../validators';
 
 @Injectable()
 export class FormLoaderService {
@@ -36,6 +37,14 @@ export class FormLoaderService {
                                 validators.push(Validators.pattern(field.validators[key]));
                             }
                                 break;
+                            case formConfig.validators.MIN: {
+                                validators.push(CustomValidators.min(field.validators[key]));
+                            }
+                                break;
+                            case formConfig.validators.MAX: {
+                                validators.push(CustomValidators.max(field.validators[key]));
+                            }
+                                break;
                             default: {
                             }
                                 break;
@@ -50,7 +59,7 @@ export class FormLoaderService {
                     }
                         break;
                     case formConfig.types.EMAIL: {
-                        validators.push(Validators.pattern(formConfig.patterns.EMAIL));
+                        validators.push(CustomValidators.email());
                         group[field.key] = new FormControl(
                             field.value || null,
                             Validators.compose(validators)

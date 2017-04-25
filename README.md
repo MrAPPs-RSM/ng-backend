@@ -303,7 +303,9 @@ To create a form page, you must define the structure in the setup JSON.
 | validators.required  | boolean         | no       | true, false                                                              | Defines if that field is required or not                                                |
 | validators.minLength | number          | no       |                                                                          | Only available for type text and email, defines a minLength                             |
 | validators.maxLength | number          | no       |                                                                          | Only available for type text and email, defines a maxLength                             |
-| validator.pattern    | string          | no       |                                                                          | Only available for type text and email, defines a pattern that input value must respect |     
+| validator.pattern    | string          | no       |                                                                          | Only available for type text and email, defines a pattern that input value must respect |
+| validator.min    | number          | no       |                                                                          | Only available for type number, defines a min number |
+| validator.max    | number          | no       |                                                                          | Only available for type number, defines a max number |     
 
 ## Available types
 
@@ -329,6 +331,28 @@ Example:
 		"minLength": 4,
 		"maxLength": 30
 	}
+},
+```
+
+### Number
+
+*Type* : **number**
+
+Simple input number field
+
+Example:
+
+```json
+{
+	"type": "number",
+	"key": "number",
+	"label": "Number",
+	"placeholder": "Insert number here...",
+	"validators": {
+		"max": 10,
+		"min": 5,
+		"required": true
+	},
 },
 ```
 

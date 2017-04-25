@@ -13,6 +13,7 @@ import { Form } from './form.component';
 import {
     Text,
     Email,
+    Number,
     Password,
     CheckBox,
     Select,
@@ -39,6 +40,7 @@ import {
         Form,
         Text,
         Email,
+        Number,
         Password,
         CheckBox,
         Select,
