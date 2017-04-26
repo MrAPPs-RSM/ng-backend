@@ -5,6 +5,7 @@ import { NgaModule } from '../../theme/nga.module';
 import { SelectModule } from 'ng2-select';
 import { MyDatePickerModule } from 'mydatepicker';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
+import { TinymceModule } from 'angular2-tinymce';
 
 import { routing } from './form.routing';
 
@@ -12,6 +13,7 @@ import { Form } from './form.component';
 
 import {
     Text,
+    TextArea,
     Email,
     Number,
     Password,
@@ -34,11 +36,13 @@ import {
         SelectModule,
         MyDatePickerModule,
         MyDateRangePickerModule,
+        TinymceModule.withConfig({}),
         routing
     ],
     declarations: [
         Form,
         Text,
+        TextArea,
         Email,
         Number,
         Password,

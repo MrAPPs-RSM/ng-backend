@@ -12,6 +12,12 @@
                             [field]="field">
                     </input-text>
 
+                    <input-text-area
+                            *ngSwitchCase="formConfig.types.TEXTAREA"
+                            [form]="form"
+                            [field]="field">
+                    </input-text-area>
+
                     <input-email
                             *ngSwitchCase="formConfig.types.EMAIL"
                             [form]="form"

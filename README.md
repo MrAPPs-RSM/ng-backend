@@ -312,6 +312,7 @@ To create a form page, you must define the structure in the setup JSON.
 Every type has the default options of the above table, and for some types it's possible to define other properties
 
 ### Text
+============================
 
 *Type* : **text**
 
@@ -334,7 +335,43 @@ Example:
 },
 ```
 
+### Textarea
+============================
+
+
+*Type*: **textarea**
+
+When creating a textarea input, is possible to define if it will be a rich text editor (*tinymce*) or a simple textarea.
+
+**Options**
+
+| Name            | Type    | Required | Description                                                         |
+|-----------------|---------|----------|---------------------------------------------------------------------|
+| options         | Object  | yes      | Options object                                                      |
+| options.tinyMce | boolean | no       | If set to true it will create a rich text editor as a textarea      |
+| options.rows    | number  | no       | Rows of the textarea (it works only if **tinyMce** option is false) |
+| options.cols    | number  | no       | Cols of the textarea (it works only if **tinyMce** option is false) |
+
+Example:
+
+```json
+{
+	"type": "textarea"
+	"key": "textarea",
+	"label": "Description",
+    "validators": {
+    	"required": true
+	},
+	"options": {
+		"tinyMce": true
+	},
+}
+```
+
+
 ### Number
+============================
+
 
 *Type* : **number**
 
@@ -357,6 +394,8 @@ Example:
 ```
 
 ### Email
+============================
+
 
 *Type* : **email**
 
@@ -378,6 +417,8 @@ Example:
 ```
 
 ### Password
+============================
+
 
 *Type* : **password**
 
@@ -416,6 +457,8 @@ Example:
 ```
 
 ### Checkbox
+============================
+
 
 *Type* : **checkbox**
 
@@ -440,6 +483,8 @@ Example
 ```
 
 ### Date picker
+============================
+
 
 *Type* : **date**
 
@@ -468,6 +513,8 @@ Example:
 ```
 
 ### Date range picker
+============================
+
 
 *Type* : **date_range**
 
@@ -508,6 +555,8 @@ Example:
 ```
 
 ### Select
+============================
+
 
 *Type* : **select**
 

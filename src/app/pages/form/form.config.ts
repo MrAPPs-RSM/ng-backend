@@ -1,6 +1,7 @@
 export let formConfig = {
     types: {
         TEXT: 'text',
+        TEXTAREA: 'textarea',
         EMAIL: 'email',
         PASSWORD: 'password',
         NUMBER: 'number',
