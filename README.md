@@ -22,7 +22,7 @@ export let config = {
 
 ```
 
-### APIs
+## APIs
 
 To define API endpoints, you have to declare them in src/app.config.ts.
 They must be defined like with the following structure:
@@ -68,7 +68,7 @@ export let config = {
 };
 ```
 
-### Sidebar and menu pages
+## Sidebar and menu pages
 
 To create the sidebar, you have to define a **setup** apiName in app.config.ts.
 NgBackend will start making a *GET* request to the defined endpoint.
@@ -172,9 +172,9 @@ Example:
 ```
 
 
-## Components
+# Components
 
-### List
+## List
 
 To create a list page, you must define the structure in the setup JSON.
 
@@ -307,12 +307,11 @@ To create a form page, you must define the structure in the setup JSON.
 | validator.min    | number          | no       |                                                                          | Only available for type number, defines a min number |
 | validator.max    | number          | no       |                                                                          | Only available for type number, defines a max number |     
 
-## Available types
+## Form field types
 
 Every type has the default options of the above table, and for some types it's possible to define other properties
 
 ### Text
-============================
 
 *Type* : **text**
 
@@ -336,8 +335,6 @@ Example:
 ```
 
 ### Textarea
-============================
-
 
 *Type*: **textarea**
 
@@ -370,8 +367,6 @@ Example:
 
 
 ### Number
-============================
-
 
 *Type* : **number**
 
@@ -394,8 +389,6 @@ Example:
 ```
 
 ### Email
-============================
-
 
 *Type* : **email**
 
@@ -417,8 +410,6 @@ Example:
 ```
 
 ### Password
-============================
-
 
 *Type* : **password**
 
@@ -457,8 +448,6 @@ Example:
 ```
 
 ### Checkbox
-============================
-
 
 *Type* : **checkbox**
 
@@ -483,8 +472,6 @@ Example
 ```
 
 ### Date picker
-============================
-
 
 *Type* : **date**
 
@@ -513,8 +500,6 @@ Example:
 ```
 
 ### Date range picker
-============================
-
 
 *Type* : **date_range**
 
@@ -555,8 +540,6 @@ Example:
 ```
 
 ### Select
-============================
-
 
 *Type* : **select**
 

@@ -64,7 +64,7 @@ export class SetupService {
         });
 
         // Deleting default pages from config
-        pages.splice(1, 3);
+        pages.splice(1, 3); // TODO remove 3 and calculate automatically standard pages count
 
         routerConfig[2].children = pages;
 
