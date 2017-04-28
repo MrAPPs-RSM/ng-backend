@@ -365,6 +365,27 @@ Example:
 }
 ```
 
+### Url
+
+*Type* : **url**
+
+Input url field can be used when we are expecting a correct full url, like *http://website.com*
+
+Example:
+
+```json
+{
+	"type": "url",
+	"key": "url",
+	"label": "Url",
+	"placeholder": "Insert full page url here...",
+	"class": "col-sm-6",
+	"validators": {
+		"required": true
+	}
+},
+```
+
 
 ### Number
 
@@ -390,9 +411,7 @@ Example:
 
 ### Email
 
-*Type* : **email**
-
-For email types, you don't have to define a pattern, FormBuilder will automatically validate the email 
+*Type* : **email** 
 
 Example:
 

@@ -13,9 +13,10 @@ export class FormLoaderService {
 
         if (!isNullOrUndefined(fields) && fields.length > 0) {
             fields.forEach(field => {
-
                 let validators = [];
-
+                /**
+                 * Adding validators if defined as field properties
+                 */
                 if (field.validators) {
                     Object.keys(field.validators).forEach(key => {
                         switch (key) {
@@ -51,19 +52,28 @@ export class FormLoaderService {
                         }
                     });
                 }
-
+                /**
+                 * Adding validators based on field type
+                 */
+                switch (field.type) {
+                    case formConfig.types.EMAIL: {
+                        validators.push(CustomValidators.email());
+                    }
+                        break;
+                    case formConfig.types.URL: {
+                        validators.push(CustomValidators.url());
+                    }
+                        break;
+                    default: {}
+                        break;
+                }
+                /**
+                 * Generating FormControls based on field type
+                 */
                 switch (field.type) {
 
                     case formConfig.types.CHECKBOX: {
                         group[field.key] = new FormControl({value: null, disabled: field.disabled}, null);
-                    }
-                        break;
-                    case formConfig.types.EMAIL: {
-                        validators.push(CustomValidators.email());
-                        group[field.key] = new FormControl(
-                            field.value || null,
-                            Validators.compose(validators)
-                        );
                     }
                         break;
                     case formConfig.types.PASSWORD: {

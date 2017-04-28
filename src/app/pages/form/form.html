@@ -24,6 +24,12 @@
                             [field]="field">
                     </input-email>
 
+                    <input-url
+                            *ngSwitchCase="formConfig.types.URL"
+                            [form]="form"
+                            [field]="field">
+                    </input-url>
+
                     <input-number
                             *ngSwitchCase="formConfig.types.NUMBER"
                             [form]="form"

@@ -3,6 +3,7 @@ export let formConfig = {
         TEXT: 'text',
         TEXTAREA: 'textarea',
         EMAIL: 'email',
+        URL: 'url',
         PASSWORD: 'password',
         NUMBER: 'number',
         CHECKBOX: 'checkbox',
