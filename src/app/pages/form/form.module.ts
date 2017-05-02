@@ -6,6 +6,7 @@ import { SelectModule } from 'ng2-select';
 import { MyDatePickerModule } from 'mydatepicker';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { TinymceModule } from 'angular2-tinymce';
+import { AgmCoreModule } from '@agm/core';
 
 import { routing } from './form.routing';
 
@@ -21,7 +22,8 @@ import {
     CheckBox,
     Select,
     DatePicker,
-    DateRangePicker
+    DateRangePicker,
+    LatLng
 } from './components';
 
 import {
@@ -38,6 +40,9 @@ import {
         MyDatePickerModule,
         MyDateRangePickerModule,
         TinymceModule.withConfig({}),
+        AgmCoreModule.forRoot({
+            apiKey: '' // TODO: set google maps apiKey
+        }),
         routing
     ],
     declarations: [
@@ -51,7 +56,8 @@ import {
         CheckBox,
         Select,
         DatePicker,
-        DateRangePicker
+        DateRangePicker,
+        LatLng
     ],
     providers: [
         FormLoaderService,

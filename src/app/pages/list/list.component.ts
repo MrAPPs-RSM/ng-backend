@@ -53,11 +53,11 @@ export class List implements OnInit {
         this._router.navigate(['pages/users/create']);
     }
 
-    onEdit(event): void {
+    onEdit(event: any): void {
         this._router.navigate(['pages/users/edit/' + event.data.id]);
     }
 
-    onDelete(event): void {
+    onDelete(event: any): void {
 
         // TODO: add a cool dialog
         if (window.confirm('Are you sure you want to delete?')) {

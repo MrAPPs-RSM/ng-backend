@@ -96,6 +96,17 @@ export class FormLoaderService {
                         }
                     }
                         break;
+                    case formConfig.types.LAT_LNG: {
+                        group[field.lat.key] = new FormControl(
+                            null,
+                            validators.length > 0 ? Validators.compose(validators) : null
+                        );
+                        group[field.lng.key] = new FormControl(
+                            null,
+                            validators.length > 0 ? Validators.compose(validators) : null
+                        );
+                    }
+                        break;
                     default: {
                         group[field.key] = new FormControl(
                             field.value || null,

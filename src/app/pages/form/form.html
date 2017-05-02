@@ -66,6 +66,12 @@
                             [field]="field">
                     </date-range-picker>
 
+                    <lat-lng
+                            *ngSwitchCase="formConfig.types.LAT_LNG"
+                            [form]="form"
+                            [field]="field">
+                    </lat-lng>
+
                 </div>
 
             </div>

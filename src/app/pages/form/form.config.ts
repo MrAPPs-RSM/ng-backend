@@ -9,7 +9,8 @@ export let formConfig = {
         CHECKBOX: 'checkbox',
         SELECT: 'select',
         DATE: 'date',
-        DATE_RANGE: 'date_range'
+        DATE_RANGE: 'date_range',
+        LAT_LNG: 'lat_lng'
     },
     validators: {
         REQUIRED: 'required',
