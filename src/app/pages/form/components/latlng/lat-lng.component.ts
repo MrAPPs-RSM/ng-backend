@@ -14,7 +14,7 @@ export class LatLng implements OnInit{
     // Setup options
     options: any = this.options = this.field.hasOwnProperty('options') ? this.field.options : {};
 
-    mapZoom: number = this.options.hasOwnProperty('zoom') ? this.field.zoom : 3;
+    mapZoom: number = this.options.hasOwnProperty('mapZoom') ? this.field.mapZoom : 3;
     defaultLat: number = this.options.hasOwnProperty('defaultLat') ? this.options.defaultLat : null;
     defaultLng: number =  this.options.hasOwnProperty('defaultLng') ? this.options.defaultLng : null;
 

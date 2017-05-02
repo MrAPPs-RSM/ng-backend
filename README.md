@@ -615,6 +615,81 @@ Example:
 },
 ```
 
+### Latitude and Longitude
+
+*Type* : **lat_lng**
+
+For this field type, we have to crate a different json structure.
+
+**Latitude**
+
+| Name            | Type   | Required | Description                                    |
+|-----------------|--------|----------|------------------------------------------------|
+| lat             | Object | yes      | Latitude object                                |
+| lat.key         | string | yes      | Key that identifies latitude field in the form |
+| lat.placeholder | string | no       | Latitude input placeholder                     |
+| lat.label       | string | no       | Latitude input label                           |
+
+**Longitude**
+
+| Name            | Type   | Required | Description                                    |
+|-----------------|--------|----------|------------------------------------------------|
+| lng             | Object | yes      | Longitude object                                |
+| lng.key         | string | yes      | Key that identifies longitude field in the form |
+| lng.placeholder | string | no       | Longitude input placeholder                     |
+| lng.label       | string | no       | Longitude input label                           |
+
+**Options**
+
+| Name               | Type   | Required | Description           |
+|--------------------|--------|----------|-----------------------|
+| options            | Object | no       | Options object        |
+| options.defaultLng | number | no       | Map default longitude |
+| options.defaultLat | number | no       | Map default latitude  |
+| options.mapZoom    | number | no       | Map zoom              |
+
+**Marker**
+
+| Name             | Type    | Required | Description                          |
+|------------------|---------|----------|--------------------------------------|
+| marker           | Object  | no       | Map marker object                    |
+| marker.lat       | number  | no       | Marker latitude                      |
+| marker.lng       | number  | no       | Marker longitude                     |
+| marker.draggable | boolean | no       | Defines if marker can be drag or not |
+| marker.label     | string  | no       | Marker label                         |
+
+Example:
+
+```json
+{
+	"type": "lat_lng",
+	"lng": {
+		"placeholder": "Insert longitude",
+		"label": "Longitude",
+		"key": "lng"
+	},
+	"lat": {
+		"placeholder": "Insert latitude",
+		"label": "Latitude",
+		"key": "lat"
+	}
+	"marker": {
+		"draggable": true,
+		"lng": 12.447509765625,
+		"lat": 43.929549935614595
+	},
+	"options": {
+		"defaultLng": 12.447509765625,
+		"defaultLat": 43.929549935614595,
+     	"zoom": 8
+	},
+	"validators": {
+		"required": true
+	}
+},
+```
+
+
 
 
 [Ng2Admin README.md](https://github.com/akveo/ng2-admin)
