@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, Routes } from '@angular/router';
-import * as _ from 'lodash';
-
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { SetupService } from '../../../setup';
 
 @Injectable()
 export class BaMenuService {
@@ -11,25 +8,7 @@ export class BaMenuService {
 
   protected _currentMenuItem = {};
 
-  constructor(private _router: Router, private _setupService: SetupService) {
-  }
-
-  public loadMenu() {
-
-    this._setupService.setup()
-        .subscribe(
-            data => {
-              // Creating sidebar
-              let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data));
-              this.menuItems.next(convertedRoutes);
-              // Updating routes
-              this._setupService.updateRoutes(data);
-            },
-            error => {
-              // This error might never happen, but in case redirect to login
-              this._router.navigate(['login']);
-            }
-        );
+  constructor(private _router: Router) {
   }
 
   public convertRoutesToMenus(routes: Routes): any[] {

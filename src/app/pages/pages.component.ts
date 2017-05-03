@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { BaMenuService } from '../theme';
+import { ActivatedRoute } from '@angular/router';
+import { BaThemeSpinner } from '../theme/services';
 
 @Component({
     selector: 'pages',
@@ -8,10 +8,13 @@ import { BaMenuService } from '../theme';
 })
 export class Pages implements OnInit {
 
-    constructor(private _menuService: BaMenuService) {
+    public params: any = {};
+
+    constructor(protected _route: ActivatedRoute,  private _spinner: BaThemeSpinner) {
     }
 
     ngOnInit() {
-        this._menuService.loadMenu();
+        this._spinner.hide();
+        this.params = this._route.snapshot.data['settings'];
     }
 }

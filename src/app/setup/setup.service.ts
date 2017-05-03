@@ -17,46 +17,44 @@ export class SetupService {
         return this._apiService.get(this.apiName, true);
     }
 
-    public updateRoutes(data: any[]){
+    public loadRoutes(data: BackendData){
 
         let routerConfig = this._router.config;
-        let pages = routerConfig[2].children;
 
-        data[0].children.map(function (item) {
+        // Pages defined in pages.routing
+        let pagesRoute = this.getPages(routerConfig);
+        let standardPages = pagesRoute.children;
 
+        // Pages defined from retrieved data
+        let apiPages = this.getPages(data.sections).children;
+
+        apiPages.map(function (item) {
             if (item.type === config.moduleTypes.group) {
-
                 if (item.children) {
                     item.children.map(function (child) {
-
-                        for (let j = 0; j < pages.length; j++){
-
-                            if (pages[j].path === config.moduleTypes[child.type]) {
+                        for (let j = 0; j < standardPages.length; j++){
+                            if (standardPages[j].path === config.moduleTypes[child.type]) {
                                 let path = child.path === 'edit' ? child.path + '/:id' : child.path;
                                 let childPage = {
                                     path: item.path + '/' + path,
-                                    loadChildren: pages[j].loadChildren,
+                                    loadChildren: standardPages[j].loadChildren,
                                     data: child.params
                                 };
-                                pages.push(childPage);
+                                standardPages.push(childPage);
                                 break;
                             }
                         }
                     });
                 }
             } else {
-
-                for (let i = 0; i < pages.length; i++) {
-
-                    if (pages[i].path === config.moduleTypes[item.type]) {
-
+                for (let i = 0; i < standardPages.length; i++) {
+                    if (standardPages[i].path === config.moduleTypes[item.type]) {
                         let page = {
                             path: item.path,
-                            loadChildren: pages[i].loadChildren,
+                            loadChildren: standardPages[i].loadChildren,
                             data: item.params
                         };
-
-                        pages.push(page);
+                        standardPages.push(page);
                         break;
                     }
                 }
@@ -64,10 +62,30 @@ export class SetupService {
         });
 
         // Deleting default pages from config
-        pages.splice(1, 3); // TODO remove 3 and calculate automatically standard pages count
+        standardPages.splice(1, 3); // TODO remove 3 and calculate automatically standard pages count
+        pagesRoute.children = standardPages;
+        pagesRoute.data = {
+            title: data.title
+        };
 
-        routerConfig[2].children = pages;
+        routerConfig[2] = pagesRoute;
 
         this._router.resetConfig(routerConfig);
     }
+
+    private getPages(array: any[]): any {
+        let pages = {};
+        array.forEach(item => {
+            if (item.path === 'pages') {
+                pages = item;
+            }
+        });
+        return pages;
+    }
+}
+
+// Interface for type safety
+interface BackendData {
+    title: string;
+    sections: any[];
 }

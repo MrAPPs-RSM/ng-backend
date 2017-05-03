@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
 import { GlobalState } from '../../../global.state';
 
 import 'style-loader!./baPageTop.scss';
@@ -10,7 +9,8 @@ import 'style-loader!./baPageTop.scss';
 })
 export class BaPageTop {
 
-  public title: string = 'NgBackend';
+  @Input() title: string;
+
   public isScrolled: boolean = false;
   public isMenuCollapsed: boolean = false;
 
