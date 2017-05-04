@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import * as _ from 'lodash';
 
 @Injectable()
 export class BaMenuService {
@@ -9,6 +10,12 @@ export class BaMenuService {
   protected _currentMenuItem = {};
 
   constructor(private _router: Router) {
+  }
+
+  public loadSidebar(data: any) {
+    // Creating sidebar and pages
+    let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data.sections));
+    this.menuItems.next(convertedRoutes);
   }
 
   public convertRoutesToMenus(routes: Routes): any[] {

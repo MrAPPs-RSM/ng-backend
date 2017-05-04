@@ -5,7 +5,6 @@ import { routing }       from './pages.routing';
 import { NgaModule } from '../theme/nga.module';
 
 import { Pages } from './pages.component';
-import { PagesResolver } from './services';
 
 @NgModule({
   imports: [
@@ -16,9 +15,7 @@ import { PagesResolver } from './services';
   declarations: [
       Pages
   ],
-  providers: [
-    PagesResolver
-  ]
+  providers: []
 })
 export class PagesModule {
 

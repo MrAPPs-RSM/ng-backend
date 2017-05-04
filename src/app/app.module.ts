@@ -19,6 +19,7 @@ import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 import { ApiService } from './api/api.service';
 import { SetupService } from './setup/setup.service';
+import { Login } from './login';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -40,7 +41,8 @@ export type StoreType = {
 @NgModule({
     bootstrap: [App],
     declarations: [
-        App
+        App,
+        Login
     ],
     imports: [ // import Angular's modules
         BrowserModule,

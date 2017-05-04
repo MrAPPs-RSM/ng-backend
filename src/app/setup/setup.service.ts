@@ -3,21 +3,37 @@ import { Injectable } from '@angular/core';
 import { config } from '../app.config';
 import { ApiService } from '../api';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BaMenuService } from '../theme/services';
 
 @Injectable()
 export class SetupService {
 
     private apiName: string = 'setup';
 
-    constructor(private _router: Router, private _apiService: ApiService) {
+    constructor(
+        private _router: Router,
+        private _apiService: ApiService,
+        private _baMenuService: BaMenuService) {
     }
 
-    public setup(): Observable<any> {
-        return this._apiService.get(this.apiName, true);
+    public setup(): Promise<any> {
+        return new Promise ((resolve, reject) => {
+            this._apiService.get(this.apiName, true)
+                .subscribe(
+                    data => {
+                        this.loadRoutes(data);
+                        this._baMenuService.loadSidebar(data);
+                        resolve();
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        });
     }
 
     public loadRoutes(data: BackendData){
+        console.log('loading routes');
 
         let routerConfig = this._router.config;
 
@@ -64,12 +80,9 @@ export class SetupService {
         // Deleting default pages from config
         standardPages.splice(1, 3); // TODO remove 3 and calculate automatically standard pages count
         pagesRoute.children = standardPages;
-        pagesRoute.data = {
-            title: data.title
-        };
+        routerConfig[1] = pagesRoute;
 
-        routerConfig[2] = pagesRoute;
-
+        console.log(routerConfig);
         this._router.resetConfig(routerConfig);
     }
 
