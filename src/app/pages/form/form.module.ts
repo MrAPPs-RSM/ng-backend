@@ -11,6 +11,7 @@ import { AgmCoreModule } from '@agm/core';
 import { routing } from './form.routing';
 
 import { Form } from './form.component';
+import { FormSwitcher } from './switcher';
 
 import {
     Text,
@@ -46,6 +47,7 @@ import {
         routing
     ],
     declarations: [
+        FormSwitcher,
         Form,
         Text,
         TextArea,

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -20,13 +21,16 @@ import { PagesModule } from './pages/pages.module';
 import { ApiService } from './api/api.service';
 import { SetupService } from './setup/setup.service';
 import { Login } from './login';
+import { FormLoaderService } from './pages/form/services';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Application wide providers
 const APP_PROVIDERS = [
     AppState,
     GlobalState,
     ApiService,
-    SetupService
+    SetupService,
+    FormLoaderService
 ];
 
 export type StoreType = {
@@ -46,13 +50,15 @@ export type StoreType = {
     ],
     imports: [ // import Angular's modules
         BrowserModule,
+        BrowserAnimationsModule,
         HttpModule,
         RouterModule,
         FormsModule,
         ReactiveFormsModule,
         NgaModule.forRoot(),
         PagesModule,
-        routing
+        routing,
+        ToastModule.forRoot()
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         ENV_PROVIDERS,

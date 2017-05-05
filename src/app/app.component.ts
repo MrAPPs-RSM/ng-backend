@@ -29,15 +29,10 @@ export class App implements OnInit {
 
     constructor(private _state: GlobalState,
                 private _imageLoader: BaImageLoaderService,
-                private themeConfig: BaThemeConfig,
-                private _setupService: SetupService,
-                private _spinner: BaThemeSpinner) {}
+                private themeConfig: BaThemeConfig
+    ) {}
 
     ngOnInit() {
-        this._setupService.setup()
-            .then(() => {
-                this._spinner.hide();
-            });
         this.themeConfig.config();
         this._loadImages();
         this._state.subscribe('menu.isCollapsed', (isCollapsed) => {

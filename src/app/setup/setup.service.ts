@@ -23,7 +23,7 @@ export class SetupService {
                     data => {
                         this.loadRoutes(data);
                         this._baMenuService.loadSidebar(data);
-                        resolve();
+                        resolve(data.settings);
                     },
                     error => {
                         console.log(error);
@@ -33,7 +33,7 @@ export class SetupService {
     }
 
     public loadRoutes(data: BackendData){
-        console.log('loading routes');
+        console.log('Loading routes...');
 
         let routerConfig = this._router.config;
 
@@ -80,6 +80,9 @@ export class SetupService {
         // Deleting default pages from config
         standardPages.splice(1, 3); // TODO remove 3 and calculate automatically standard pages count
         pagesRoute.children = standardPages;
+        pagesRoute.data = {
+            settings: data.settings
+        };
         routerConfig[1] = pagesRoute;
 
         console.log(routerConfig);
@@ -99,6 +102,8 @@ export class SetupService {
 
 // Interface for type safety
 interface BackendData {
-    title: string;
+    settings: {
+        title?: string
+    },
     sections: any[];
 }

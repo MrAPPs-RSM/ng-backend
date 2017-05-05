@@ -68,6 +68,10 @@ export let config = {
 };
 ```
 
+##Login
+
+**TODO**
+
 ## Sidebar and menu pages
 
 To create the sidebar, you have to define a **setup** apiName in app.config.ts.
@@ -353,7 +357,7 @@ Example:
 
 ```json
 {
-	"type": "textarea"
+	"type": "textarea",
 	"key": "textarea",
 	"label": "Description",
     "validators": {

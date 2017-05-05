@@ -1,0 +1,73 @@
+<div *ngFor="let field of fields">
+
+    <div [ngSwitch]="field.type">
+
+        <input-text
+                *ngSwitchCase="formConfig.types.TEXT"
+                [form]="form"
+                [field]="field">
+        </input-text>
+
+        <input-text-area
+                *ngSwitchCase="formConfig.types.TEXTAREA"
+                [form]="form"
+                [field]="field">
+        </input-text-area>
+
+        <input-email
+                *ngSwitchCase="formConfig.types.EMAIL"
+                [form]="form"
+                [field]="field">
+        </input-email>
+
+        <input-url
+                *ngSwitchCase="formConfig.types.URL"
+                [form]="form"
+                [field]="field">
+        </input-url>
+
+        <input-number
+                *ngSwitchCase="formConfig.types.NUMBER"
+                [form]="form"
+                [field]="field">
+        </input-number>
+
+        <input-password
+                *ngSwitchCase="formConfig.types.PASSWORD"
+                [form]="form"
+                [field]="field">
+        </input-password>
+
+        <checkbox
+                *ngSwitchCase="formConfig.types.CHECKBOX"
+                [form]="form"
+                [field]="field">
+        </checkbox>
+
+        <ui-select
+                *ngSwitchCase="formConfig.types.SELECT"
+                [form]="form"
+                [field]="field">
+        </ui-select>
+
+        <date-picker
+                *ngSwitchCase="formConfig.types.DATE"
+                [form]="form"
+                [field]="field">
+        </date-picker>
+
+        <date-range-picker
+                *ngSwitchCase="formConfig.types.DATE_RANGE"
+                [form]="form"
+                [field]="field">
+        </date-range-picker>
+
+        <lat-lng
+                *ngSwitchCase="formConfig.types.LAT_LNG"
+                [form]="form"
+                [field]="field">
+        </lat-lng>
+
+    </div>
+
+</div>

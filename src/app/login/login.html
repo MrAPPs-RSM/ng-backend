@@ -1,28 +1,42 @@
 <div class="auth-main">
-  <div class="auth-block">
-    <h1>Sign in to ng2-admin</h1>
+    <div class="auth-block">
+        <h1>{{ config.title }}</h1>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
-      <div class="form-group row" [ngClass]="{'has-error': (!email.valid && email.touched), 'has-success': (email.valid && email.touched)}">
-        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
 
-        <div class="col-sm-10">
-          <input [formControl]="email" type="email" class="form-control" id="inputEmail3" placeholder="Email">
-        </div>
-      </div>
-      <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
-        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <div [ngClass]="{'has-error': !isValidField(fields[0].key) && isTouchedField(fields[0].key), 'has-success': isValidField(fields[0].key) && isTouchedField(fields[0].key)}" class="form-group row">
+                <label for="{{ fields[0].key }}" class="col-sm-2 form-control-label">{{ fields[0].label }}</label>
+                <div class="col-sm-10">
+                    <input
+                            formControlName="{{ fields[0].key }}"
+                            type="{{ fields[0].type }}"
+                            class="form-control"
+                            id="{{ fields[0].key }}"
+                            placeholder="{{ fields[0].placeholder }}"
+                    >
+                </div>
+            </div>
 
-        <div class="col-sm-10">
-          <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="offset-sm-2 col-sm-10">
-          <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Sign in</button>
-          <a routerLink="/login" class="forgot-pass">Forgot password?</a>
-        </div>
-      </div>
-    </form>
-  </div>
+            <div [ngClass]="{'has-error': !isValidField(fields[1].key) && isTouchedField(fields[1].key), 'has-success': isValidField(fields[1].key) && isTouchedField(fields[1].key)}" class="form-group row">
+                <label for="{{ fields[1].key }}" class="col-sm-2 form-control-label">{{ fields[1].label }}</label>
+
+                <div class="col-sm-10">
+                    <input
+                            formControlName="{{ fields[1].key }}"
+                            type="{{ fields[1].type }}"
+                            class="form-control"
+                            id="{{ fields[1].key }}"
+                            placeholder="{{ fields[1].placeholder }}"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="offset-sm-2 col-sm-10">
+                    <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Sign in</button>
+                    <a routerLink="/login" class="forgot-pass">Forgot password?</a>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

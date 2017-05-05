@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import 'style-loader!./login.scss';
 import { BaThemeSpinner } from '../theme/services';
+import { config } from '../app.config';
+import { FormLoaderService } from '../pages/form/services';
+import { ApiService } from '../api';
+import { Router } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
     selector: 'login',
@@ -10,30 +15,59 @@ import { BaThemeSpinner } from '../theme/services';
 })
 export class Login implements OnInit {
 
+    public config: any;
+    public fields: any[];
     public form: FormGroup;
-    public email: AbstractControl;
-    public password: AbstractControl;
-    public submitted: boolean = false;
+    private apiName: string = 'login';
+    private payload: string = '';
 
-    constructor(private _formBuilder: FormBuilder, private _spinner: BaThemeSpinner) {
+    constructor(vcr: ViewContainerRef,
+                private _loaderService: FormLoaderService,
+                private _spinner: BaThemeSpinner,
+                private _apiService: ApiService,
+                private _router: Router,
+                private _toastManager: ToastsManager) {
+        this._toastManager.setRootViewContainerRef(vcr);
+    }
+
+    public isValidField(key: any) {
+        return this.form.controls[key].valid;
+    }
+
+    public isTouchedField(key: any) {
+        return this.form.controls[key].touched;
     }
 
     ngOnInit() {
         this._spinner.hide();
-        this.form = this._formBuilder.group({
-            'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-            'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
-        });
-
-        this.email = this.form.controls['email'];
-        this.password = this.form.controls['password'];
+        this.config = config.auth.config;
+        this.fields = config.auth.fields;
+        this.form = this._loaderService.createFormGroup(this.fields);
     }
 
-    public onSubmit(values: Object): void {
-        this.submitted = true;
+    public onSubmit(): void {
         if (this.form.valid) {
-            // your code goes here
-            // console.log(values);
+            this.payload = JSON.stringify(this.form.value);
+
+            // FAKE LOCAL LOGIN
+            setTimeout(() => {
+                if (this.form.value[this.fields[0].key] === 'admin'
+                && this.form.value[this.fields[1].key] === 'admin') {
+                    this._spinner.show();
+                    this._router.navigate(['pages']);
+                } else {
+                    this._toastManager.error(this.config.errorMessage);
+                }
+            }, 200);
+
+            /* this._apiService.post(
+                this.apiName,
+                this.payload,
+                true
+            ).subscribe(
+                data => { console.log(data); },
+                error => { console.log(error); }
+            ); */
         }
     }
 }

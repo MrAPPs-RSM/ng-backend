@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BaThemeSpinner } from '../theme/services';
 
 @Component({
     selector: 'pages',
@@ -8,12 +9,13 @@ import { ActivatedRoute } from '@angular/router';
 export class Pages implements OnInit {
 
     public params: any = {};
-    public title: string = 'TEST';
 
-    constructor(protected _route: ActivatedRoute) {
+    constructor(protected _route: ActivatedRoute, protected _spinner: BaThemeSpinner) {
     }
 
     ngOnInit() {
+        this._spinner.hide();
+        console.log('Pages component');
         this.params = this._route.snapshot.data['settings'];
     }
 }

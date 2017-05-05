@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= htmlWebpackPlugin.options.title %></title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
 
-  <meta name="description" content="<%= htmlWebpackPlugin.options.metadata.description %>">
+    <meta name="description" content="<%= htmlWebpackPlugin.options.metadata.description %>">
 
-  <% if (webpackConfig.htmlElements.headTags) { %>
-  <!-- Configured Head Tags  -->
-  <%= webpackConfig.htmlElements.headTags %>
-  <% } %>
+    <% if (webpackConfig.htmlElements.headTags) { %>
+    <!-- Configured Head Tags  -->
+    <%= webpackConfig.htmlElements.headTags %>
+    <% } %>
 
-  <!-- base url -->
-  <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+    <!-- base url -->
+    <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
 
-
+    <!-- toastr -->
+    <link href="assets/toastr/ng2-toastr.min.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
 </app>
 
 <div id="preloader">
-  <div></div>
+    <div></div>
 </div>
 
 <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>

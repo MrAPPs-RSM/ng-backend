@@ -15,13 +15,13 @@ import { ApiService } from '../../api';
 
 export class Form implements OnInit{
 
-  params: any = {}; // Setup params
-  id: number = null;
+  public formConfig: any = {};
+  public fields: any = {};
+  public form: FormGroup;
+  public payLoad: string = '';
 
-  formConfig: any = {};
-  fields: any = {};
-  form: FormGroup;
-  payLoad = '';
+  private params: any = {}; // Setup params
+  private id: number = null;
 
   constructor(
       protected _route: ActivatedRoute,
@@ -72,11 +72,10 @@ export class Form implements OnInit{
           this.payLoad,
           true,
           '/' + this.id
-      )
-          .subscribe(
-              data => {},
-              error => {}
-          );
+      ).subscribe(
+          data => {},
+          error => {}
+      );
     } else {
       this._apiService.put(
           this.params.api.name,
