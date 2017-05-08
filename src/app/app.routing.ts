@@ -1,11 +1,15 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { Login } from './login';
+import { LoginGuard } from './auth';
 
 export const routes: Routes = [
     {
         path: 'login',
-        component: Login
+        component: Login,
+        canActivate: [
+            LoginGuard
+        ]
     },
     {
         path: '',

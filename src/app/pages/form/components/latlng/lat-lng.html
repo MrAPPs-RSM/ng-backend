@@ -15,7 +15,7 @@
 </agm-map>
 
 <div [formGroup]="form" [class]="field.lat.class ? field.lat.class : 'col-sm-6'">
-    <div class="form-group" [class]="isValidLat ? 'has-success' : 'has-error'">
+    <div class="form-group form-element" [ngClass]="{'has-error': !isValidLat, 'has-success': isValidLat}">
 
         <!-- Label -->
         <label for="{{field.lat.key}}">
@@ -39,7 +39,7 @@
 </div>
 
 <div [formGroup]="form" [class]="field.lng.class ? field.lng.class : 'col-sm-6'">
-    <div class="form-group" [class]="isValidLng ? 'has-success' : 'has-error'">
+    <div class="form-group form-element" [ngClass]="{'has-error': !isValidLng, 'has-success': isValidLng}">
 
         <!-- Label -->
         <label for="{{field.lng.key}}">

@@ -1,0 +1,13 @@
+@import '../../../../theme/sass/conf/conf';
+
+.drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over { /* Default class applied to drop zones on over */
+  border: dotted 3px $danger;
+}
+
+.another-file-over-class {
+  border: dotted 3px $success;
+}

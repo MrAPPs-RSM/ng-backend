@@ -10,7 +10,8 @@ export let formConfig = {
         SELECT: 'select',
         DATE: 'date',
         DATE_RANGE: 'date_range',
-        LAT_LNG: 'lat_lng'
+        LAT_LNG: 'lat_lng',
+        FILE: 'file'
     },
     validators: {
         REQUIRED: 'required',

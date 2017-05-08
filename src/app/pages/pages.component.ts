@@ -14,8 +14,8 @@ export class Pages implements OnInit {
     }
 
     ngOnInit() {
+        console.log('[COMPONENT INIT]: Pages');
         this._spinner.hide();
-        console.log('Pages component');
         this.params = this._route.snapshot.data['settings'];
     }
 }

@@ -1,3 +1,17 @@
 .btn:hover {
   transform: none !important;
 }
+
+.ui-select-wrapper{
+  position: relative;
+
+  .ui-select-button{
+    cursor: pointer;
+    position: absolute;
+    top: 7px;
+    right: 35px;
+    z-index: 1;
+    font-size: 15px;
+    color: black;
+  }
+}

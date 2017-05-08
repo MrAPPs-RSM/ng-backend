@@ -1,0 +1,50 @@
+<div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
+
+    <!-- Drop zone -->
+    <div
+            ng2FileDrop
+            *ngIf="field.allowDrop"
+            [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+            (fileOver)="fileOverBase($event)"
+            [uploader]="uploader"
+            class="well drop-zone">
+        Drop files here
+    </div>
+
+    <div class="form-group form-element" [ngClass]="{'has-error': !isValid, 'has-success': isValid}">
+
+        <!-- Label -->
+        <label>
+            {{field.label}}
+            <span *ngIf="field.validators.required">*</span>
+        </label>
+        <br>
+
+        <input
+                #fileUpload
+                ng2FileSelect
+                [uploader]="uploader"
+                type="file"
+                formControlName="{{field.key}}"
+                hidden>
+
+        <div class="input-group">
+            <input #inputText
+                   [value]="textValue"
+                   type="text"
+                   class="form-control"
+                   readonly
+            >
+            <span class="input-group-btn">
+                <button class="btn btn-primary"
+                        type="button"
+                        (click)="bringFileSelector();">
+                    Browse
+                </button>
+            </span>
+        </div>
+
+        <!-- Others -->
+        <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 <div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
-    <div class="form-group" [class]="isValid ? 'has-success' : 'has-error'">
+    <div class="form-group form-element" [ngClass]="{'has-error': !isValid, 'has-success': isValid}">
 
         <!-- Label -->
         <label for="{{field.key}}">

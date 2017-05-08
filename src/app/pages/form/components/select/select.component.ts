@@ -38,11 +38,7 @@ export class Select implements OnInit{
   }
 
   get showClearButton() {
-      if (this.field.multiple) {
-          return this.value.length > 1;
-      } else {
-          return this.value.hasOwnProperty('id') && this.value.hasOwnProperty('text');
-      }
+      return this.field.multiple ? false : this.value.hasOwnProperty('id') && this.value.hasOwnProperty('text');
   }
 
   get isValid() {

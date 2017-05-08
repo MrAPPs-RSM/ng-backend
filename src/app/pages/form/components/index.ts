@@ -9,5 +9,6 @@ export * from './select';
 export * from './datePicker';
 export * from './dateRangePicker';
 export * from './latlng';
+export * from './file';
 
 

@@ -2,13 +2,16 @@
 
     <label>{{field.label}}</label>
     <span *ngIf="field.validators.required">*</span>
-    <button *ngIf="showClearButton" class="btn btn-primary btn-icon btn-xs"
-            (click)="clearValue()">
-        <span *ngIf="field.multiple && value.length > 1">Clear all</span>
-        <i class="ion-close"></i>
-    </button>
 
-    <div class="form-group" [class]="isValid ? 'has-success' : 'has-error'">
+    <div class="form-group form-element ui-select-wrapper"
+         [ngClass]="{'has-error': !isValid, 'has-success': isValid}">
+
+        <span *ngIf="showClearButton"
+                class="ui-select-button"
+                (click)="clearValue()">
+            <i class="fa fa-close"></i>
+        </span>
+
         <ng-select
                 #ngSelect
                 [multiple]="field.multiple"

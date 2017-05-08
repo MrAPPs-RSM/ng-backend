@@ -68,6 +68,12 @@
                 [field]="field">
         </lat-lng>
 
+        <file-uploader
+                *ngSwitchCase="formConfig.types.FILE"
+                [form]="form"
+                [field]="field">
+        </file-uploader>
+
     </div>
 
 </div>

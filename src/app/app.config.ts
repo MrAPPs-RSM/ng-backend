@@ -4,7 +4,7 @@ export let config = {
         dev: {
             baseUrl: 'http://beta.json-generator.com/api/json/get/',
             api: {
-                login: 'login',
+                login: 'Vkd4XNrk7',
                 setup: 'E1utOUgTG',
                 users: '4yHf-YBTz',
             }
@@ -20,8 +20,7 @@ export let config = {
     },
     auth: {
         config: {
-            title: 'Ng2Backend',
-            errorMessage: 'Wrong parameters'
+            title: 'Ng2Backend'
         },
         fields: [
             {
@@ -45,9 +44,9 @@ export let config = {
             }
         ]
     },
-    moduleTypes: {
-        dashboard: 'dashboard',
+    pageTypes: {
         group: 'group',
+        dashboard: 'dashboard',
         list: 'list',
         form: 'form'
     }
