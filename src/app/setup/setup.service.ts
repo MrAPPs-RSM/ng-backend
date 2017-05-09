@@ -11,22 +11,22 @@ export class SetupService {
     private apiName: string = 'setup';
 
     private data: BackendData = {
-        "sections": [
+        sections: [
             {
-                "children": [
+                children: [
                     {
-                        "params": {
-                            "menu": {
-                                "order": 0,
-                                "expanded": false,
-                                "selected": false,
-                                "sidebar": true,
-                                "icon": "ion-android-home",
-                                "title": "Dashboard"
+                        params: {
+                            menu: {
+                                order: 0,
+                                expanded: false,
+                                selected: false,
+                                sidebar: true,
+                                icon: "ion-android-home",
+                                title: "Dashboard"
                             }
                         },
-                        "type": "dashboard",
-                        "path": "dashboard"
+                        type: "dashboard",
+                        path: "dashboard"
                     },
                     {
                         "params": {
@@ -82,8 +82,14 @@ export class SetupService {
                                         "validators": {
                                             "required": true
                                         },
-                                        "multiple": false,
-                                        "allowDrop": false,
+                                        "options": {
+                                            "dataEndpoint": 'https://evening-anchorage-3159.herokuapp.com/api/',
+                                            "extensions": [
+                                                'txt', 'jpg', 'pdf'
+                                            ],
+                                            "multiple": false,
+                                            "allowDrop": false,
+                                        },
                                         "label": "File upload",
                                         "key": "file",
                                         "type": "file"

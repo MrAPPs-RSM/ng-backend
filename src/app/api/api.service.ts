@@ -11,17 +11,50 @@ import { isNullOrUndefined } from 'util';
 @Injectable()
 export class ApiService {
 
-    config = config.env === 'dev' ? config.api.dev : config.api.prod;
-    headers = new Headers({ 'Content-Type': 'application/json' });
+    config: any = config.env === 'dev' ? config.api.dev : config.api.prod;
+    headers: Headers = new Headers({ 'Content-Type': 'application/json' });
 
-    constructor(private _http: Http) {
+    static extractData(res: Response): Object {
+        return res.json() || {};
+    }
+
+    static handleError(error: Response): Observable<any> {
+        // In a real world app, you might use a remote logging infrastructure
+        let errMsg: string;
+        if (error instanceof Response) {
+            const body = error.json() || '';
+            const err = body.error || JSON.stringify(body);
+            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+        } else {
+            errMsg = error['message'] ? error['message'] : String(error);
+        }
+        console.error(errMsg);
+        errMsg = 'Http error, try again later';
+        return Observable.throw(errMsg);
+    }
+
+    constructor(protected _http: Http) {
     }
 
     /**
-     * Set headers
+     * Set headers (reset all headers)
      * @param headers
      */
     public setHeaders(headers: any[]): void {
+        this.headers = new Headers();
+        headers.forEach(header => {
+            this.headers.append(
+                header.name,
+                header.value
+            );
+        });
+    }
+
+    /**
+     * Add headers
+     * @param headers
+     */
+    public addHeaders(headers: any[]): void {
         headers.forEach(header => {
             this.headers.append(
                 header.name,
@@ -37,7 +70,7 @@ export class ApiService {
      * @returns {string}
      */
     protected composeUrl(apiName: string, options?: string): string {
-        let url = this.config.baseUrl + this.config.api[apiName];
+        let url: string = this.config.baseUrl + this.config.api[apiName];
         return !isNullOrUndefined(options) && options !== '' ? url + options : url;
     }
 
@@ -54,8 +87,8 @@ export class ApiService {
                 composeUrl === true ? this.composeUrl(apiName, options) : apiName,
                 this.headers
             )
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
     }
 
     /**
@@ -73,8 +106,8 @@ export class ApiService {
                 body,
                 this.headers
             )
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
     }
 
     /**
@@ -92,8 +125,8 @@ export class ApiService {
                 body,
                 this.headers
             )
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
     }
 
     /**
@@ -109,26 +142,8 @@ export class ApiService {
                 composeUrl === true ? this.composeUrl(apiName, options) : apiName,
                 this.headers
             )
-            .map(this.extractData)
-            .catch(this.handleError);
-    }
-
-    protected extractData(res: Response): Object {
-        return res.json() || {};
-    }
-
-    protected handleError(error: Response): Observable<any> {
-        // In a real world app, you might use a remote logging infrastructure
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-            errMsg = error['message'] ? error['message'] : String(error);
-        }
-        console.error(errMsg);
-        return Observable.throw(errMsg);
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
     }
 
     public getHttp(): Http {

@@ -21,11 +21,11 @@ export class Login implements OnInit {
     private payload: string = '';
 
     constructor(vcr: ViewContainerRef,
-                private _loaderService: FormLoaderService,
-                private _spinner: BaThemeSpinner,
-                private _authService: AuthService,
-                private _router: Router,
-                private _toastManager: ToastsManager) {
+                protected _loaderService: FormLoaderService,
+                protected _spinner: BaThemeSpinner,
+                protected _authService: AuthService,
+                protected _router: Router,
+                protected _toastManager: ToastsManager) {
         this._toastManager.setRootViewContainerRef(vcr);
     }
 

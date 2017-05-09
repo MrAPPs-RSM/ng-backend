@@ -1,13 +1,34 @@
 @import '../../../../theme/sass/conf/conf';
 
-.drop-zone {
-  border: dotted 3px lightgray;
+.progress {
+  font-size: 13px;
+  border-radius: 5px;
+  margin-bottom: 0;
+  .progress-bar {
+    border-radius: 5px;
+    text-align: center;
+    color: $label-text;
+    -webkit-transition: width 1.0s ease !important;
+    -moz-transition: width 1.0s ease !important;
+    -o-transition: width 1.0s ease !important;
+    transition: width 1.0s ease !important;
+  }
 }
 
-.nv-file-over { /* Default class applied to drop zones on over */
-  border: dotted 3px $danger;
+.vertical-align {
+  display: flex;
+  align-items: center;
 }
 
-.another-file-over-class {
-  border: dotted 3px $success;
+.uploaded-files {
+  margin-left: 0;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.uploaded-files-list {
+  list-style: none;
+  li {
+    display: inline-block !important;
+  }
 }

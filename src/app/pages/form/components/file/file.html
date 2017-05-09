@@ -1,17 +1,6 @@
 <div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
-
-    <!-- Drop zone -->
-    <div
-            ng2FileDrop
-            *ngIf="field.allowDrop"
-            [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-            (fileOver)="fileOverBase($event)"
-            [uploader]="uploader"
-            class="well drop-zone">
-        Drop files here
-    </div>
-
-    <div class="form-group form-element" [ngClass]="{'has-error': !isValid, 'has-success': isValid}">
+    <div class="form-group form-element"
+         [ngClass]="{'has-warning': uploadFileInProgress, 'has-success': uploadCompleted}">
 
         <!-- Label -->
         <label>
@@ -22,29 +11,68 @@
 
         <input
                 #fileUpload
-                ng2FileSelect
-                [uploader]="uploader"
+                ngFileSelect
                 type="file"
-                formControlName="{{field.key}}"
-                hidden>
+                id="{{field.key}}"
+                [options]="fileUploaderOptions"
+                (change)="beforeFileUpload($event)"
+                multiple
+                hidden="true">
 
         <div class="input-group">
             <input #inputText
-                   [value]="textValue"
                    type="text"
                    class="form-control"
-                   readonly
-            >
+                   readonly>
             <span class="input-group-btn">
-                <button class="btn btn-primary"
+                <button
+                        class="btn btn-primary"
                         type="button"
-                        (click)="bringFileSelector();">
-                    Browse
+                        (click)="bringFileSelector()">
+                    <i class="ion-search"></i>
                 </button>
             </span>
         </div>
+    </div>
 
-        <!-- Others -->
-        <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
+    <!-- Others -->
+    <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
+
+    <!-- Progress -->
+    <div class="row vertical-align">
+        <div class="col-xs-2">
+            <button *ngIf="files"
+                    [disabled]="uploadFileInProgress || uploadCompleted"
+                    class="btn btn-sm btn-primary btn-block"
+                    type="button"
+                    (click)="uploadQueue()">
+                <i class="ion-upload"></i> <span class="hidden-sm-down">Upload</span>
+            </button>
+        </div>
+        <div class="col-xs-10">
+            <div *ngIf="uploadFileInProgress || uploadCompleted" class="progress">
+                <div class="progress-bar progress-bar-primary"
+                     role="progressbar"
+                     [attr.aria-valuenow]="progressValue"
+                     aria-valuemin="0" aria-valuemax="100"
+                     [ngStyle]="{ 'width': progressValue + '%' }">
+                    <span *ngIf="uploadFileInProgress">{{ progressValue }}%</span>
+                    <span *ngIf="uploadCompleted">{{ progressValue }}% Completed!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Uploaded files -->
+    <div *ngIf="uploadedFiles.length > 0" class="row vertical-align uploaded-files">
+        <div class="col-sm-12">
+            <label>Uploaded files:</label>
+            <ul class="uploaded-files-list">
+                <li *ngFor="let file of uploadedFiles">
+                    {{ file.name }}
+                </li>
+            </ul>
+
+        </div>
     </div>
 </div>

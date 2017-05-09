@@ -7,7 +7,8 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { TinymceModule } from 'angular2-tinymce';
 import { AgmCoreModule } from '@agm/core';
-import { FileUploadModule } from 'ng2-file-upload';
+import { NgUploaderModule } from 'ngx-uploader';
+import { NgProgressModule } from 'ng2-progressbar';
 
 import { routing } from './form.routing';
 
@@ -46,7 +47,8 @@ import {
         AgmCoreModule.forRoot({
             apiKey: '' // TODO: set google maps apiKey
         }),
-        FileUploadModule,
+        NgUploaderModule,
+        NgProgressModule,
         routing
     ],
     declarations: [
