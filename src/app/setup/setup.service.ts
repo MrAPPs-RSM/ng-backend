@@ -84,10 +84,8 @@ export class SetupService {
                                         },
                                         "options": {
                                             "dataEndpoint": 'https://evening-anchorage-3159.herokuapp.com/api/',
-                                            "extensions": [
-                                                'txt', 'jpg', 'pdf'
-                                            ],
-                                            "multiple": false,
+                                            "showUploadedFiles": true,
+                                            "multiple": true,
                                             "allowDrop": false,
                                         },
                                         "label": "File upload",
@@ -446,7 +444,7 @@ export class SetupService {
                 this.loadRoutes(this.data);
                 this._baMenuService.loadSidebar(this.data);
                 resolve(this.data.settings);
-            }, 200);
+            }, 100);
 
             /* this._apiService.get(this.apiName, true)
                 .subscribe(

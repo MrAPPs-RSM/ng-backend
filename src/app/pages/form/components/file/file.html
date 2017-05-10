@@ -1,6 +1,5 @@
 <div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
-    <div class="form-group form-element"
-         [ngClass]="{'has-warning': uploadFileInProgress, 'has-success': uploadCompleted}">
+    <div class="form-group form-element">
 
         <!-- Label -->
         <label>
@@ -9,21 +8,28 @@
         </label>
         <br>
 
-        <input
-                #fileUpload
-                ngFileSelect
-                type="file"
-                id="{{field.key}}"
-                [options]="fileUploaderOptions"
-                (change)="beforeFileUpload($event)"
-                multiple
-                hidden="true">
+        <input #fileUpload
+               ngFileSelect
+               type="file"
+               [options]="fileUploaderOptions"
+               (change)="beforeFileUpload($event)"
+               [multiple]="field.options?.multiple"
+               hidden>
 
         <div class="input-group">
+
+            <span *ngIf="showClearButton"
+                  class="file-upload-close-button"
+                  (click)="removeFiles()">
+                <i class="fa fa-close"></i>
+            </span>
+
             <input #inputText
                    type="text"
                    class="form-control"
+                   (click)="bringFileSelector()"
                    readonly>
+
             <span class="input-group-btn">
                 <button
                         class="btn btn-primary"
@@ -33,43 +39,62 @@
                 </button>
             </span>
         </div>
+        <!-- Description -->
+        <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
     </div>
-
-    <!-- Others -->
-    <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
 
     <!-- Progress -->
     <div class="row vertical-align">
         <div class="col-xs-2">
-            <button *ngIf="files"
-                    [disabled]="uploadFileInProgress || uploadCompleted"
+            <button
+                    [disabled]="uploadInProgress || !files?.length"
                     class="btn btn-sm btn-primary btn-block"
                     type="button"
                     (click)="uploadQueue()">
-                <i class="ion-upload"></i> <span class="hidden-sm-down">Upload</span>
+                <i class="ion-upload"></i> Upload
             </button>
         </div>
         <div class="col-xs-10">
-            <div *ngIf="uploadFileInProgress || uploadCompleted" class="progress">
-                <div class="progress-bar progress-bar-primary"
-                     role="progressbar"
-                     [attr.aria-valuenow]="progressValue"
-                     aria-valuemin="0" aria-valuemax="100"
-                     [ngStyle]="{ 'width': progressValue + '%' }">
-                    <span *ngIf="uploadFileInProgress">{{ progressValue }}%</span>
-                    <span *ngIf="uploadCompleted">{{ progressValue }}% Completed!</span>
-                </div>
+            <div *ngIf="uploadInProgress">
+                <i class="fa fa-spin fa-spinner"></i>
+                Uploading:
+                <span *ngFor="let file of files; let i = index" [attr.data-index]="i">
+                    <strong>{{ file.name }}</strong><span *ngIf="i < (files.length-1)">, </span>
+                </span>
             </div>
         </div>
     </div>
 
     <!-- Uploaded files -->
-    <div *ngIf="uploadedFiles.length > 0" class="row vertical-align uploaded-files">
-        <div class="col-sm-12">
+    <div *ngIf="uploadedFiles.length > 0 &&  field.options?.showUploadedFiles"
+         class="row vertical-align uploaded-files">
+        <div class="col-sm-12 no-padding">
             <label>Uploaded files:</label>
             <ul class="uploaded-files-list">
                 <li *ngFor="let file of uploadedFiles">
-                    {{ file.name }}
+                    <div [ngSwitch]="file.type">
+                        <div *ngSwitchCase="'text/plain'"> <!--.txt-->
+                           <file-txt [name]="file.name" (click)="deleteFile(file)"></file-txt>
+                        </div>
+                        <div *ngSwitchCase="'application/msword'"> <!--.doc-->
+                            <file-txt [name]="file.name" (click)="deleteFile(file)"></file-txt>
+                        </div>
+                        <div *ngSwitchCase="'text/csv'"> <!--.csv-->
+                            <file-txt [name]="file.name" (click)="deleteFile(file)"></file-txt>
+                        </div>
+                        <div *ngSwitchCase="'application/pdf'"> <!--.pdf-->
+                            <file-pdf [name]="file.name" (click)="deleteFile(file)"></file-pdf>
+                        </div>
+                        <div *ngSwitchCase="'image/jpeg'"> <!--.jpeg-->
+                            <file-img [name]="file.name" (click)="deleteFile(file)"></file-img>
+                        </div>
+                        <div *ngSwitchCase="'image/png'"> <!--.png-->
+                            <file-img [name]="file.name" (click)="deleteFile(file)"></file-img>
+                        </div>
+                        <div *ngSwitchDefault> <!--.others-->
+                            <file-default [name]="file.name" (click)="deleteFile(file)"></file-default>
+                        </div>
+                    </div>
                 </li>
             </ul>
 

@@ -30,10 +30,13 @@ import {
     File
 } from './components';
 
+
 import {
     FormLoaderService,
     FormHelperService
 } from './services';
+
+import { FileTxt, FilePdf, FileImg, FileDefault } from './components/file/views';
 
 @NgModule({
     imports: [
@@ -65,7 +68,11 @@ import {
         DatePicker,
         DateRangePicker,
         LatLng,
-        File
+        File,
+        FileTxt,
+        FilePdf,
+        FileImg,
+        FileDefault
     ],
     providers: [
         FormLoaderService,

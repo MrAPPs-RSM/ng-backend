@@ -1,17 +1,20 @@
 @import '../../../../theme/sass/conf/conf';
 
-.progress {
-  font-size: 13px;
-  border-radius: 5px;
-  margin-bottom: 0;
-  .progress-bar {
-    border-radius: 5px;
-    text-align: center;
-    color: $label-text;
-    -webkit-transition: width 1.0s ease !important;
-    -moz-transition: width 1.0s ease !important;
-    -o-transition: width 1.0s ease !important;
-    transition: width 1.0s ease !important;
+.input-group {
+  margin-bottom: 0 !important;
+  position: relative;
+  .file-upload-close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 9px;
+    right: 58px;
+    z-index: 4;
+    font-size: 15px;
+    color: black;
+  }
+  .form-control {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 }
 
@@ -28,7 +31,44 @@
 
 .uploaded-files-list {
   list-style: none;
+  padding: 0;
   li {
+    text-align: center;
+    margin: 0 15px 0 15px;
     display: inline-block !important;
+  }
+}
+
+.uploaded-files-list-item  {
+  .list-item-wrapper{
+    position: relative;
+    .delete-file {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      i {
+        color: black;
+        font-size: 15px;
+      }
+    }
+    i {
+      font-size: 50px;
+      &.txt {
+        color: $info;
+      }
+      &.pdf {
+        color: $danger;
+      }
+      &.img{
+        color: $warning;
+      }
+      &.default{
+        color: $bootstrap-panel-text;
+      }
+    }
+  }
+  p {
+    font-size: 12px;
   }
 }
