@@ -86,7 +86,11 @@ export class SetupService {
                                             "dataEndpoint": 'https://evening-anchorage-3159.herokuapp.com/api/',
                                             "showUploadedFiles": true,
                                             "multiple": true,
-                                            "allowDrop": false,
+                                            "labels": {
+                                                "upload": "Carica",
+                                                "uploading": "Sto caricando",
+                                                "uploadedFiles": "File caricati",
+                                            }
                                         },
                                         "label": "File upload",
                                         "key": "file",

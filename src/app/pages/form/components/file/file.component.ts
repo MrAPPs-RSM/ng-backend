@@ -33,15 +33,50 @@ export class File implements OnInit {
         };
     }
 
-    get showClearButton() {
-        return this.files ? this.files.length : false;
+    getUploadButtonClass(): string {
+        let cssClass: string = '';
+        switch (this.field.class ? this.field.class : '') {
+            case 'col-sm-6':
+            case 'col-sm-8':
+            case 'col-sm-10': {
+                cssClass = 'col-sm-4';
+            }
+                break;
+            default: {
+                cssClass = 'col-sm-2';
+            }
+        }
+        return cssClass;
     }
 
+    getUploadProgressClass(): string {
+        let cssClass: string = '';
+        switch (this.field.class ? this.field.class : '') {
+            case 'col-sm-6':
+            case 'col-sm-8':
+            case 'col-sm-10': {
+                cssClass = 'col-sm-8';
+            }
+                break;
+            default: {
+                cssClass = 'col-sm-10';
+            }
+        }
+        return cssClass;
+    }
+
+    /**
+     * Just to invoke file selection if click on button or input text
+     * @returns {boolean}
+     */
     bringFileSelector(): boolean {
         this._renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
         return false;
     }
 
+    /**
+     * Show selected file names on input text
+     */
     showFileNames() {
         let names = [];
         Object.keys(this.files).forEach((key) => {
@@ -51,24 +86,45 @@ export class File implements OnInit {
         this._inputText.nativeElement.value = names.join(', ');
     }
 
+    /**
+     * Method called when user select some files
+     * @param uploadingFile
+     */
     beforeFileUpload(uploadingFile: any): void {
         this.files = this._fileUpload.nativeElement.files;
         console.log(this.files);
         this.showFileNames();
     }
 
-    removeFiles() {
-        this._fileUpload.nativeElement.value = '';
-        this.files = this._fileUpload.nativeElement.files;
-        this.formValue = [];
-        this.showFileNames();
-    }
+    /* TODO: disabled for bad ux
+     Delete selected files
 
+     get showClearButton() {
+     return this.files ? this.files.length : false;
+     }
+
+     removeFiles() {
+     this._fileUpload.nativeElement.value = '';
+     this.files = this._fileUpload.nativeElement.files;
+     this.formValue = [];
+     this.showFileNames();
+     }*/
+
+    /**
+     * Delete an uploaded file from server making an api DELETE
+     * @param file
+     */
     deleteFile(file: any): void {
         console.log('delete');
         console.log(file);
+        let index = this.uploadedFiles.indexOf(file);
+        this.uploadedFiles.splice(index, 1);
+        // TODO: api call here to delete file from server
     }
 
+    /**
+     * Upload all files to server
+     */
     uploadQueue(): void {
         console.log('uploadQueue');
         if (this.files.length) {
@@ -78,9 +134,14 @@ export class File implements OnInit {
         }
     }
 
+    /**
+     * Upload single file to server
+     * @param file
+     */
     uploadFile(file: any): void {
         if (!Utils.containsObject(file, this.uploadedFiles)) {
             this.uploadInProgress = true;
+            // TODO: api call here to upload file to server
             setTimeout(() => {
                 console.log('uploading:' + file.name);
                 this.onUploadFileCompleted(file);
@@ -113,12 +174,22 @@ export class File implements OnInit {
      );
      }*/
 
+    /**
+     * When file upload is completed
+     * @param file
+     */
     onUploadFileCompleted(file: any): void {
         console.log('finishing:' + file.name);
         this.uploadInProgress = false;
         this.uploadedFiles.push(file);
+        if (this.uploadedFiles.length === this.files.length) {
+            this.onUploadCompleted();
+        }
     }
 
+    /**
+     * When all files were uploaded
+     */
     onUploadCompleted(): void {
         console.log('uploaded all files');
         this.form.controls[this.field.key].setValue(this.formValue);

@@ -30,6 +30,7 @@
 }
 
 .uploaded-files-list {
+  margin-bottom: 0;
   list-style: none;
   padding: 0;
   li {
@@ -70,5 +71,6 @@
   }
   p {
     font-size: 12px;
+    margin-bottom: 0;
   }
 }

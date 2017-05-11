@@ -693,6 +693,51 @@ Example:
 },
 ```
 
+### File upload 
+
+Type: **file**
+
+For file upload, we have to define some options
+
+| Name                      | Type    | Required | Description                                                    |
+|---------------------------|---------|----------|----------------------------------------------------------------|
+| options                   | Object  | yes      | File upload options                                            |
+| options.dataEndpoint      | string  | yes      | Url where to upload files                                      |
+| options.showUploadedFiles | boolean | yes      | If set to true, a list of the uploaded files will be displayed |
+| options.multiple          | boolean | yes      | Define if multiple files can be selected                       |
+| options.labels            | Object  | no      | Labels options                                                 |
+
+For *options.labels* we have the following keys
+
+| Name                 | Type   | Required | Description          |
+|----------------------|--------|----------|----------------------|
+| labels.upload        | string | no       | Upload button label  |
+| labels.uploading     | string | no       | Uploading label      |
+| labels.uploadedFiles | string | no       | Uploaded files label |
+
+Example:
+
+```json
+{
+  "key": "file",
+  "type": "file",
+  "label": "File upload",
+  "validators": {
+    "required": true
+  },
+  "options": {
+    "dataEndpoint": "https:\/\/evening-anchorage-3159.herokuapp.com\/api\/",
+    "showUploadedFiles": true,
+    "multiple": true,
+    "allowDrop": false,
+    "labels": {
+      "upload": "Carica",
+      "uploading": "Sto caricando",
+      "uploadedFiles": "File caricati"
+    }
+  },
+}```
+
 
 
 

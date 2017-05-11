@@ -18,11 +18,11 @@
 
         <div class="input-group">
 
-            <span *ngIf="showClearButton"
+            <!--<span *ngIf="showClearButton"
                   class="file-upload-close-button"
                   (click)="removeFiles()">
                 <i class="fa fa-close"></i>
-            </span>
+            </span>-->
 
             <input #inputText
                    type="text"
@@ -45,19 +45,19 @@
 
     <!-- Progress -->
     <div class="row vertical-align">
-        <div class="col-xs-2">
+        <div [class]="getUploadButtonClass()">
             <button
                     [disabled]="uploadInProgress || !files?.length"
-                    class="btn btn-sm btn-primary btn-block"
+                    class="btn btn-primary btn-block"
                     type="button"
                     (click)="uploadQueue()">
-                <i class="ion-upload"></i> Upload
+                <i class="ion-upload"></i> {{ field.options?.labels?.upload ?  field.options.labels.upload : 'Upload'}}
             </button>
         </div>
-        <div class="col-xs-10">
+        <div [class]="getUploadProgressClass()">
             <div *ngIf="uploadInProgress">
                 <i class="fa fa-spin fa-spinner"></i>
-                Uploading:
+                {{ field.options?.labels?.uploading ?  field.options.labels.uploading : 'Uploading'}}:
                 <span *ngFor="let file of files; let i = index" [attr.data-index]="i">
                     <strong>{{ file.name }}</strong><span *ngIf="i < (files.length-1)">, </span>
                 </span>
@@ -69,7 +69,7 @@
     <div *ngIf="uploadedFiles.length > 0 &&  field.options?.showUploadedFiles"
          class="row vertical-align uploaded-files">
         <div class="col-sm-12 no-padding">
-            <label>Uploaded files:</label>
+            <label>{{ field.options?.labels?.uploadedFiles ?  field.options.labels.uploadedFiles : 'Uploaded files'}}:</label>
             <ul class="uploaded-files-list">
                 <li *ngFor="let file of uploadedFiles">
                     <div [ngSwitch]="file.type">
@@ -97,7 +97,6 @@
                     </div>
                 </li>
             </ul>
-
         </div>
     </div>
 </div>
