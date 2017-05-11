@@ -1,0 +1,46 @@
+<div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
+    <ba-card>
+
+        <label>{{field.label}}</label>
+        <span *ngIf="field.validators.required">*</span>
+        <ng-select
+                *ngIf="showSelect"
+                #ngSelect
+                [multiple]="false"
+                [items]="items"
+                (data)="setSelectedItem($event)"
+                placeholder="{{field.placeholder}}">
+        </ng-select>
+
+        <button
+                *ngIf="!showSelect"
+                class="btn btn-xs btn-primary pull-right"
+                (click)="showSelect = true">
+            <i class="fa fa-plus-circle"></i> {{ field.options?.labels?.add ? field.options.labels.add : 'Add'}}
+        </button>
+
+        <div *ngIf="showSelect">
+            <button
+                    [disabled]="confirmDisabled"
+                    class="btn btn-xs btn-info pull-right"
+                    (click)="addValue()">
+                <i class="fa fa-check"></i> {{ field.options?.labels?.confirm ? field.options.labels.confirm : 'Confirm'}}
+            </button>
+            <button
+                    class="btn btn-xs btn-warning pull-right"
+                    (click)="dismiss()">
+                <i class="fa fa-ban"></i> {{ field.options?.labels?.dismiss ? field.options.labels.dismiss : 'Dismiss'}}
+            </button>
+        </div>
+
+
+        <ng2-smart-table
+                [settings]="tableSettings"
+                [source]="dataSource"
+                (delete)="deleteValue($event)"
+        ></ng2-smart-table>
+        <!-- Others -->
+        <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
+    </ba-card>
+
+</div>

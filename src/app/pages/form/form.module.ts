@@ -8,13 +8,17 @@ import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { TinymceModule } from 'angular2-tinymce';
 import { AgmCoreModule } from '@agm/core';
 import { NgUploaderModule } from 'ngx-uploader';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { routing } from './form.routing';
 
 import { Form } from './form.component';
 import { FormSwitcher } from './switcher';
 
-import {
+import { Text, TextArea, Email, Url, Number, Password, CheckBox, Select, DatePicker,
+DateRangePicker, LatLng, File, ListDetails } from './components';
+
+const FORM_COMPONENTS = [
     Text,
     TextArea,
     Email,
@@ -26,16 +30,20 @@ import {
     DatePicker,
     DateRangePicker,
     LatLng,
-    File
-} from './components';
+    File,
+    ListDetails
+];
 
+import { FileTxt, FilePdf, FileImg, FileDefault } from './components/file/views';
+const FILE_VIEWS = [
+    FileTxt, FilePdf, FileImg, FileDefault
+];
 
 import {
     FormLoaderService,
     FormHelperService
 } from './services';
 
-import { FileTxt, FilePdf, FileImg, FileDefault } from './components/file/views';
 
 @NgModule({
     imports: [
@@ -50,27 +58,14 @@ import { FileTxt, FilePdf, FileImg, FileDefault } from './components/file/views'
             apiKey: '' // TODO: set google maps apiKey
         }),
         NgUploaderModule,
+        Ng2SmartTableModule,
         routing
     ],
     declarations: [
         FormSwitcher,
         Form,
-        Text,
-        TextArea,
-        Email,
-        Url,
-        Number,
-        Password,
-        CheckBox,
-        Select,
-        DatePicker,
-        DateRangePicker,
-        LatLng,
-        File,
-        FileTxt,
-        FilePdf,
-        FileImg,
-        FileDefault
+        FORM_COMPONENTS,
+        FILE_VIEWS
     ],
     providers: [
         FormLoaderService,

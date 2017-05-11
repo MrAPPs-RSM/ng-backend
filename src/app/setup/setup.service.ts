@@ -192,6 +192,47 @@ export class SetupService {
                                                 "validators": {
                                                     "required": true
                                                 },
+                                                "key": "list-details",
+                                                "type": "list_details",
+                                                "placeholder": "Select friends",
+                                                "label": "Friends",
+                                                "options": {
+                                                    "columns": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "title": "ID",
+                                                            "filter": false
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "title": "Username",
+                                                            "filter": false
+                                                        },
+                                                    },
+                                                    "data": [
+                                                        {
+                                                            "text": "John Doe",
+                                                            "id": 1
+                                                        },
+                                                        {
+                                                            "text": "Tim Cook",
+                                                            "id": 2
+                                                        },
+                                                        {
+                                                            "text": "Bill Gates",
+                                                            "id": 3
+                                                        },
+                                                        {
+                                                            "text": "Didier Drogba",
+                                                            "id": 4
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "validators": {
+                                                    "required": true
+                                                },
                                                 "class": "col-sm-6",
                                                 "placeholder": "Insert first name here...",
                                                 "label": "First name",

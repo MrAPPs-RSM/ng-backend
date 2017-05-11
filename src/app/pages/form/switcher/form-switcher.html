@@ -74,6 +74,12 @@
                 [field]="field">
         </file-uploader>
 
+       <list-details
+                *ngSwitchCase="formConfig.types.LIST_DETAILS"
+                [form]="form"
+                [field]="field">
+        </list-details>
+
     </div>
 
 </div>

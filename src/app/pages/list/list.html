@@ -1,13 +1,9 @@
-<div class="widgets">
-  <div class="row">
-    <ba-card baCardClass="with-scroll">
-      <ng2-smart-table
-              [settings]="settings"
-              [source]="source"
-              (create)="onCreate()"
-              (delete)="onDelete($event)"
-              (edit)="onEdit($event)"
-      ></ng2-smart-table>
-    </ba-card>
-  </div>
-</div>
+<ba-card>
+    <ng2-smart-table
+            [settings]="settings"
+            [source]="source"
+            (create)="onCreate()"
+            (delete)="onDelete($event)"
+            (edit)="onEdit($event)"
+    ></ng2-smart-table>
+</ba-card>
