@@ -736,7 +736,8 @@ Example:
       "uploadedFiles": "File caricati"
     }
   },
-}```
+}
+```
 
 ### List details
 
