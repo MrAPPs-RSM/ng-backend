@@ -195,17 +195,17 @@ To create a list page, you must define the structure in the setup JSON.
 | table.columns       | Array   | yes      | Structure of the table columns                      |
 | table.columns[KEY]  | string  | yes      | Key name of the field                               |
 
-<a name="listOptions"></a> **Column params**
+**Column params**
 
-| Name                       | Type            | Required | Description                                                                                                                                          |
-|----------------------------|-----------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| title                      | string          | yes      | Column title (it appears on top of the table)                                                                                                        |
-| type                       | string          | yes      | Column type (boolean, number, string)                                                                                                                |
-| filter                     | Object | false  | no       | Column filter, if false no filter will be applied to the column. If not defined, base filter (text) will be applied                                  |
-| filter.type                | string          | no       | Defines the filter type if it mustn't be text. Possibile values are **checkbox** for boolean values or **list** to create a filter with a select-input.  |
-| filter.config              | Object          | no       | Required only if filter.type = list                                                                                                                  |
-| filter.config.selectText   | string          | no       | Select placeholder where no value is selected                                                                                                        |
-| filter.config.dataEndpoint | string          | no       | Data endpoint (full url) to call to retrieve data to populate select options                                                                         |
+| Name                       | Type            | Required | Description                                                                                                                                            |
+|----------------------------|-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| title                      | string          | yes      | Column title (it appears on top of the table)                                                                                                          |
+| type                       | string          | yes      | Column type (boolean, number, string)                                                                                                                  |
+| filter                     | Object | false  | no       | Column filter, if false no filter will be applied to the column. If not defined, base filter (text) will be applied                                    |
+| filter.type                | string          | no       | Defines the filter type if it mustn't be text. Possibile values are **checkbox** for boolean values or **list** to create a filter with a select-input.|
+| filter.config              | Object          | no       | Required only if filter.type = list                                                                                                                    |
+| filter.config.selectText   | string          | no       | Select placeholder where no value is selected                                                                                                          |
+| filter.config.dataEndpoint | string          | no       | Data endpoint (full url) to call to retrieve data to populate select options                                                                           |
 
 Example
 
@@ -289,14 +289,14 @@ To create a form page, you must define the structure in the setup JSON.
 **Form params**
 
 | Name                 | Type    | Required | Description                                                                                                                                                                       |
-|----------------------|---------|----------|------------
-| fields               | Array   | yes      | Array that contains all the fields that the form must render    
+|----------------------|---------|----------|-------------------------------------------------------------|
+| fields               | Array   | yes      | Array that contains all the fields that the form must render|  
 
 **Field params**   
 
 | Name                 | Type            | Required | Available values                                                         | Description                                                                             |
 |----------------------|-----------------|----------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| type                 | string          | yes      | **text**, **email**, **checkbox**,  **select**, **date**, **date_range**, **password** | Defines the input type of the form field                                                |
+| type                 | string          | yes      | **text**, **email**, **checkbox**,  **select**, **date**, **date_range**, **password** | Defines the input type of the form field                                  |
 | key                  | string          | yes      |                                                                          | Key that identifies that field in the form                                              |
 | label                | string          | yes      |                                                                          | Label                                                                                   |
 | placeholder          | string          | no       |                                                                          | Placeholder                                                                             |
@@ -308,8 +308,8 @@ To create a form page, you must define the structure in the setup JSON.
 | validators.minLength | number          | no       |                                                                          | Only available for type text and email, defines a minLength                             |
 | validators.maxLength | number          | no       |                                                                          | Only available for type text and email, defines a maxLength                             |
 | validator.pattern    | string          | no       |                                                                          | Only available for type text and email, defines a pattern that input value must respect |
-| validator.min    | number          | no       |                                                                          | Only available for type number, defines a min number |
-| validator.max    | number          | no       |                                                                          | Only available for type number, defines a max number |     
+| validator.min        | number          | no       |                                                                          | Only available for type number, defines a min number                                    |
+| validator.max        | number          | no       |                                                                          | Only available for type number, defines a max number                                    |     
 
 ## Form field types
 
@@ -335,7 +335,7 @@ Example:
 		"minLength": 4,
 		"maxLength": 30
 	}
-},
+}
 ```
 
 ### Textarea
@@ -365,7 +365,7 @@ Example:
 	},
 	"options": {
 		"tinyMce": true
-	},
+	}
 }
 ```
 
@@ -387,7 +387,7 @@ Example:
 	"validators": {
 		"required": true
 	}
-},
+}
 ```
 
 
@@ -409,8 +409,8 @@ Example:
 		"max": 10,
 		"min": 5,
 		"required": true
-	},
-},
+	}
+}
 ```
 
 ### Email
@@ -429,7 +429,7 @@ Example:
 	"validators": {
 		"required": true
 	}
-},
+}
 ```
 
 ### Password
@@ -464,10 +464,10 @@ Example:
 		"key": "password_confirm",
 		"label": "Confirm password",
 		"placeholder": "Confirm password here...",
-		"class": "col-sm-6"
+		"class": "col-sm-6",
 		"errorMessage": "Password don't match"
-	},
-},
+	}
+}
 ```
 
 ### Checkbox
@@ -491,7 +491,7 @@ Example
 	"class": "col-sm-12",
 	"checked": true,
 	"disabled": false
-},
+}
 ```
 
 ### Date picker
@@ -500,9 +500,9 @@ Example
 
 **Options**
 
-| Name         | Type    | Required | Description                                          |
-|--------------|---------|----------|------------- |
-| dateFormat   | string  | yes     | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...)   |
+| Name         | Type    | Required | Description                                                                         |                                      
+|--------------|---------|----------|-------------------------------------------------------------------------------------|
+| dateFormat   | string  | yes      | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...)   |
 
 *Note*: if you set a default value with the **value** option, it must respect the *mm/dd/yyyy* standard format
 
@@ -519,7 +519,7 @@ Example:
 	"validators": {
 		"required": true
 	}
-},
+}
 ```
 
 ### Date range picker
@@ -528,9 +528,9 @@ Example:
 
 **Options**
 
-| Name         | Type    | Required | Description                                          |
-|--------------|---------|----------|------------- |
-| dateFormat   | string  | yes     | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...)   |
+| Name         | Type    | Required | Description                                                                         |                                      
+|--------------|---------|----------|-------------------------------------------------------------------------------------|
+| dateFormat   | string  | yes      | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...)   |
 
 *Note*: if you set a default value with the **value** option, it must be an object respecting the following format (and values must respect the *mm/dd/yyyy* standard format)
 
@@ -539,7 +539,7 @@ Example:
 {
 	"value": {
 		"startDate": "06/25/2016",
-		"endDate": "04/08/2017",
+		"endDate": "04/08/2017"
 	}
 }
 ```
@@ -573,15 +573,15 @@ Example:
 | multiple | boolean    | yes      | Defines if multiple choice is available or not                               |
 
 
-With select type we can choice if *options* are static or must be fetched from an external source. In every case the structure of data must be the following:
+For the options of the select, we have to define the **options.data** key, it can be an *Array* or a *string* that defines the data endpoint to retrieve the options.
+The structure must be the following:
 
 ```json
 [
 	{
 		"id": "option_id",
 		"text": "option_text"
-	},
-	...
+	}
 ]
 ```
 
@@ -616,7 +616,7 @@ Example:
 	"validators": {
 		"required": true
 	}
-},
+}
 ```
 
 ### Latitude and Longitude
@@ -636,8 +636,8 @@ For this field type, we have to crate a different json structure.
 
 **Longitude**
 
-| Name            | Type   | Required | Description                                    |
-|-----------------|--------|----------|------------------------------------------------|
+| Name            | Type   | Required | Description                                     |
+|-----------------|--------|----------|-------------------------------------------------|
 | lng             | Object | yes      | Longitude object                                |
 | lng.key         | string | yes      | Key that identifies longitude field in the form |
 | lng.placeholder | string | no       | Longitude input placeholder                     |
@@ -690,7 +690,7 @@ Example:
 	"validators": {
 		"required": true
 	}
-},
+}
 ```
 
 ### File upload 
@@ -735,7 +735,7 @@ Example:
       "uploading": "Sto caricando",
       "uploadedFiles": "File caricati"
     }
-  },
+  }
 }
 ```
 
@@ -755,7 +755,7 @@ For list_details type, we have to define some options
 For the options of the select, we have to define the **options.data** key, it can be an *Array* or a *string* that defines the data endpoint to retrieve the options.
 
 | Name                  | Type    | Required | Description                                                                  |
-|-----------------------|---------|----------|----------------------------------------|                                              |
+|-----------------------|---------|----------|------------------------------------------------------------------------------|
 | options.data          | string  | yes      | Data endpoint (full url) to call to retrieve data to populate select options |
 | options.data          | Array   | yes      | Array that contains the select options                                       |
 
@@ -766,13 +766,9 @@ In every case the structure of data must be the following:
 	{
 		"id": "option_id",
 		"text": "option_text"
-	},
-	...
+	}
 ]
 ```
-
-
-
 
 Example:
 
