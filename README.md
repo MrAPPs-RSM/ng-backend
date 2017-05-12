@@ -195,7 +195,7 @@ To create a list page, you must define the structure in the setup JSON.
 | table.columns       | Array   | yes      | Structure of the table columns                      |
 | table.columns[KEY]  | string  | yes      | Key name of the field                               |
 
-**Column params**
+<a name="listOptions"></a> **Column params**
 
 | Name                       | Type            | Required | Description                                                                                                                                          |
 |----------------------------|-----------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -738,6 +738,80 @@ Example:
   },
 }```
 
+### List details
+
+Type: **list_details**
+
+For list_details type, we have to define some options
+
+| Name                  | Type   | Required | Description                                                                                                            |
+|-----------------------|--------|----------|------------------------------------------------------------------------------------------------------------------------|
+| options               | Object | yes      | List details options                                                                                                   |
+| options.noDataMessage | string | no       | Label when list is empty                                                                                               |
+| options.actionsTitle  | string | no       | Label for actions column                                                                                               |
+| options.columns       | Object | yes      | Object that defines the columns of the table (max 2 fields) Params are the same as defined in [list](#listColumns) |
+
+For the options of the select, we have to define the **options.data** key, it can be an *Array* or a *string* that defines the data endpoint to retrieve the options.
+
+| Name                  | Type    | Required | Description                                                                  |
+|-----------------------|---------|----------|----------------------------------------|                                              |
+| options.data          | string  | yes      | Data endpoint (full url) to call to retrieve data to populate select options |
+| options.data          | Array   | yes      | Array that contains the select options                                       |
+
+In every case the structure of data must be the following:
+
+```json
+[
+	{
+		"id": "option_id",
+		"text": "option_text"
+	},
+	...
+]
+```
+
+
+
+
+Example:
+
+```json
+{
+  "key": "list-details",
+  "type": "list_details",
+  "placeholder": "Select friends",
+  "label": "Friends",
+  "validators": {
+    "required": true
+  },
+  "options": {
+    "noDataMessage": "No friend selected",
+    "actionsTitle": "Actions",
+    "columns": {
+      "id": {
+        "type": "number",
+        "title": "ID",
+        "filter": false
+      },
+      "username": {
+        "type": "string",
+        "title": "Username",
+        "filter": false
+      }
+    },
+    "data": [
+      {
+        "text": "John Doe",
+        "id": 1
+      },
+      {
+        "text": "Tim Cook",
+        "id": 2
+      }
+    ]
+  }
+}
+```
 
 
 

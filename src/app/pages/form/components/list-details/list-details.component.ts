@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { SelectComponent } from 'ng2-select';
 import { ApiService } from '../../../../api';
 import { LocalDataSource } from 'ng2-smart-table';
+import { Utils } from '../../../../utils';
 
 @Component({
     selector: 'list-details',
@@ -14,12 +15,13 @@ export class ListDetails implements OnInit {
     @Input() field: any = {};
     @ViewChild('ngSelect') public ngSelect: SelectComponent;
 
-    items: any[] = [];
+    formValue: any[] = [];
+    selectValues: any[] = [];
 
     showSelect: boolean = false;
     tableSettings: any = {
         mode: 'external',
-        noDataMessage: 'No data found',
+        noDataMessage: '',
         delete: {
             deleteButtonContent: '<span class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></span>'
         },
@@ -28,7 +30,7 @@ export class ListDetails implements OnInit {
             delete: true,
             edit: false,
             add: false,
-            columnTitle: 'Actions'
+            columnTitle: ''
         },
         columns: {}
     };
@@ -41,19 +43,18 @@ export class ListDetails implements OnInit {
     }
 
     get confirmDisabled(){
-        return Object.keys(this.selectedItem).length === 0;
+        return Utils.isEmptyObject(this.selectedItem);
     }
 
     ngOnInit() {
         this.loadTable();
-        this.tableSettings.columns = this.field.options.columns;
         if (this.field.options.data instanceof Array) {
-            this.items = this.field.options.data;
+            this.selectValues = this.field.options.data;
         } else {
             this._apiService.get(this.field.options.data, false)
                 .subscribe(
                     data => {
-                        this.items = data;
+                        this.selectValues = data;
                     },
                     error => {
                         console.log(error);
@@ -63,7 +64,15 @@ export class ListDetails implements OnInit {
         }
     }
 
+    /**
+     * Load table: set table columns, options and load default data
+     */
     loadTable(): void {
+        this.tableSettings.noDataMessage = this.field.options.noDataMessage ?
+            this.field.options.noDataMessage : 'No data selected';
+        this.tableSettings.actions.columnTitle = this.field.options.actionsTitle ?
+            this.field.options.actionsTitle : 'Actions';
+        this.tableSettings.columns = this.field.options.columns;
         Object.keys(this.field.options.columns).forEach((key) => {
             this.tableKeys.push(key);
             this.field.options.columns[key].filter = false;
@@ -72,23 +81,79 @@ export class ListDetails implements OnInit {
         this.dataSource.load([]);
     }
 
+    /**
+     * Set the active item by the select option
+     * @param value
+     */
     setSelectedItem(value: any): void {
         this.selectedItem[this.tableKeys[0]] = value.id;
         this.selectedItem[this.tableKeys[1]] = value.text;
     }
 
+    /**
+     * Remove the last-added-to-list value from the select to avoid duplicates
+     */
+    removeValueFromSelect(): void {
+        let itemIndex: number = -1;
+        this.selectValues.forEach((item, index) => {
+            if (item.id === this.selectedItem[this.tableKeys[0]]
+                && item.text === this.selectedItem[this.tableKeys[1]]) {
+                itemIndex = index;
+            }
+        });
+        if (itemIndex !== -1) {
+            this.selectValues.splice(itemIndex, 1);
+        }
+    }
+
+    /**
+     * Re-add the deleted-from-list value to the select
+     * @param item
+     */
+    reAddValueToSelect(item: any): void {
+        this.selectValues.push({
+            id: item[this.tableKeys[0]],
+            text: item[this.tableKeys[1]]
+        });
+        this.showSelect = false;
+    }
+
+    /**
+     * Dismiss option after select options
+     */
     dismiss(): void {
         this.showSelect = false;
         this.selectedItem = {};
     }
 
-    addValue(): void {
+    /**
+     * Confirm option after select options (add the selected item to the list)
+     */
+    addItem(): void {
         this.dataSource.append(this.selectedItem);
+        this.removeValueFromSelect();
+        this.updateFormValue(this.selectedItem, true);
         this.dismiss();
     }
 
-    deleteValue(event: any): void {
+    /**
+     * Deletes the selected item from the list
+     */
+    deleteItem(event: any): void {
         this.dataSource.remove(event.data);
+        this.reAddValueToSelect(event.data);
+        this.updateFormValue(event.data, false);
+    }
+
+    /**
+     * Updates form control value
+     */
+    updateFormValue(item: any, add: boolean): void {
+        if (add) {
+            this.formValue.push(item);
+        } else {
+            this.formValue = Utils.removeObjectFromArray(item, this.formValue);
+        }
+        this.form.controls[this.field.key].setValue(this.formValue);
     }
 }
-

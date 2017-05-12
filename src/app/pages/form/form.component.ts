@@ -50,6 +50,7 @@ export class Form implements OnInit {
     ngOnChange() {
         this.form.valueChanges
             .subscribe(data => {
+                    console.log(this.form.value);
                     this.payLoad = JSON.stringify(this.form.value);
                 }
             );

@@ -197,6 +197,8 @@ export class SetupService {
                                                 "placeholder": "Select friends",
                                                 "label": "Friends",
                                                 "options": {
+                                                    "noDataMessage": "No friend selected",
+                                                    "actionsTitle": "Actions",
                                                     "columns": {
                                                         "id": {
                                                             "type": "number",
@@ -321,7 +323,7 @@ export class SetupService {
                                                 "validators": {
                                                     "required": true
                                                 },
-                                                "multiple": false,
+                                                "multiple": true,
                                                 "options": [
                                                     {
                                                         "text": "Amsterdam",

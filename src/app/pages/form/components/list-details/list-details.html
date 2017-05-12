@@ -1,13 +1,12 @@
 <div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
-    <ba-card>
-
+    <div class="form-element">
         <label>{{field.label}}</label>
         <span *ngIf="field.validators.required">*</span>
         <ng-select
                 *ngIf="showSelect"
                 #ngSelect
                 [multiple]="false"
-                [items]="items"
+                [items]="selectValues"
                 (data)="setSelectedItem($event)"
                 placeholder="{{field.placeholder}}">
         </ng-select>
@@ -23,8 +22,9 @@
             <button
                     [disabled]="confirmDisabled"
                     class="btn btn-xs btn-info pull-right"
-                    (click)="addValue()">
-                <i class="fa fa-check"></i> {{ field.options?.labels?.confirm ? field.options.labels.confirm : 'Confirm'}}
+                    (click)="addItem()">
+                <i class="fa fa-check"></i> {{ field.options?.labels?.confirm ? field.options.labels.confirm :
+                'Confirm'}}
             </button>
             <button
                     class="btn btn-xs btn-warning pull-right"
@@ -37,10 +37,9 @@
         <ng2-smart-table
                 [settings]="tableSettings"
                 [source]="dataSource"
-                (delete)="deleteValue($event)"
+                (delete)="deleteItem($event)"
         ></ng2-smart-table>
         <!-- Others -->
         <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
-    </ba-card>
-
+    </div>
 </div>

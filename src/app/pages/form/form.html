@@ -1,29 +1,33 @@
 <div>
-    <form [formGroup]="form">
+    <ba-card>
+        <form [formGroup]="form">
 
-        <div class="row">
-            <form-switcher
-                    [fields]="fields"
-                    [form]="form"
-                    [formConfig]="formConfig">
-            </form-switcher>
-        </div>
-
-        <br>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-raised" [disabled]="!isFormValid">Save</button>
+            <div class="row">
+                <form-switcher
+                        [fields]="fields"
+                        [form]="form"
+                        [formConfig]="formConfig">
+                </form-switcher>
             </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-raised"
+                            [disabled]="!isFormValid">Save
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="row">
+            <strong>Form valid:</strong><br>{{isFormValid}}
         </div>
 
-    </form>
-
-    <div class="row">
-        <strong>Form valid:</strong><br>{{isFormValid}}
-    </div>
-
-    <div *ngIf="payLoad" class="row">
-        <strong>Form Values:</strong><br>{{payLoad}}
-    </div>
+        <div *ngIf="payLoad" class="row">
+            <strong>Form Values:</strong><br>{{payLoad}}
+        </div>
+    </ba-card>
 </div>
