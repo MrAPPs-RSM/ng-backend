@@ -14,13 +14,13 @@ export class List implements OnInit {
         mode: 'external',
         noDataMessage: 'No data found',
         add: {
-            addButtonContent: '<i class="ion-ios-plus-outline green"></i>'
+            addButtonContent: '<span class="btn btn-xs btn-success"><i class="fa fa-plus-circle"></i></span>'
         },
         edit: {
-            editButtonContent: '<i class="ion-edit yellow"></i>'
+            editButtonContent: '<span class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></span>'
         },
         delete: {
-            deleteButtonContent: '<i class="ion-trash-a red"></i>'
+            deleteButtonContent: '<span class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></span>'
         },
         actions: {},
         columns: {},

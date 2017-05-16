@@ -124,13 +124,13 @@ export class SetupService {
                                                 "title": "First Name"
                                             },
                                             "lastName": {
-                                                /*"filter": {
+                                                "filter": {
                                                     "config": {
                                                         "dataEndpoint": "http://beta.json-generator.com/api/json/get/4yhx6nC6z",
                                                         "selectText": "Select last name..."
                                                     },
                                                     "type": "list"
-                                                },*/
+                                                },
                                                 "type": "string",
                                                 "title": "Last Name"
                                             },
