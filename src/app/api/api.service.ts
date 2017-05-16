@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -72,6 +72,24 @@ export class ApiService {
     protected composeUrl(apiName: string, options?: string): string {
         let url: string = this.config.baseUrl + this.config.api[apiName];
         return !isNullOrUndefined(options) && options !== '' ? url + options : url;
+    }
+
+    /**
+     * POST file request
+     * @param apiEndpoint
+     * @param file
+     * @returns {Observable<R>}
+     */
+    public postFile(apiEndpoint: string, file: any): Observable<any> {
+        let formData: FormData = new FormData();
+        formData.append('uploadFile', file, file.name);
+        let headers = new Headers;
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        let options = new RequestOptions({ headers: headers });
+        return this._http.post(apiEndpoint, formData, options)
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
     }
 
     /**

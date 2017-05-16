@@ -21,6 +21,7 @@ export class AuthService {
     }
 
     public isLogged(): boolean {
+        return true;
         return localStorage.getItem(this.localStorageKey) !== null;
     }
 

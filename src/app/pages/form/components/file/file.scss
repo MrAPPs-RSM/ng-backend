@@ -1,21 +1,17 @@
 @import '../../../../theme/sass/conf/conf';
 
-.input-group {
-  margin-bottom: 0 !important;
-  position: relative;
-  .file-upload-close-button {
-    cursor: pointer;
-    position: absolute;
-    top: 9px;
-    right: 58px;
-    z-index: 4;
-    font-size: 15px;
-    color: black;
-  }
-  .form-control {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
+.drag-drop-container {
+  display: flex;
+  height: 50px;
+  border: 2px dashed $info-dark;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.is-drag-over {
+  background-color: $info-light;
 }
 
 .vertical-align {
@@ -41,18 +37,8 @@
 }
 
 .uploaded-files-list-item  {
-  .list-item-wrapper{
+  .list-item-wrapper {
     position: relative;
-    .delete-file {
-      cursor: pointer;
-      position: absolute;
-      top: 0;
-      left: 0;
-      i {
-        color: black;
-        font-size: 15px;
-      }
-    }
     i {
       font-size: 50px;
       &.txt {
@@ -61,11 +47,27 @@
       &.pdf {
         color: $danger;
       }
-      &.img{
+      &.img {
         color: $warning;
       }
-      &.default{
+      &.zip {
+        color: purple;
+      }
+      &.code {
+        color: greenyellow;
+      }
+      &.default {
         color: $bootstrap-panel-text;
+      }
+    }
+    .delete-file {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      i {
+        color: black;
+        font-size: 15px;
       }
     }
   }

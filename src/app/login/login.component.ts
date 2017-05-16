@@ -7,7 +7,7 @@ import { config } from '../app.config';
 import { FormLoaderService } from '../pages/form/services';
 import { AuthService } from '../auth';
 import { Router } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastHandler } from '../theme/services';
 
 @Component({
     selector: 'login',
@@ -20,13 +20,11 @@ export class Login implements OnInit {
     public form: FormGroup;
     private payload: string = '';
 
-    constructor(vcr: ViewContainerRef,
-                protected _loaderService: FormLoaderService,
+    constructor(protected _loaderService: FormLoaderService,
                 protected _spinner: BaThemeSpinner,
                 protected _authService: AuthService,
                 protected _router: Router,
-                protected _toastManager: ToastsManager) {
-        this._toastManager.setRootViewContainerRef(vcr);
+                protected _toastManager: ToastHandler) {
     }
 
     public isValidField(key: any) {

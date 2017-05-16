@@ -34,11 +34,6 @@ const FORM_COMPONENTS = [
     ListDetails
 ];
 
-import { FileTxt, FilePdf, FileImg, FileDefault } from './components/file/views';
-const FILE_VIEWS = [
-    FileTxt, FilePdf, FileImg, FileDefault
-];
-
 import {
     FormLoaderService,
     FormHelperService
@@ -64,8 +59,7 @@ import {
     declarations: [
         FormSwitcher,
         Form,
-        FORM_COMPONENTS,
-        FILE_VIEWS
+        FORM_COMPONENTS
     ],
     providers: [
         FormLoaderService,

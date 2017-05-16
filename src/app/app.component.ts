@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 
 import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader } from './theme/services';
@@ -7,8 +7,7 @@ import { layoutPaths } from './theme/theme.constants';
 
 import 'style-loader!./app.scss';
 import 'style-loader!./theme/initial.scss';
-import { SetupService } from './setup';
-import { BaThemeSpinner } from './theme/services';
+import { ToastsManager } from 'ng2-toastr';
 
 /*
  * App Component
@@ -27,10 +26,14 @@ export class App implements OnInit {
 
     isMenuCollapsed: boolean = false;
 
-    constructor(private _state: GlobalState,
+    constructor(vcr: ViewContainerRef,
+                private _state: GlobalState,
                 private _imageLoader: BaImageLoaderService,
+                private _toastManager: ToastsManager,
                 private themeConfig: BaThemeConfig
-    ) {}
+    ) {
+        this._toastManager.setRootViewContainerRef(vcr);
+    }
 
     ngOnInit() {
         this.themeConfig.config();

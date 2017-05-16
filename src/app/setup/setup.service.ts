@@ -83,14 +83,11 @@ export class SetupService {
                                             "required": true
                                         },
                                         "options": {
-                                            "dataEndpoint": 'https://evening-anchorage-3159.herokuapp.com/api/',
-                                            "showUploadedFiles": true,
-                                            "multiple": true,
-                                            "labels": {
-                                                "upload": "Carica",
-                                                "uploading": "Sto caricando",
-                                                "uploadedFiles": "File caricati",
-                                            }
+                                            "api": {
+                                                "upload": "/upload",
+                                                "delete": "/delete"
+                                            },
+                                            "multiple": true
                                         },
                                         "label": "File upload",
                                         "key": "file",
@@ -123,24 +120,17 @@ export class SetupService {
                                                 "title": "ID"
                                             },
                                             "firstName": {
-                                                "filter": {
-                                                    "config": {
-                                                        "dataEndpoint": "http://beta.json-generator.com/api/json/get/4JAQ2206z",
-                                                        "selectText": "Select..."
-                                                    },
-                                                    "type": "list"
-                                                },
                                                 "type": "string",
                                                 "title": "First Name"
                                             },
                                             "lastName": {
-                                                "filter": {
+                                                /*"filter": {
                                                     "config": {
                                                         "dataEndpoint": "http://beta.json-generator.com/api/json/get/4yhx6nC6z",
                                                         "selectText": "Select last name..."
                                                     },
                                                     "type": "list"
-                                                },
+                                                },*/
                                                 "type": "string",
                                                 "title": "Last Name"
                                             },

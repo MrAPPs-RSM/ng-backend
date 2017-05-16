@@ -50,7 +50,7 @@
     "ng2-toastr": "^4.0.1",
     "ng2-tree": "2.0.0-alpha.3",
     "ngx-bootstrap": "^1.6.6",
-    "ngx-uploader": "2.2.0",
+    "ngx-uploader": "3.0.0",
     "normalize.css": "4.2.0",
     "reflect-metadata": "0.1.9",
     "roboto-fontface": "0.7.0",

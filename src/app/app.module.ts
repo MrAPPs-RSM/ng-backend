@@ -26,12 +26,14 @@ import { FormLoaderService } from './pages/form/services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService, LoginGuard } from './auth';
 import { GlobalValuesService } from './global-values.service';
+import { ToastHandler } from './theme/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
     AppState,
     GlobalState,
     GlobalValuesService,
+    ToastHandler,
     AuthService,
     LoginGuard,
     ApiService,

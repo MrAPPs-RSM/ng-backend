@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { formConfig } from './form.config';
 import { FormLoaderService, FormHelperService } from './services';
 import { ApiService } from '../../api';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastHandler } from '../../theme/services';
 
 @Component({
     selector: '',
@@ -24,13 +24,11 @@ export class Form implements OnInit {
     private params: any = {}; // Setup params
     private id: number = null;
 
-    constructor(vcr: ViewContainerRef,
-                protected _route: ActivatedRoute,
+    constructor(protected _route: ActivatedRoute,
                 protected _state: GlobalState,
                 protected _loaderService: FormLoaderService,
                 protected _apiService: ApiService,
-                protected _toastManager: ToastsManager) {
-        this._toastManager.setRootViewContainerRef(vcr);
+                protected _toastManager: ToastHandler) {
     }
 
     ngOnInit() {
