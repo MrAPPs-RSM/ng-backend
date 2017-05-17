@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, ServerDataSource } from '../../api';
+import { ToastHandler } from '../../theme/services';
 
 @Component({
     selector: 'list',
@@ -33,7 +34,11 @@ export class List implements OnInit {
 
     params: any = {}; // Setup params
 
-    constructor(protected _router: Router, protected _route: ActivatedRoute, protected _apiService: ApiService) {}
+    constructor(protected _router: Router,
+                protected _route: ActivatedRoute,
+                protected _apiService: ApiService,
+                protected _toastManager: ToastHandler
+    ) {}
 
     ngOnInit() {
         this.params = this._route.snapshot.data;
@@ -59,16 +64,17 @@ export class List implements OnInit {
 
     onDelete(event: any): void {
 
-        // TODO: add a cool dialog
+        // TODO: add a real dialog
         if (window.confirm('Are you sure you want to delete?')) {
 
             this._apiService.delete(this.params.api.name, true, '/' + event.data.id)
                 .subscribe(
                     res => {
+                        this._toastManager.info('Item deleted successfully');
                         event.confirm.resolve();
                     },
                     error => {
-                        console.log(error); // TODO
+                        this._toastManager.error("Can't delete item, try again later");
                         event.confirm.resolve();
                     }
                 );

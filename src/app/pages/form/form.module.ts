@@ -50,7 +50,7 @@ import {
         MyDateRangePickerModule,
         TinymceModule.withConfig({}),
         AgmCoreModule.forRoot({
-            apiKey: '' // TODO: set google maps apiKey
+            apiKey: '' // TODO: set google maps apiKey (but works also without it)
         }),
         NgUploaderModule,
         Ng2SmartTableModule,

@@ -21,7 +21,6 @@ export class AuthService {
     }
 
     public isLogged(): boolean {
-        return true;
         return localStorage.getItem(this.localStorageKey) !== null;
     }
 
@@ -55,6 +54,7 @@ export class AuthService {
         console.log('[AUTH SERVICE]: Action: logout');
         this.removeUser();
         this._router.navigate(['login']);
+        location.reload();
     }
 }
 

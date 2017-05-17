@@ -66,6 +66,7 @@ export class Form implements OnInit {
     }
 
     onSubmit() {
+        // TODO refactor this
         if (this.id !== null) {
             this._apiService.post(
                 this.params.api.name,
@@ -76,7 +77,6 @@ export class Form implements OnInit {
                 data => {
                 },
                 error => {
-                    // TODO handle error
                     this._toastManager.error(error);
                 }
             );
@@ -90,7 +90,6 @@ export class Form implements OnInit {
                     data => {
                     },
                     error => {
-                        // TODO handle error
                         this._toastManager.error(error);
                     }
                 );
