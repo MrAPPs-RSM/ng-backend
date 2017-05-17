@@ -14,20 +14,12 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-raised"
-                            [disabled]="!isFormValid">Save
+                    <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-raised btn-hover pull-right"
+                            [disabled]="!isFormValid"> {{ params.form.options?.submitLabel ? params.form.options?.submitLabel : 'Save'}}
                     </button>
                 </div>
             </div>
 
         </form>
-
-        <div class="row">
-            <strong>Form valid:</strong><br>{{isFormValid}}
-        </div>
-
-        <div *ngIf="payLoad" class="row">
-            <strong>Form Values:</strong><br>{{payLoad}}
-        </div>
     </ba-card>
 </div>

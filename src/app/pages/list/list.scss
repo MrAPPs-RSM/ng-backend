@@ -12,8 +12,17 @@ ba-card {
 }
 
 ng2-smart-table {
-  th, td {
+
+  table {
+    border-collapse: separate !important;
     border: 1px solid $border-light !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    border-radius: 5px !important;
+  }
+
+  th, td {
+    border: 0.5px solid $border-light !important;
     line-height: 20px;
     vertical-align: middle;
     text-align: center;

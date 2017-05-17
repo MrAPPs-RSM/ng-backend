@@ -68,9 +68,47 @@ export let config = {
 };
 ```
 
-##Login
+## Login 
 
-**TODO**
+To define the login, you must provide the config in the *auth* key of the *app.config.ts* 
+
+You can define two input fields (like username & password, or email & password ...). 
+Fields can be defined in the same way as form fields. 
+
+It's also possible to define some config. (**TODO IN_PROGRESS**)
+
+Example: 
+
+```json
+{
+  "auth": {
+    "config": {
+      "title": "Ng2Backend"
+    },
+    "fields": [
+      {
+        "key": "username",
+        "type": "text",
+        "label": "Username",
+        "placeholder": "Username",
+        "validators": {
+          "required": true
+        }
+      },
+      {
+        "key": "password",
+        "type": "password",
+        "label": "Password",
+        "placeholder": "Password",
+        "validators": {
+          "required": true,
+          "minLength": 4
+        }
+      }
+    ]
+  }
+}
+```
 
 ## Sidebar and menu pages
 
@@ -702,18 +740,20 @@ For file upload, we have to define some options
 | Name                      | Type    | Required | Description                                                    |
 |---------------------------|---------|----------|----------------------------------------------------------------|
 | options                   | Object  | yes      | File upload options                                            |
-| options.dataEndpoint      | string  | yes      | Url where to upload files                                      |
-| options.showUploadedFiles | boolean | yes      | If set to true, a list of the uploaded files will be displayed |
+| options.api               | Object  | yes      | Api object for upload/delete files                             |
+| options.api.upload        | string  | yes      | Full url to call for upload files to server                    |
+| options.api.delete        | string  | yes      | Full url to call for delete files from server                  |
+| options.allowDrop         | boolean | yes      | If set to true, drag&drop will be enabled                      |
 | options.multiple          | boolean | yes      | Define if multiple files can be selected                       |
-| options.labels            | Object  | no      | Labels options                                                 |
+| options.labels            | Object  | no      | Labels options                                                  |
 
 For *options.labels* we have the following keys
 
-| Name                 | Type   | Required | Description          |
-|----------------------|--------|----------|----------------------|
-| labels.upload        | string | no       | Upload button label  |
-| labels.uploading     | string | no       | Uploading label      |
-| labels.uploadedFiles | string | no       | Uploaded files label |
+| Name                   | Type   | Required | Description          |
+|------------------------|--------|----------|----------------------|
+| labels.dragDropMessage | string | no       | Drag&Drop zone label |
+| labels.selectMessage   | string | no       | Select input label   |
+| labels.uploadedFiles   | string | no       | Uploaded files label |
 
 Example:
 
@@ -726,13 +766,15 @@ Example:
     "required": true
   },
   "options": {
-    "dataEndpoint": "https:\/\/evening-anchorage-3159.herokuapp.com\/api\/",
-    "showUploadedFiles": true,
+    "api": {
+      "upload": "/upload",
+      "delete": "/delete"
+    },
     "multiple": true,
     "allowDrop": false,
     "labels": {
-      "upload": "Carica",
-      "uploading": "Sto caricando",
+      "dragDropMessage": "Drag & drop files here",
+      "selectMessage": "or select files",
       "uploadedFiles": "File caricati"
     }
   }

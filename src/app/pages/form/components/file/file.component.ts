@@ -37,8 +37,11 @@ export class File {
 
     onUploadOutput(output: UploadOutput): void {
         switch (output.type) {
-            case 'addedToQueue': {
+            case 'allAddedToQueue': {
                 this._fileUpload.nativeElement.value = ''; // Clear always file input value to avoid errors
+            }
+                break;
+            case 'addedToQueue': {
                 this.files.push(output.file);
                 this.startUpload(output.file);
             }
@@ -74,10 +77,10 @@ export class File {
     }
 
     cancelUpload(deletedFile: UploadFile): void {
-        this.files = this.files.filter((file: UploadFile) => file !== deletedFile);
         this._apiService.post(this.field.options.api.delete, deletedFile, false).subscribe(
             data => {
                 this._toastManager.success(deletedFile.name + ' removed');
+                this.files = this.files.filter((file: UploadFile) => file !== deletedFile);
                 this.removeFromUpdatedFiles(deletedFile);
             },
             error => {

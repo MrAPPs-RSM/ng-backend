@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './../api';
 import { Router } from '@angular/router';
+import { BaThemeSpinner } from '../theme/services';
 
 @Injectable()
 export class AuthService {
@@ -9,7 +10,7 @@ export class AuthService {
     private localStorageKey = 'user';
     private user: User;
 
-    constructor(private _apiService: ApiService, private _router: Router) {
+    constructor(private _apiService: ApiService, private _router: Router, private _spinner: BaThemeSpinner) {
     }
 
     public storeUser(user: User): void {
@@ -53,6 +54,7 @@ export class AuthService {
     public logout() {
         console.log('[AUTH SERVICE]: Action: logout');
         this.removeUser();
+        this._spinner.show();
         this._router.navigate(['login']);
         location.reload();
     }

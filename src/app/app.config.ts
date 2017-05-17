@@ -43,12 +43,6 @@ export let config = {
                 }
             }
         ]
-    },
-    pageTypes: {
-        group: 'group',
-        dashboard: 'dashboard',
-        list: 'list',
-        form: 'form'
     }
 };
 
