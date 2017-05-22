@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IMyOptions } from 'mydatepicker';
+import { IMyDateModel, IMyOptions } from 'mydatepicker';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'date-picker',
@@ -9,40 +10,59 @@ import { IMyOptions } from 'mydatepicker';
 })
 
 export class DatePicker implements OnInit{
+
+    static EMPTY_DATE_STRING: string = '';
+    static EMPTY_DATE_OBJ: any = {year: 0, month: 0, day: 0};
+    static DEFAULT_DATE_FORMAT: string = 'dd/mm/yyyy';
+
     @Input() form: FormGroup;
     @Input() field: any = {};
 
-    options: IMyOptions = {};
+    options: IMyOptions = {
+        dateFormat: DatePicker.DEFAULT_DATE_FORMAT
+    };
+    selectedDate: any = DatePicker.EMPTY_DATE_STRING;
 
     constructor() {}
 
     ngOnInit() {
-        this.options.dateFormat = this.field.dateFormat;
+        this.setCustomOptions();
         if (this.field.value) {
             this.setDate(this.field.value);
         }
     }
 
-    get isValid() {
-        return this.form.controls[this.field.key].valid;
+    setCustomOptions(): void {
+        if (this.field.options.dateFormat) {
+            this.options.dateFormat = this.field.options.dateFormat;
+        }
+    }
+
+    onDateChanged(event: IMyDateModel): void {
+        this.setDate(event.date);
     }
 
     setDate(value: any): void {
-        let date = new Date(value);
-        let jsonValue = {};
-        jsonValue[this.field.key] = {
-            date: {
-                year: date.getFullYear(),
-                month: date.getMonth() + 1,
-                day: date.getDate()
-            }
-        };
-        this.form.patchValue(jsonValue);
-    }
+        let dateObj: any = {};
+        if (value.hasOwnProperty('year') && value.hasOwnProperty('month') && value.hasOwnProperty('day')) {
+            dateObj.year = value.year;
+            dateObj.month = value.month;
+            dateObj.day = value.day;
+        } else {
+            let date = new Date(value);
+            dateObj.year = date.getFullYear();
+            dateObj.month = date.getMonth() + 1;
+            dateObj.day = date.getDate();
+        }
 
-    clearDate(): void {
+        if (_.isEqual(dateObj, DatePicker.EMPTY_DATE_OBJ)) {
+            dateObj = DatePicker.EMPTY_DATE_STRING;
+        }
+
+        this.selectedDate = dateObj;
+
         let jsonValue = {};
-        jsonValue[this.field.key] = null;
+        jsonValue[this.field.key] = dateObj;
         this.form.patchValue(jsonValue);
     }
 }

@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 import { SelectModule } from 'ng2-select';
 import { MyDatePickerModule } from 'mydatepicker';
-import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { TinymceModule } from 'angular2-tinymce';
 import { AgmCoreModule } from '@agm/core';
 import { NgUploaderModule } from 'ngx-uploader';
@@ -47,7 +46,6 @@ import {
         NgaModule,
         SelectModule,
         MyDatePickerModule,
-        MyDateRangePickerModule,
         TinymceModule.withConfig({}),
         AgmCoreModule.forRoot({
             apiKey: '' // TODO: set google maps apiKey (but works also without it)

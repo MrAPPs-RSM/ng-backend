@@ -50,17 +50,17 @@
                 [field]="field">
         </ui-select>
 
-        <date-picker
-                *ngSwitchCase="formConfig.types.DATE"
-                [form]="form"
-                [field]="field">
-        </date-picker>
-
         <date-range-picker
                 *ngSwitchCase="formConfig.types.DATE_RANGE"
                 [form]="form"
                 [field]="field">
         </date-range-picker>
+
+        <date-picker
+                *ngSwitchCase="formConfig.types.DATE"
+                [form]="form"
+                [field]="field">
+        </date-picker>
 
         <lat-lng
                 *ngSwitchCase="formConfig.types.LAT_LNG"

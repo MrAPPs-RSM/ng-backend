@@ -538,9 +538,10 @@ Example
 
 **Options**
 
-| Name         | Type    | Required | Description                                                                         |                                      
-|--------------|---------|----------|-------------------------------------------------------------------------------------|
-| dateFormat   | string  | yes      | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...)   |
+| Name                 | Type   | Required | Description                                                                       |
+|----------------------|--------|----------|-----------------------------------------------------------------------------------|
+| options              | Object | no       | Date picker options                                                               |
+| options.dateFormat   | string | no       | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...) |                      |
 
 *Note*: if you set a default value with the **value** option, it must respect the *mm/dd/yyyy* standard format
 
@@ -548,15 +549,16 @@ Example:
 
 ```json
 {
-	"type": "date",
-	"key": "date",
-	"dateFormat": "dd/mm/yyyy",
-	"value": "12/24/2018",
-	"label": "Select a date",
-	"class": "col-sm-12",
-	"validators": {
-		"required": true
-	}
+  "type": "date",
+  "key": "date",
+  "options": {
+    "dateFormat": "dd/mm/yyyy"
+  },
+  "value": "12/24/2018",
+  "label": "Select a date",
+  "validators": {
+    "required": true
+  }
 }
 ```
 
@@ -566,37 +568,38 @@ Example:
 
 **Options**
 
-| Name         | Type    | Required | Description                                                                         |                                      
-|--------------|---------|----------|-------------------------------------------------------------------------------------|
-| dateFormat   | string  | yes      | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...)   |
+| Name               | Type   | Required | Description                                                                       |
+|--------------------|--------|----------|-----------------------------------------------------------------------------------|
+| options            | Object | no       | Date picker options                                                               |
+| options.dateFormat | string | no       | Defines the dateFormat that the picker must have ('dd-mm-yyyy', 'dd/mm/yyyy',...) |
+| startDate, endDate | Object | yes      | Object that defines startDate/endDate picker config (same options of any field)                             |
 
 *Note*: if you set a default value with the **value** option, it must be an object respecting the following format (and values must respect the *mm/dd/yyyy* standard format)
-
-
-```json
-{
-	"value": {
-		"startDate": "06/25/2016",
-		"endDate": "04/08/2017"
-	}
-}
-```
 
 Example: 
 
 ```json
 {
-	"type": "date_range",
-	"key": "date_range",
-	"value": {
-    	"startDate": "12/07/2012",
-    	"endDate": "12/07/2017"
-    },
-	"label": "Select a date range",
-	"class": "col-sm-12",
-	"validators": {
-		"required": true
-	}
+  "description": "desc",
+  "label": "Date range select",
+  "errorMessage": "Date range invalid",
+  "validators": {
+    "required": true
+  },
+  "endDate": {
+    "label": "Select end date",
+    "value": "12/08/2012",
+    "key": "endDate"
+  },
+  "startDate": {
+    "label": "Select start date",
+    "value": "12/07/2012",
+    "key": "startDate"
+  },
+  "options": {
+    "dateFormat": "dd\/mm\/yyyy"
+  },
+  "type": "date_range"
 }
 ```
 
