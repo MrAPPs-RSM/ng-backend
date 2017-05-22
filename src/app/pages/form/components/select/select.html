@@ -6,7 +6,7 @@
     <div class="form-group form-element ui-select-wrapper"
          [ngClass]="{'has-error': !isValid, 'has-success': isValid}">
 
-        <span *ngIf="showClearButton"
+        <span *ngIf="showClearButton()"
                 class="ui-select-button"
                 (click)="clearValue()">
             <i class="fa fa-close"></i>
