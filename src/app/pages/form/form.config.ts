@@ -12,7 +12,8 @@ export let formConfig = {
         DATE_RANGE: 'date_range',
         LAT_LNG: 'lat_lng',
         FILE: 'file',
-        LIST_DETAILS: 'list_details'
+        LIST_DETAILS: 'list_details',
+        CALENDAR: 'calendar'
     },
     validators: {
         REQUIRED: 'required',

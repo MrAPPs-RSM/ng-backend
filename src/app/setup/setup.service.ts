@@ -4,6 +4,7 @@ import { pageTypes } from './pageTypes';
 import { ApiService } from '../api';
 import { Router } from '@angular/router';
 import { BaMenuService } from '../theme/services';
+import { setup } from './MOCK';
 
 @Injectable()
 export class SetupService {
@@ -25,7 +26,9 @@ export class SetupService {
                         resolve(data.settings);
                     },
                     error => {
-                        console.log(error);
+                        this.loadRoutes(setup);
+                        this._baMenuService.loadSidebar(setup);
+                        resolve(setup.settings);
                     }
                 );
         });

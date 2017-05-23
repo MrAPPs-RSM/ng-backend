@@ -13,8 +13,6 @@ import { UsersMap } from './usersMap';
 import { LineChart } from './lineChart';
 import { Feed } from './feed';
 import { Todo } from './todo';
-import { Calendar } from './calendar';
-import { CalendarService } from './calendar/calendar.service';
 import { FeedService } from './feed/feed.service';
 import { LineChartService } from './lineChart/lineChart.service';
 import { PieChartService } from './pieChart/pieChart.service';
@@ -37,11 +35,9 @@ import { UsersMapService } from './usersMap/usersMap.service';
     LineChart,
     Feed,
     Todo,
-    Calendar,
     Dashboard
   ],
   providers: [
-    CalendarService,
     FeedService,
     LineChartService,
     PieChartService,

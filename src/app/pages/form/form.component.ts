@@ -66,7 +66,6 @@ export class Form implements OnInit {
     }
 
     onSubmit() {
-        // TODO refactor this
         if (this.id !== null) {
             this._apiService.post(
                 this.params.api.name,
