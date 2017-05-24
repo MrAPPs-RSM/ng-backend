@@ -11,8 +11,11 @@
 }
 
 .cal-cell-top  {
-  input[type="checkbox"] {
-    margin: 5px 0 0 5px;
+  label {
+    margin: 8px 0 0 8px;
+  }
+  .cal-day-number {
+    margin: 8px 8px 0 0;
   }
 }
 
@@ -37,5 +40,12 @@
 
   &:hover {
     background-color: #878787;
+  }
+}
+
+.clear-all-events {
+  .btn {
+    padding: 1px;
+    font-size: 12px;
   }
 }

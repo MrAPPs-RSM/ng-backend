@@ -12,6 +12,7 @@
                         mwlCalendarPreviousView
                         [view]="view"
                         [(viewDate)]="viewDate">
+                    <i class="fa fa-caret-left"></i>
                     {{ field.options?.labels?.previous ? field.options.labels.previous : 'Previous'}}
                 </div>
                 <div
@@ -26,6 +27,7 @@
                         [view]="view"
                         [(viewDate)]="viewDate">
                     {{ field.options?.labels?.next ? field.options.labels.next : 'Next'}}
+                    <i class="fa fa-caret-right"></i>
                 </div>
             </div>
         </div>
@@ -39,10 +41,10 @@
             <ng-select
                     *ngIf="showSelect"
                     #ngSelect
-                    [multiple]="false"
+                    [multiple]="field.options.multipleSelect"
                     [items]="selectValues"
-                    (data)="selectedValue = $event"
-                    placeholder="{{ field.options.selectPlaceholder }}">
+                    (data)="selectedValues = $event"
+                    placeholder="{{ field.options?.selectPlaceholder ? field.options?.selectPlaceholder : 'Select event' }}">
             </ng-select>
 
             <button
@@ -53,9 +55,18 @@
                 {{ field.options?.labels?.add ? field.options.labels.add : 'Add event'}}
             </button>
 
+            <button
+                    *ngIf="!showSelect"
+                    class="btn btn-sm btn-danger"
+                    (click)="clearAllEventsByDay()"
+                    [disabled]="selectedDays.length === 0 || events.length === 0">
+                <i class="fa fa-ban"></i>
+                {{ field.options?.labels?.clear ? field.options.labels.clear : 'Clear day events'}}
+            </button>
+
             <div *ngIf="showSelect">
                 <button
-                        [disabled]="!selectedValue || selectedDays.length === 0"
+                        [disabled]="!selectedValues || selectedValues.length === 0 || selectedDays.length === 0"
                         class="btn btn-sm btn-info"
                         (click)="confirmCreation()">
                     <i class="fa fa-check"></i>
@@ -75,7 +86,12 @@
     <!-- start custom cell template -->
     <ng-template #customCellTemplate let-day="day" let-locale="locale">
         <div class="cal-cell-top">
-            <input type="checkbox" (change)="onCheckBoxClick($event.target.checked, day)">
+
+            <label class="checkbox-inline custom-checkbox nowrap">
+                <input type="checkbox" (change)="onCheckBoxClick($event.target.checked, day)">
+                <span></span>
+            </label>
+
             <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
             <!--
             <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
@@ -98,7 +114,6 @@
                 ...
             </div>
         </div>
-
     </ng-template>
     <!-- end custom cell template -->
 
