@@ -48,6 +48,10 @@ export class ListDetails implements OnInit {
 
     ngOnInit() {
         this.loadTable();
+        this.loadSelectValues();
+    }
+
+    loadSelectValues(): void {
         if (this.field.options.data instanceof Array) {
             this.selectValues = this.field.options.data;
         } else {

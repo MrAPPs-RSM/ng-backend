@@ -1,0 +1,130 @@
+<div class="col-sm-12">
+
+    <!-- start header -->
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        </div>
+        <div class="col-sm-8">
+            <div class="btn-group pull-right">
+                <div
+                        class="btn btn-sm btn-secondary"
+                        mwlCalendarPreviousView
+                        [view]="view"
+                        [(viewDate)]="viewDate">
+                    <i class="fa fa-caret-left"></i>
+                    {{ field.options?.labels?.previous ? field.options.labels.previous : 'Previous'}}
+                </div>
+                <div
+                        class="btn btn-sm btn-primary"
+                        mwlCalendarToday
+                        [(viewDate)]="viewDate">
+                    {{ field.options?.labels?.today ? field.options.labels.today : 'Today'}}
+                </div>
+                <div
+                        class="btn btn-sm btn-secondary"
+                        mwlCalendarNextView
+                        [view]="view"
+                        [(viewDate)]="viewDate">
+                    {{ field.options?.labels?.next ? field.options.labels.next : 'Next'}}
+                    <i class="fa fa-caret-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end header -->
+    <hr>
+
+    <!-- start event actions -->
+    <div class="row">
+        <div class="col-sm-12 event-actions">
+            <ng-select
+                    *ngIf="showSelect"
+                    #ngSelect
+                    [multiple]="field.options.multipleSelect"
+                    [items]="selectValues"
+                    (data)="selectedValues = $event"
+                    placeholder="{{ field.options?.selectPlaceholder ? field.options?.selectPlaceholder : 'Select event' }}">
+            </ng-select>
+
+            <button
+                    *ngIf="!showSelect"
+                    class="btn btn-sm btn-primary"
+                    (click)="showSelect = true">
+                <i class="fa fa-plus-circle"></i>
+                {{ field.options?.labels?.add ? field.options.labels.add : 'Add event'}}
+            </button>
+
+            <button
+                    *ngIf="!showSelect"
+                    class="btn btn-sm btn-danger"
+                    (click)="clearAllEventsByDay()"
+                    [disabled]="selectedDays.length === 0 || events.length === 0">
+                <i class="fa fa-ban"></i>
+                {{ field.options?.labels?.clear ? field.options.labels.clear : 'Clear day events'}}
+            </button>
+
+            <div *ngIf="showSelect">
+                <button
+                        [disabled]="!selectedValues || selectedValues.length === 0 || selectedDays.length === 0"
+                        class="btn btn-sm btn-info"
+                        (click)="confirmCreation()">
+                    <i class="fa fa-check"></i>
+                    {{ field.options?.labels?.confirm ? field.options.labels.confirm : 'Confirm'}}
+                </button>
+                <button
+                        class="btn btn-sm btn-warning"
+                        (click)="dismissCreation()">
+                    <i class="fa fa-ban"></i>
+                    {{ field.options?.labels?.dismiss ? field.options.labels.dismiss : 'Dismiss'}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- end event actions -->
+
+    <!-- start custom cell template -->
+    <ng-template #customCellTemplate let-day="day" let-locale="locale">
+        <div class="cal-cell-top">
+
+            <label class="checkbox-inline custom-checkbox nowrap">
+                <input type="checkbox" (change)="onCheckBoxClick($event.target.checked, day)">
+                <span></span>
+            </label>
+
+            <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+            <!--
+            <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+            -->
+        </div>
+        <div class="cal-events" *ngIf="day.events.length > 0">
+            <div class="hidden-sm-down" *ngFor="let event of day.events; let i = index" [attr.data-index]="i">
+                <div
+                        class="cal-event"
+                        *ngIf="i < MAX_EVENTS_SHOWN"
+                        [style.backgroundColor]="event.color.primary"
+                        [ngClass]="event?.cssClass"
+                        [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
+                        [tooltipPlacement]="'top'"
+                        (mwlClick)="onEventClick($event, event)">
+                    <i [class]="event.icon" [style.color]="event.color.secondary"></i>
+                </div>
+            </div>
+            <div (click)="onDayClicked(day)" class="cal-event edit-events">
+                ...
+            </div>
+        </div>
+    </ng-template>
+    <!-- end custom cell template -->
+
+    <!-- start month view -->
+    <mwl-calendar-month-view
+            [weekStartsOn]="1"
+            [viewDate]="viewDate"
+            [events]="events"
+            [cellTemplate]="customCellTemplate"
+            [activeDayIsOpen]="activeDayIsOpen"
+            [refresh]="refresh"
+    ></mwl-calendar-month-view>
+    <!-- end month view -->
+</div>

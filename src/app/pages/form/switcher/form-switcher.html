@@ -74,11 +74,17 @@
                 [field]="field">
         </file-uploader>
 
-       <list-details
+        <list-details
                 *ngSwitchCase="formConfig.types.LIST_DETAILS"
                 [form]="form"
                 [field]="field">
         </list-details>
+
+        <calendar
+                *ngSwitchCase="formConfig.types.CALENDAR"
+                [form]="form"
+                [field]="field">
+        </calendar>
 
     </div>
 

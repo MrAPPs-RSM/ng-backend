@@ -1,0 +1,51 @@
+@import '../../../../theme/sass/conf/conf';
+
+.btn-primary {
+  background-color: $primary !important;
+}
+
+.event-actions {
+  .btn-sm {
+    margin: 5px;
+  }
+}
+
+.cal-cell-top  {
+  label {
+    margin: 8px 0 0 8px;
+  }
+  .cal-day-number {
+    margin: 8px 8px 0 0;
+  }
+}
+
+.cal-event {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  padding-top: 2px;
+  i {
+    font-size: 14px;
+  }
+}
+
+.edit-events {
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  background-color: #b7b7b7;
+
+  &:hover {
+    background-color: #878787;
+  }
+}
+
+.clear-all-events {
+  .btn {
+    padding: 1px;
+    font-size: 12px;
+  }
+}
