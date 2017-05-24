@@ -67,6 +67,7 @@ export class SetupService {
             } else {
                 for (let i = 0; i < standardPages.length; i++) {
                     if (standardPages[i].path === pageTypes[item.type]) {
+                        // let path = item.path === 'edit' ? item.path + '/:id' : item.path;
                         let page = {
                             path: item.path,
                             loadChildren: standardPages[i].loadChildren,

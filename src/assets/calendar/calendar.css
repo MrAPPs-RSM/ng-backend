@@ -278,3 +278,8 @@
 .cal-day-view .cal-all-day-event {
     padding: 8px;
     border: solid 1px; }
+
+.cal-day-selected,
+.cal-day-selected:hover{
+    background-color: #d1efee !important;
+}

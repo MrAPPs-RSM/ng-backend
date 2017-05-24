@@ -55,11 +55,11 @@ export class List implements OnInit {
     }
 
     onCreate(): void {
-        this._router.navigate(['pages/users/create']);
+        this._router.navigate(['pages/' + this.params.api.name + '/' + this.params.api.add]);
     }
 
     onEdit(event: any): void {
-        this._router.navigate(['pages/users/edit/' + event.data.id]);
+        this._router.navigate(['pages/' + this.params.api.name + '/' + this.params.api.edit + '/' + event.data.id]);
     }
 
     onDelete(event: any): void {

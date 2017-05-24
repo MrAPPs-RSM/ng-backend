@@ -5,6 +5,7 @@ import { setHours, setMinutes, isSameDay } from 'date-fns';
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../../api';
 import { isNullOrUndefined } from 'util';
+import { Utils } from '../../../../utils';
 
 @Component({
     selector: 'calendar',
@@ -100,7 +101,7 @@ export class Calendar implements OnInit {
         this.eventClicked.emit({event: calendarEvent});
     }
 
-    onDayClicked({date, events}: { date: Date, events: CalendarEvent[] }): void {
+    onDayEventsClicked({date, events}: { date: Date, events: CalendarEvent[] }): void {
         if (
             (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
             events.length === 0
@@ -112,10 +113,12 @@ export class Calendar implements OnInit {
         }
     }
 
-    onCheckBoxClick(checked: boolean, day: any): void {
-        if (checked) {
+    onDayClick(day: any): void {
+        if (!Utils.containsObject(day, this.selectedDays)) {
+            day.cssClass = 'cal-day-selected';
             this.selectedDays.push(day);
         } else {
+            delete day.cssClass;
             this.selectedDays = this.selectedDays.filter(selDay => selDay !== day);
         }
     }
@@ -186,7 +189,6 @@ export class Calendar implements OnInit {
         console.log(indexes);
         if (indexes.length > 0) {
             indexes.forEach((index) => {
-                console.log('removing ' + this.events[index]);
                 delete this.events[index];
             });
             this.refresh.next();
