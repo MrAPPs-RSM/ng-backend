@@ -2,11 +2,11 @@ export let config = {
     env: 'dev',
     api: {
         dev: {
-            baseUrl: 'http://beta.json-generator.com/api/json/get/',
+            baseUrl: 'http://0.0.0.0:5555/api/',
             api: {
-                login: 'Vkd4XNrk7',
-                setup: 'E1utOUgTG',
-                users: '4yHf-YBTz',
+                login: 'persons/login',
+                setup: 'setup',
+                zone: 'zone'
             }
         },
         prod: {
@@ -20,7 +20,7 @@ export let config = {
     },
     auth: {
         config: {
-            title: 'Ng2Backend'
+            title: 'SM-Differenzia'
         },
         fields: [
             {

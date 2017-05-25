@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -12,7 +12,10 @@ import { isNullOrUndefined } from 'util';
 export class ApiService {
 
     config: any = config.env === 'dev' ? config.api.dev : config.api.prod;
-    headers: Headers = new Headers({ 'Content-Type': 'application/json' });
+    options: any = {
+        headers: null,
+        search: null
+    };
 
     static extractData(res: Response): Object {
         return res.json() || {};
@@ -21,19 +24,21 @@ export class ApiService {
     static handleError(error: Response): Observable<any> {
         // In a real world app, you might use a remote logging infrastructure
         let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-            errMsg = error['message'] ? error['message'] : String(error);
-        }
-        console.error(errMsg);
-        errMsg = 'Http error, try again later';
+        const body = error.json() || '';
+        const err = body.error || JSON.stringify(body);
+        errMsg = err['message'] ? err['message'] : String(err);
         return Observable.throw(errMsg);
     }
 
     constructor(protected _http: Http) {
+        this.options.headers = new Headers();
+        this.options.search = new URLSearchParams();
+
+        this.options.headers.append('Content-Type', 'application/json');
+
+        if (localStorage.getItem('access_token') !== null) {
+            this.options.search.set('access_token', localStorage.getItem('access_token'));
+        }
     }
 
     /**
@@ -41,9 +46,9 @@ export class ApiService {
      * @param headers
      */
     public setHeaders(headers: any[]): void {
-        this.headers = new Headers();
+        this.options.headers = new Headers();
         headers.forEach(header => {
-            this.headers.append(
+            this.options.headers.append(
                 header.name,
                 header.value
             );
@@ -56,7 +61,7 @@ export class ApiService {
      */
     public addHeaders(headers: any[]): void {
         headers.forEach(header => {
-            this.headers.append(
+            this.options.headers.append(
                 header.name,
                 header.value
             );
@@ -86,7 +91,7 @@ export class ApiService {
         let headers = new Headers;
         headers.append('Content-Type', 'multipart/form-data');
         headers.append('Accept', 'application/json');
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({headers: headers});
         return this._http.post(apiEndpoint, formData, options)
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
@@ -103,7 +108,7 @@ export class ApiService {
         return this._http
             .get(
                 composeUrl === true ? this.composeUrl(apiName, options) : apiName,
-                this.headers
+                this.options
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
@@ -122,7 +127,7 @@ export class ApiService {
             .post(
                 composeUrl === true ? this.composeUrl(apiName, options) : apiName,
                 body,
-                this.headers
+                this.options
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
@@ -141,7 +146,7 @@ export class ApiService {
             .put(
                 composeUrl === true ? this.composeUrl(apiName, options) : apiName,
                 body,
-                this.headers
+                this.options
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
@@ -158,7 +163,7 @@ export class ApiService {
         return this._http
             .delete(
                 composeUrl === true ? this.composeUrl(apiName, options) : apiName,
-                this.headers
+                this.options
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);

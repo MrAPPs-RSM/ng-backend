@@ -4,7 +4,7 @@ import { pageTypes } from './pageTypes';
 import { ApiService } from '../api';
 import { Router } from '@angular/router';
 import { BaMenuService } from '../theme/services';
-import { setup } from './MOCK';
+import { AuthService } from '../auth';
 
 @Injectable()
 export class SetupService {
@@ -12,6 +12,7 @@ export class SetupService {
     private apiName: string = 'setup';
 
     constructor(private _router: Router,
+                private _authService: AuthService,
                 private _apiService: ApiService,
                 private _baMenuService: BaMenuService) {
     }
@@ -26,9 +27,8 @@ export class SetupService {
                         resolve(data.settings);
                     },
                     error => {
-                        this.loadRoutes(setup);
-                        this._baMenuService.loadSidebar(setup);
-                        resolve(setup.settings);
+                        // Might never happen, in case, logout the user
+                        this._authService.logout();
                     }
                 );
         });
@@ -36,6 +36,8 @@ export class SetupService {
 
     public loadRoutes(data: BackendData) {
         console.log('[SETUP SERVICE]: Loading routes...');
+
+        // TODO handle more complicated paths
 
         let routerConfig = this._router.config;
 
@@ -52,9 +54,8 @@ export class SetupService {
                     item.children.map(function (child) {
                         for (let j = 0; j < standardPages.length; j++) {
                             if (standardPages[j].path === pageTypes[child.type]) {
-                                let path = child.path === 'edit' ? child.path + '/:id' : child.path;
                                 let childPage = {
-                                    path: item.path + '/' + path,
+                                    path: item.path + '/' + child.path,
                                     loadChildren: standardPages[j].loadChildren,
                                     data: child.params
                                 };
@@ -67,7 +68,6 @@ export class SetupService {
             } else {
                 for (let i = 0; i < standardPages.length; i++) {
                     if (standardPages[i].path === pageTypes[item.type]) {
-                        // let path = item.path === 'edit' ? item.path + '/:id' : item.path;
                         let page = {
                             path: item.path,
                             loadChildren: standardPages[i].loadChildren,

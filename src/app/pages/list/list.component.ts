@@ -4,6 +4,7 @@ import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, ServerDataSource } from '../../api';
 import { ToastHandler } from '../../theme/services';
+import { TokenManager } from '../../auth';
 
 @Component({
     selector: 'list',
@@ -37,29 +38,43 @@ export class List implements OnInit {
     constructor(protected _router: Router,
                 protected _route: ActivatedRoute,
                 protected _apiService: ApiService,
+                protected _tokenManager: TokenManager,
                 protected _toastManager: ToastHandler
     ) {}
 
     ngOnInit() {
         this.params = this._route.snapshot.data;
-        this.settings.actions = this.params.table.actions;
+        this.loadActions();
         this.settings.columns = this.params.table.columns;
         this.loadData();
+    }
+
+    loadActions(): void {
+        let actions = {};
+        Object.keys(this.params.table.actions).forEach((key) => {
+            if (key === 'add' || key === 'edit' || key === 'delete') {
+                actions[key] = this.params.table.actions[key].enable;
+            } else {
+                actions[key] = this.params.table.actions[key];
+            }
+        });
+        this.settings.actions = actions;
     }
 
     loadData(): void {
         this.source = new ServerDataSource(
             this._apiService.getHttp(),
-            this._apiService.getComposedUrl(this.params.api.name)
+            this._apiService.getComposedUrl(this.params.api.name),
+            this._tokenManager
         );
     }
 
     onCreate(): void {
-        this._router.navigate(['pages/' + this.params.api.name + '/' + this.params.api.add]);
+        this._router.navigate(['pages/' + this.params.table.actions.add.path]);
     }
 
     onEdit(event: any): void {
-        this._router.navigate(['pages/' + this.params.api.name + '/' + this.params.api.edit + '/' + event.data.id]);
+        this._router.navigate(['pages/' + this.params.table.actions.edit.path + '/' + event.data.id]);
     }
 
     onDelete(event: any): void {

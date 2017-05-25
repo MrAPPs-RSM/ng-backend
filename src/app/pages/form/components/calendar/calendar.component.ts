@@ -65,15 +65,13 @@ export class Calendar implements OnInit {
     }
 
     loadSelectValues(): void {
-        if (this.field.options.selectOptions instanceof Array) {
-            this.selectValues = this.field.options.selectOptions;
-            // this.transformSelectValues(this.field.options.selectOptions);
+        if (this.field.options.select.values instanceof Array) {
+            this.selectValues = this.field.options.select.values;
         } else {
-            this._apiService.get(this.field.options.selectOptions, false)
+            this._apiService.get(this.field.options.select.values, false)
                 .subscribe(
                     data => {
                         this.selectValues = data;
-                        // this.transformSelectValues(data);
                     },
                     error => {
                         console.log(error);
@@ -82,17 +80,6 @@ export class Calendar implements OnInit {
                 );
         }
     }
-
-    /* transformSelectValues(array: [{ id: any, text: string }]): void {
-        array.forEach((item) => {
-            let color = !isNullOrUndefined(this.COLORS.custom[item.id]) ?
-                this.COLORS.custom[item.id].primary : this.COLORS.default;
-            this.selectValues.push({
-                id: item.id,
-                text: '<i class="' + this.EVENT_ICON + '" style="color:' + color + '"></i>&nbsp;' + item.text
-            });
-        });
-    } */
 
     onEventClick(mouseEvent: MouseEvent, calendarEvent: CalendarEvent): void {
         if (mouseEvent.stopPropagation) {

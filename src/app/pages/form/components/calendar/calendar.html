@@ -41,10 +41,10 @@
             <ng-select
                     *ngIf="showSelect"
                     #ngSelect
-                    [multiple]="field.options.multipleSelect"
+                    [multiple]="field.options.select.multiple"
                     [items]="selectValues"
                     (data)="selectedValues = $event"
-                    placeholder="{{ field.options?.selectPlaceholder ? field.options?.selectPlaceholder : 'Select event' }}">
+                    placeholder="{{ field.options?.select?.placeholder ? field.options?.select.placeholder : 'Select event' }}">
             </ng-select>
 
             <button

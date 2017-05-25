@@ -4,6 +4,7 @@ import { RequestOptionsArgs } from '@angular/http/src/interfaces';
 import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
 import { getDeepFromObject } from 'ng2-smart-table/lib/helpers';
+import { TokenManager } from '../auth';
 
 export class ServerDataSource extends LocalDataSource {
 
@@ -23,18 +24,16 @@ export class ServerDataSource extends LocalDataSource {
 
     protected conf: any = {
         endPoint: '',
-        sortFieldKey: '_sort',
-        sortDirKey: '_order',
-        pagerPageKey: '_page',
-        pagerLimitKey: '_limit',
-        filterFieldKey: '#field#_like',
+        sortKey: 'order',
+        skipKey: 'filter[skip]',
+        limitKey: 'filter[limit]',
+        whereKey: 'where',
         totalKey: 'x-total-count',
-        dataKey: 'data',
     };
 
     protected lastRequestCount: number = 0;
 
-    constructor(protected _http: Http, endPoint: string) {
+    constructor(protected _http: Http, endPoint: string, protected _tokenManager: TokenManager) {
         super();
 
         this.conf.endPoint = endPoint;
@@ -66,15 +65,12 @@ export class ServerDataSource extends LocalDataSource {
      */
     protected extractDataFromResponse(res: any): Array<any> {
         const rawData = res.json();
-        let data = this.conf.dataKey ? getDeepFromObject(rawData, this.conf.dataKey, []) : rawData;
 
-        if (data instanceof Array) {
-            return data;
+        if (rawData instanceof Array) {
+            return rawData;
         }
 
-        throw new Error(`Data must be an array.
-     Please check that data extracted from the server response by the key
-      '${this.conf.dataKey}' exists and is array.`);
+        throw new Error(`Data must be an array.`);
     }
 
     /**
@@ -98,39 +94,42 @@ export class ServerDataSource extends LocalDataSource {
     }
 
     protected createRequestOptions(): RequestOptionsArgs {
-        let requestOptions: RequestOptionsArgs = {};
-        requestOptions.search = new URLSearchParams();
+        let requestOptions = {
+            search: new URLSearchParams()
+        };
 
-        requestOptions = this.addSortRequestOptions(requestOptions);
-        requestOptions = this.addFilterRequestOptions(requestOptions);
-        return this.addPagerRequestOptions(requestOptions);
-    }
+        /** Setting auth token */
+        requestOptions.search.set(this._tokenManager.accessTokenKey, this._tokenManager.getToken());
 
-    protected addSortRequestOptions(requestOptions: RequestOptionsArgs): RequestOptionsArgs {
-        let searchParams: URLSearchParams = <URLSearchParams> requestOptions.search;
+        let filterOptions = {};
 
+        /** SORTING */
         if (this.sortConf) {
             this.sortConf.forEach((fieldConf) => {
-                searchParams.set(this.conf.sortFieldKey, fieldConf.field);
-                searchParams.set(this.conf.sortDirKey, fieldConf.direction.toUpperCase());
+                filterOptions[this.conf.sortKey] = fieldConf.field + ' ' + fieldConf.direction.toUpperCase();
             });
         }
 
-        return requestOptions;
-    }
-
-    protected addFilterRequestOptions(requestOptions: RequestOptionsArgs): RequestOptionsArgs {
-        let searchParams: URLSearchParams = <URLSearchParams> requestOptions.search;
-
-        if (this.filterConf.filters) {
+        /** FILTERS */
+        if (this.filterConf.filters.length) {
+            filterOptions[this.conf.whereKey] = {
+                and: []
+            };
             this.filterConf.filters.forEach((fieldConf: any) => {
                 if (fieldConf['search']) {
-                    searchParams.set(
-                        this.conf.filterFieldKey.replace('#field#', fieldConf['field']), fieldConf['search']);
+
+                    let condition = {};
+                    condition[fieldConf.field] = {
+                        like: '%' + fieldConf.search + '%'
+                    };
+
+                    filterOptions[this.conf.whereKey].and.push(condition);
                 }
             });
         }
+        // TODO handle other filter types
 
+        requestOptions.search.set('filter', JSON.stringify(filterOptions));
         return requestOptions;
     }
 
