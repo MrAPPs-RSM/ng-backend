@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, URLSearchParams, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { config } from '../app.config';
-import { isNullOrUndefined } from 'util';
 
 @Injectable()
 export class ApiService {
 
     config: any = config.env === 'dev' ? config.api.dev : config.api.prod;
-    options: any = {
-        headers: null,
-        search: null
-    };
+    headers: Headers;
 
     static extractData(res: Response): Object {
         return res.json() || {};
@@ -25,20 +21,36 @@ export class ApiService {
         // In a real world app, you might use a remote logging infrastructure
         let errMsg: string;
         const body = error.json() || '';
-        const err = body.error || JSON.stringify(body);
+        const err = body.error || {message: 'Server error, try again later'};
         errMsg = err['message'] ? err['message'] : String(err);
         return Observable.throw(errMsg);
     }
 
-    constructor(protected _http: Http) {
-        this.options.headers = new Headers();
-        this.options.search = new URLSearchParams();
-
-        this.options.headers.append('Content-Type', 'application/json');
-
+    /**
+     * Add authorization
+     */
+    static setAuth(searchParams: URLSearchParams | any | null): URLSearchParams {
         if (localStorage.getItem('access_token') !== null) {
-            this.options.search.set('access_token', localStorage.getItem('access_token'));
+            if (!searchParams) {
+                searchParams = new URLSearchParams();
+            }
+            searchParams.set('access_token', localStorage.getItem('access_token'));
         }
+        return searchParams;
+    }
+
+    constructor(protected _http: Http) {
+        this.headers = new Headers();
+        this.headers.append('Content-Type', 'application/json');
+    }
+
+    /**
+     * Return composed url based on ENV
+     * @param endpoint
+     * @returns {string}
+     */
+    protected composeUrl(endpoint: string): string {
+        return this.config.baseUrl + endpoint;
     }
 
     /**
@@ -46,9 +58,9 @@ export class ApiService {
      * @param headers
      */
     public setHeaders(headers: any[]): void {
-        this.options.headers = new Headers();
+        this.headers = new Headers();
         headers.forEach(header => {
-            this.options.headers.append(
+            this.headers.append(
                 header.name,
                 header.value
             );
@@ -61,7 +73,7 @@ export class ApiService {
      */
     public addHeaders(headers: any[]): void {
         headers.forEach(header => {
-            this.options.headers.append(
+            this.headers.append(
                 header.name,
                 header.value
             );
@@ -69,46 +81,45 @@ export class ApiService {
     }
 
     /**
-     * Return composed url based on ENV
-     * @param apiName
-     * @param options
-     * @returns {string}
+     * Creates standard request options
      */
-    protected composeUrl(apiName: string, options?: string): string {
-        let url: string = this.config.baseUrl + this.config.api[apiName];
-        return !isNullOrUndefined(options) && options !== '' ? url + options : url;
+    protected setOptions(requestOptions: RequestOptionsArgs): any {
+        return {
+            search: ApiService.setAuth(requestOptions && requestOptions.search ? requestOptions.search : null),
+            headers: this.headers
+        };
     }
 
     /**
      * POST file request
-     * @param apiEndpoint
+     * @param endpoint
      * @param file
      * @returns {Observable<R>}
      */
-    public postFile(apiEndpoint: string, file: any): Observable<any> {
+    public postFile(endpoint: string, file: any): Observable<any> {
         let formData: FormData = new FormData();
         formData.append('uploadFile', file, file.name);
         let headers = new Headers;
         headers.append('Content-Type', 'multipart/form-data');
         headers.append('Accept', 'application/json');
         let options = new RequestOptions({headers: headers});
-        return this._http.post(apiEndpoint, formData, options)
+        return this._http.post(this.composeUrl(endpoint), formData, options)
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
     }
 
     /**
      * GET request
-     * @param apiName
-     * @param composeUrl
-     * @param options
+     * @param endpoint
+     * @param requestOptions
      * @returns {Observable<R>}
      */
-    public get(apiName: string, composeUrl: boolean, options?: string): Observable<any> {
+    public get(endpoint: string,
+               requestOptions?: RequestOptionsArgs): Observable<any> {
         return this._http
             .get(
-                composeUrl === true ? this.composeUrl(apiName, options) : apiName,
-                this.options
+                this.composeUrl(endpoint),
+                this.setOptions(requestOptions)
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
@@ -116,18 +127,19 @@ export class ApiService {
 
     /**
      * POST request
-     * @param apiName
+     * @param endpoint
      * @param body
-     * @param composeUrl
-     * @param options
+     * @param requestOptions
      * @returns {Observable<R>}
      */
-    public post(apiName: string, body: any, composeUrl: boolean, options?: string): Observable<any> {
+    public post(endpoint: string,
+                body: any,
+                requestOptions?: RequestOptionsArgs): Observable<any> {
         return this._http
             .post(
-                composeUrl === true ? this.composeUrl(apiName, options) : apiName,
+                this.composeUrl(endpoint),
                 body,
-                this.options
+                this.setOptions(requestOptions)
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
@@ -135,18 +147,19 @@ export class ApiService {
 
     /**
      * PUT request
-     * @param apiName
+     * @param endpoint
      * @param body
-     * @param composeUrl
-     * @param options
+     * @param requestOptions
      * @returns {Observable<R>}
      */
-    public put(apiName: string, body: any, composeUrl: boolean, options?: string): Observable<any> {
+    public put(endpoint: string,
+               body: any,
+               requestOptions?: RequestOptionsArgs): Observable<any> {
         return this._http
             .put(
-                composeUrl === true ? this.composeUrl(apiName, options) : apiName,
+                this.composeUrl(endpoint),
                 body,
-                this.options
+                this.setOptions(requestOptions)
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
@@ -154,26 +167,18 @@ export class ApiService {
 
     /**
      * DELETE request
-     * @param apiName
-     * @param composeUrl
-     * @param options
+     * @param endpoint
+     * @param requestOptions
      * @returns {Observable<R>}
      */
-    public delete(apiName: string, composeUrl: boolean, options?: string): Observable<any> {
+    public delete(endpoint: string,
+                  requestOptions?: RequestOptionsArgs): Observable<any> {
         return this._http
             .delete(
-                composeUrl === true ? this.composeUrl(apiName, options) : apiName,
-                this.options
+                this.composeUrl(endpoint),
+                this.setOptions(requestOptions)
             )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
-    }
-
-    public getHttp(): Http {
-        return this._http;
-    }
-
-    public getComposedUrl(apiName: string): string {
-        return this.composeUrl(apiName);
     }
 }

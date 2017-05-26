@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService, ServerDataSource } from '../../api';
+import { ApiService } from '../../api';
 import { ToastHandler } from '../../theme/services';
-import { TokenManager } from '../../auth';
+import { ServerDataSource } from './data-source';
+import { TitleChecker } from '../services';
 
 @Component({
     selector: 'list',
@@ -36,14 +37,15 @@ export class List implements OnInit {
     params: any = {}; // Setup params
 
     constructor(protected _router: Router,
+                protected _titleChecker: TitleChecker,
                 protected _route: ActivatedRoute,
                 protected _apiService: ApiService,
-                protected _tokenManager: TokenManager,
                 protected _toastManager: ToastHandler
     ) {}
 
     ngOnInit() {
         this.params = this._route.snapshot.data;
+        this._titleChecker.setCorrectTitle(this._route, this.params);
         this.loadActions();
         this.settings.columns = this.params.table.columns;
         this.loadData();
@@ -63,9 +65,9 @@ export class List implements OnInit {
 
     loadData(): void {
         this.source = new ServerDataSource(
-            this._apiService.getHttp(),
-            this._apiService.getComposedUrl(this.params.api.name),
-            this._tokenManager
+            this._route,
+            this._apiService,
+            this.params.api
         );
     }
 
@@ -74,7 +76,8 @@ export class List implements OnInit {
     }
 
     onEdit(event: any): void {
-        this._router.navigate(['pages/' + this.params.table.actions.edit.path + '/' + event.data.id]);
+        this._router.navigate(
+            ['pages/' + this.params.table.actions.edit.path + '/' + event.data.id]);
     }
 
     onDelete(event: any): void {
@@ -82,15 +85,14 @@ export class List implements OnInit {
         // TODO: add a real dialog
         if (window.confirm('Are you sure you want to delete?')) {
 
-            this._apiService.delete(this.params.api.name, true, '/' + event.data.id)
+            this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
                 .subscribe(
                     res => {
                         this._toastManager.info('Item deleted successfully');
-                        event.confirm.resolve();
+                        this.source.refresh();
                     },
                     error => {
                         this._toastManager.error("Can't delete item, try again later");
-                        event.confirm.resolve();
                     }
                 );
         }

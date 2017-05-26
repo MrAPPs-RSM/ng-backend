@@ -9,7 +9,7 @@ import { AuthService } from '../auth';
 @Injectable()
 export class SetupService {
 
-    private apiName: string = 'setup';
+    private endpoint: string = 'setup';
 
     constructor(private _router: Router,
                 private _authService: AuthService,
@@ -19,7 +19,9 @@ export class SetupService {
 
     public setup(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._apiService.get(this.apiName, true)
+            this._apiService.get(
+                this.endpoint
+            )
                 .subscribe(
                     data => {
                         this.loadRoutes(data);
@@ -84,6 +86,8 @@ export class SetupService {
         standardPages.splice(1, 3);
         pagesRoute.children = standardPages;
         routerConfig[1] = pagesRoute;
+
+        console.log(routerConfig);
         this._router.resetConfig(routerConfig);
     }
 

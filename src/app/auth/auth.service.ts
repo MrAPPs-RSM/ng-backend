@@ -3,11 +3,10 @@ import { ApiService } from './../api';
 import { Router } from '@angular/router';
 import { BaThemeSpinner } from '../theme/services';
 import { TokenManager } from './token-manager.service';
+import { config } from '../app.config';
 
 @Injectable()
 export class AuthService {
-
-    private apiName: string = 'login';
 
     constructor(
         private _tokenManager: TokenManager,
@@ -24,9 +23,8 @@ export class AuthService {
         console.log('[AUTH SERVICE]: Action: login');
         return new Promise((resolve, reject) => {
             this._apiService.post(
-                this.apiName,
-                body,
-                true
+                config.auth.config.api,
+                body
             ).subscribe(
                     response => { // Status 200, OK
                         this._tokenManager.storeToken(response.id);

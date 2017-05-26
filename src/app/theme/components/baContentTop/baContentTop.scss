@@ -25,7 +25,7 @@ h1.al-title {
   float: right;
   padding-top: 11px;
   li {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: $font-normal;
     a {
       color: $primary-light;
@@ -33,6 +33,7 @@ h1.al-title {
 
     &.breadcrumb-item.active {
       color: $default-text;
+      font-weight: $font-bolder;
     }
   }
 }

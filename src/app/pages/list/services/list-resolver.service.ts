@@ -38,12 +38,11 @@ export class ListResolver implements Resolve<List> {
                         if (params.columns[key].hasOwnProperty('filter')) {
                             let filter = params.columns[key].filter;
                             if (filter !== false) {
-                                /** Rendering filters correctly  */
                                 switch (filter.type) {
-                                    case listConfig.filters.LIST: { // TODO: table doesn't load filter list
+                                    case listConfig.filters.LIST: {
                                         if (filter.config.hasOwnProperty('dataEndpoint')) {
                                             this._apiService
-                                                .get(filter.config.dataEndpoint, false)
+                                                .get(filter.config.dataEndpoint)
                                                 .subscribe(
                                                     data => {
                                                         filter.config.list = data;
@@ -59,20 +58,15 @@ export class ListResolver implements Resolve<List> {
                                         }
                                     }
                                         break;
-                                    case listConfig.filters.CHECKBOX: {
-                                        filter.config = {
-                                            true: 1,
-                                            false: 0
-                                        };
-                                    }
-                                        break;
                                     default: {
+                                        pResolve();
                                     }
                                         break;
                                 }
                             }
+                        } else {
+                            pResolve();
                         }
-                        pResolve();
                     });
                     requests.push(filterPromise);
                 }

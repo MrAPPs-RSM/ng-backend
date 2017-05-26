@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { GlobalState } from '../../global.state';
 import { ActivatedRoute } from '@angular/router';
 
 import { formConfig } from './form.config';
 import { FormLoaderService, FormHelperService } from './services';
 import { ApiService } from '../../api';
 import { ToastHandler } from '../../theme/services';
+import { TitleChecker } from '../services';
 
 @Component({
     selector: '',
@@ -25,7 +25,7 @@ export class Form implements OnInit {
     private id: number = null;
 
     constructor(protected _route: ActivatedRoute,
-                protected _state: GlobalState,
+                protected _titleChecker: TitleChecker,
                 protected _loaderService: FormLoaderService,
                 protected _apiService: ApiService,
                 protected _toastManager: ToastHandler) {
@@ -34,6 +34,7 @@ export class Form implements OnInit {
     ngOnInit() {
         this.formConfig = formConfig;
         this.params = this._route.snapshot.data;
+        this._titleChecker.setCorrectTitle(this._route, this.params);
         this.checkEditOrCreate();
         this.fields = this.params.form.fields;
         this.form = this._loaderService.createFormGroup(this.fields);
@@ -59,7 +60,6 @@ export class Form implements OnInit {
         // Check if edit or create
         if (urlParams && urlParams['id']) {
             this.id = urlParams['id'];
-            this._state.notifyDataChanged('menu.activeLink', {title: this.params.menu.title + ' ' + this.id});
 
             // TODO call API get/id here to populate form
         }
@@ -68,10 +68,8 @@ export class Form implements OnInit {
     onSubmit() {
         if (this.id !== null) {
             this._apiService.post(
-                this.params.api.name,
-                this.payLoad,
-                true,
-                '/' + this.id
+                this.params.api.endpoint + '/' + this.id,
+                this.payLoad
             ).subscribe(
                 data => {
                 },
@@ -81,9 +79,8 @@ export class Form implements OnInit {
             );
         } else {
             this._apiService.put(
-                this.params.api.name,
-                this.payLoad,
-                true
+                this.params.api.endpoint,
+                this.payLoad
             )
                 .subscribe(
                     data => {

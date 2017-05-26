@@ -2,25 +2,16 @@ export let config = {
     env: 'dev',
     api: {
         dev: {
-            baseUrl: 'http://0.0.0.0:5555/api/',
-            api: {
-                login: 'persons/login',
-                setup: 'setup',
-                zone: 'zone'
-            }
+            baseUrl: 'http://0.0.0.0:5555/api/'
         },
         prod: {
-            baseUrl: 'api/backend/',
-            api: {
-                login: 'login',
-                setup: 'setup',
-                users: 'users'
-            }
+            baseUrl: 'api/backend/'
         }
     },
     auth: {
         config: {
-            title: 'SM-Differenzia'
+            title: 'SM-Differenzia',
+            api: 'persons/login'
         },
         fields: [
             {
