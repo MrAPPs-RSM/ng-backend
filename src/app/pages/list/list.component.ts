@@ -72,6 +72,7 @@ export class List implements OnInit {
 
     loadData(): void {
         this.source = new ServerDataSource(
+            this._toastManager,
             this._route,
             this._apiService,
             this.params.api

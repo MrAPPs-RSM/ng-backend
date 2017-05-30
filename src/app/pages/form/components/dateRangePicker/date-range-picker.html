@@ -12,11 +12,14 @@
                 <br>
 
                 <!-- Input -->
-                <my-date-picker
-                        [selDate]="startDate"
-                        [options]="options"
-                        (dateChanged)="onDateChanged($event, 'start')"
-                ></my-date-picker>
+                <input
+                        ngui-datetime-picker
+                        class="form-control date-picker"
+                        id="{{field.startDate.key}}"
+                        formControlName="{{field.startDate.key}}"
+                        [date-only]="true"
+                />
+
             </div>
         </div>
 
@@ -31,11 +34,13 @@
                 <br>
 
                 <!-- Input -->
-                <my-date-picker
-                        [selDate]="endDate"
-                        (dateChanged)="onDateChanged($event, 'end')"
-                        [options]="options"
-                ></my-date-picker>
+                <input
+                        ngui-datetime-picker
+                        class="form-control date-picker"
+                        id="{{field.endDate.key}}"
+                        formControlName="{{field.endDate.key}}"
+                        [date-only]="true"
+                />
             </div>
         </div>
 

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IMyDateModel, IMyOptions } from 'mydatepicker';
+import { NguiDatetime } from '@ngui/datetime-picker';
 
 @Component({
     selector: 'date-picker',
@@ -8,43 +8,20 @@ import { IMyDateModel, IMyOptions } from 'mydatepicker';
     templateUrl: './date-picker.html'
 })
 
-export class DatePicker implements OnInit{
-
-    static DEFAULT_DATE_FORMAT: string = 'dd/mm/yyyy';
+export class DatePicker implements OnInit {
 
     @Input() form: FormGroup;
     @Input() field: any = {};
+    date: any;
 
-    options: IMyOptions = {
-        dateFormat: DatePicker.DEFAULT_DATE_FORMAT
-    };
-    selectedDate = null;
+    constructor() {
+    }
 
-    constructor() {}
+    get isValid() {
+        return this.form.controls[this.field.key].valid;
+    }
 
     ngOnInit() {
-        this.setCustomOptions();
-        if (this.field.value) {
-            this.setDate(this.field.value);
-        }
-    }
-
-    setCustomOptions(): void {
-        if (this.field.options.dateFormat) {
-            this.options.dateFormat = this.field.options.dateFormat;
-        }
-    }
-
-    onDateChanged(event: IMyDateModel): void {
-        this.setDate(event.jsdate);
-    }
-
-    setDate(value: any): void {
-        if (value instanceof Date) {
-            this.selectedDate = value;
-        } else {
-            this.selectedDate = new Date(value);
-        }
-        this.form.controls[this.field.key].setValue(this.selectedDate);
+        // TODO fix when pre-selected value in edit forms
     }
 }

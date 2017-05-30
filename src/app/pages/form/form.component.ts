@@ -7,6 +7,7 @@ import { FormLoaderService, FormHelperService } from './services';
 import { ApiService } from '../../api';
 import { ToastHandler } from '../../theme/services';
 import { TitleChecker } from '../services';
+import { NguiDatetime } from '@ngui/datetime-picker';
 
 @Component({
     selector: '',
@@ -66,7 +67,13 @@ export class Form implements OnInit {
                     data => {
                         Object.keys(data).forEach((key) => {
                             if (this.form.controls[key]) {
-                                this.form.controls[key].setValue(data[key]);
+                                if (!isNaN(data[key]) && new Date(data[key] * 1000).getTime() > 0) {
+                                    this.form.controls[key].setValue(
+                                        NguiDatetime.formatDate(new Date(data[key]))
+                                    );
+                                } else {
+                                    this.form.controls[key].setValue(data[key]);
+                                }
                             }
                         });
                     },

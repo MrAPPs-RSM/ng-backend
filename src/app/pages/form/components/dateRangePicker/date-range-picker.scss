@@ -2,19 +2,6 @@
 
 .form-element {
   min-height: 85px;
-  #startDate {
-    padding-left: 0;
-    @media screen and (max-width: 545px) {
-      padding-left: 15px;
-    }
-  }
-  #endDate {
-    padding-right: 0;
-    @media screen and (max-width: 545px) {
-      padding-right: 15px;
-    }
-  }
-
   padding: 8px;
   border: 1px solid $border-light;
   -webkit-border-radius: 5px;

@@ -4,6 +4,7 @@ import { SelectComponent } from 'ng2-select';
 import { ApiService } from '../../../../api';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Utils } from '../../../../utils';
+import { ToastHandler } from '../../../../theme/services';
 
 @Component({
     selector: 'list-details',
@@ -38,8 +39,8 @@ export class ListDetails implements OnInit {
     dataSource: LocalDataSource = new LocalDataSource();
     selectedItem: any = {};
 
-    constructor(
-        protected _apiService: ApiService) {
+    constructor(protected _apiService: ApiService,
+                protected _toastHandler: ToastHandler) {
     }
 
     get confirmDisabled(){
@@ -49,23 +50,6 @@ export class ListDetails implements OnInit {
     ngOnInit() {
         this.loadTable();
         this.loadSelectValues();
-    }
-
-    loadSelectValues(): void {
-        if (this.field.options.data instanceof Array) {
-            this.selectValues = this.field.options.data;
-        } else {
-            this._apiService.get(this.field.options.data, false)
-                .subscribe(
-                    data => {
-                        this.selectValues = data;
-                    },
-                    error => {
-                        console.log(error);
-                        // TODO
-                    }
-                );
-        }
     }
 
     /**
@@ -83,6 +67,32 @@ export class ListDetails implements OnInit {
             this.field.options.columns[key].sort = false;
         });
         this.dataSource.load([]);
+    }
+
+    loadSelectValues(): void {
+        if (this.field.options.data instanceof Array) {
+            this.transformSelectValues(this.field.options.data);
+        } else {
+            this._apiService.get(this.field.options.data)
+                .subscribe(
+                    data => {
+                        this.transformSelectValues(data);
+                    },
+                    error => {
+                        this._toastHandler.error(error);
+                    }
+                );
+        }
+    }
+
+    transformSelectValues(data: any[]): void {
+        data.forEach((item) => {
+            this.selectValues.push({
+                id: item[this.tableKeys[0]],
+                text: item[this.tableKeys[1]]
+            });
+        });
+        console.log(this.selectValues);
     }
 
     /**

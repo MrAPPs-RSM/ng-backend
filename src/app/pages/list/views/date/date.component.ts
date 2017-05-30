@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
-
+import { NguiDatetime } from '@ngui/datetime-picker';
 
 @Component({
     templateUrl: './date.html'
@@ -13,16 +13,6 @@ export class DateRender implements ViewCell {
 
     ngOnInit() {
         let date = new Date(this.value);
-        this.renderValue =
-            date.getUTCFullYear() + '/' +
-            this.addLeadingZero(date.getUTCMonth()) + '/' +
-            this.addLeadingZero(date.getUTCDate()) + ' ' +
-            this.addLeadingZero(date.getUTCHours()) + ':' +
-            this.addLeadingZero(date.getUTCMinutes()) + ':' +
-            this.addLeadingZero(date.getUTCSeconds());
-    }
-
-    addLeadingZero(value: number): string | number {
-        return value < 10 ? '0' + value : value;
+        this.renderValue = NguiDatetime.formatDate(date);
     }
 }

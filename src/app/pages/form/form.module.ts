@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 import { SelectModule } from 'ng2-select';
-import { MyDatePickerModule } from 'mydatepicker';
 import { TinymceModule } from 'angular2-tinymce';
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { AgmCoreModule } from '@agm/core';
 import { NgUploaderModule } from 'ngx-uploader';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -40,14 +40,13 @@ import {
     FormHelperService
 } from './services';
 
-
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
         NgaModule,
         SelectModule,
-        MyDatePickerModule,
+        NguiDatetimePickerModule,
         TinymceModule.withConfig({}),
         AgmCoreModule.forRoot({
             apiKey: '' // TODO: set google maps apiKey (but works also without it)

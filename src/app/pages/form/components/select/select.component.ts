@@ -37,7 +37,7 @@ export class Select implements OnInit {
     }
 
     get isValid() {
-        if (this.field.validators.required) {
+        if (this.field.validators && this.field.validators.required) {
             if (this.field.multiple) {
                 return this.value.length > 0;
             } else {

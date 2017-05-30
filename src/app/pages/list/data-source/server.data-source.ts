@@ -3,6 +3,7 @@ import { RequestOptionsArgs } from '@angular/http/src/interfaces';
 import { URLSearchParams } from '@angular/http';
 import { ApiService } from '../../../api';
 import { ActivatedRoute } from '@angular/router';
+import { ToastHandler } from '../../../theme/services';
 
 export class ServerDataSource extends LocalDataSource {
 
@@ -34,6 +35,7 @@ export class ServerDataSource extends LocalDataSource {
     protected lastRequestCount: number = 0;
 
     constructor(
+        protected _toastHandler: ToastHandler,
         protected _route: ActivatedRoute,
         protected _apiService: ApiService,
         protected apiConfig: any) {
@@ -190,6 +192,8 @@ export class ServerDataSource extends LocalDataSource {
                 });
 
                 this.isLoading = false;
+            }).catch((error) => {
+                this._toastHandler.error(error);
             });
         }
     }

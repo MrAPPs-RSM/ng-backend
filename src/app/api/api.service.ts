@@ -20,7 +20,6 @@ export class ApiService {
     static handleError(error: Response): Observable<any> {
         let errMsg: string;
         const body = error.json() || '';
-        console.log(body);
         const err = body.error || {message: 'Server error, try again later'};
         errMsg = err['message'] ? err['message'] : String(err);
         return Observable.throw(errMsg);
