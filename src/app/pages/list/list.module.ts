@@ -7,7 +7,7 @@ import { routing } from './list.routing';
 
 import { List } from './list.component';
 import { ListResolver } from './services';
-import { BooleanRender } from './views';
+import { BooleanRender, DateRender } from './views';
 
 @NgModule({
     imports: [
@@ -17,10 +17,11 @@ import { BooleanRender } from './views';
         routing,
         Ng2SmartTableModule
     ],
-    entryComponents: [BooleanRender],
+    entryComponents: [BooleanRender, DateRender],
     declarations: [
         List,
-        BooleanRender
+        BooleanRender,
+        DateRender
     ],
     providers: [
         ListResolver

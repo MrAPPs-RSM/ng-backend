@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../../../api';
 import { List }  from '../list.component';
 import { listConfig } from '../list.config';
-import { BooleanRender } from '../views';
+import { BooleanRender, DateRender } from '../views';
 
 @Injectable()
 export class ListResolver implements Resolve<List> {
@@ -16,6 +16,7 @@ export class ListResolver implements Resolve<List> {
         return this.loadColumns(route.data['table']);
     }
 
+    // TODO: missing date rendering
     loadColumns(params: any): Promise<any> {
         return new Promise((resolve, reject) => {
             let requests = [];
@@ -27,6 +28,21 @@ export class ListResolver implements Resolve<List> {
                         case listConfig.types.BOOLEAN: {
                             params.columns[key].type = listConfig.types.CUSTOM;
                             params.columns[key].renderComponent = BooleanRender;
+                            if (!params.columns.filter) {
+                                params.columns[key].filter = {
+                                    type: 'checkbox',
+                                    config: {
+                                        true: '(bool)1',
+                                        false: '(bool)0',
+                                        resetText: 'reset'
+                                    }
+                                };
+                            }
+                        }
+                            break;
+                        case listConfig.types.DATE: {
+                            params.columns[key].type = listConfig.types.CUSTOM;
+                            params.columns[key].renderComponent = DateRender;
                         }
                             break;
                         default: {
@@ -63,6 +79,8 @@ export class ListResolver implements Resolve<List> {
                                     }
                                         break;
                                 }
+                            } else {
+                                pResolve();
                             }
                         } else {
                             pResolve();

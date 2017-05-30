@@ -621,7 +621,7 @@ label.custom-checkbox {
       & + span {
         &:before {
           content: "\f00c";
-          font-weight: $font-light;
+          font-weight: $font-normal;
         }
       }
     }
@@ -641,7 +641,7 @@ label.custom-checkbox {
     display: inline-block;
     margin: 0;
     line-height: 16px;
-    font-weight: $font-light;
+    font-weight: $font-normal;
     cursor: pointer;
     padding-left: 22px;
     width: 100%;

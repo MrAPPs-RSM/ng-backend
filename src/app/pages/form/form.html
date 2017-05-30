@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-raised btn-hover pull-right"
-                            [disabled]="!isFormValid"> {{ params.form.options?.submitLabel ? params.form.options?.submitLabel : 'Save'}}
+                            [disabled]="!isFormValid"> {{ params.form.options?.submit?.label ? params.form.options.submit.label : 'Save'}}
                     </button>
                 </div>
             </div>

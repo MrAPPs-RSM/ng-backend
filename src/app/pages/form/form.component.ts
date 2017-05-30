@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { formConfig } from './form.config';
 import { FormLoaderService, FormHelperService } from './services';
@@ -25,6 +25,7 @@ export class Form implements OnInit {
     private id: number = null;
 
     constructor(protected _route: ActivatedRoute,
+                protected _router: Router,
                 protected _titleChecker: TitleChecker,
                 protected _loaderService: FormLoaderService,
                 protected _apiService: ApiService,
@@ -49,7 +50,6 @@ export class Form implements OnInit {
     ngOnChange() {
         this.form.valueChanges
             .subscribe(data => {
-                    console.log(this.form.value);
                     this.payLoad = JSON.stringify(this.form.value);
                 }
             );
@@ -61,35 +61,43 @@ export class Form implements OnInit {
         if (urlParams && urlParams['id']) {
             this.id = urlParams['id'];
 
-            // TODO call API get/id here to populate form
+            this._apiService.get(this.params.api.endpoint + '/' + this.id)
+                .subscribe(
+                    data => {
+                        Object.keys(data).forEach((key) => {
+                            if (this.form.controls[key]) {
+                                this.form.controls[key].setValue(data[key]);
+                            }
+                        });
+                    },
+                    error => {
+                        this._toastManager.error(error);
+                        if (this.params.form.options.submit.redirectAfter) {
+                            this._router.navigate(
+                                ['pages/' + this.params.form.options.submit.redirectAfter]);
+                        }
+                    }
+                );
         }
     }
 
     onSubmit() {
-        if (this.id !== null) {
-            this._apiService.post(
-                this.params.api.endpoint + '/' + this.id,
-                this.payLoad
-            ).subscribe(
+        this._apiService.put(
+            this.id ? this.params.api.endpoint + '/' + this.id : this.params.api.endpoint,
+            this.payLoad
+        )
+            .subscribe(
                 data => {
+                    this._toastManager.success();
+                    if (this.params.form.options.submit.redirectAfter) {
+                        this._router.navigate(
+                            ['pages/' + this.params.form.options.submit.redirectAfter]);
+                    }
                 },
                 error => {
                     this._toastManager.error(error);
                 }
             );
-        } else {
-            this._apiService.put(
-                this.params.api.endpoint,
-                this.payLoad
-            )
-                .subscribe(
-                    data => {
-                    },
-                    error => {
-                        this._toastManager.error(error);
-                    }
-                );
-        }
     }
 
 }

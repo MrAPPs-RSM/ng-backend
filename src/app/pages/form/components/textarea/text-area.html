@@ -4,22 +4,22 @@
         <!-- Label -->
         <label for="{{field.key}}">
             {{field.label}}
-            <span *ngIf="field.validators.required">*</span>
+            <span *ngIf="field.validators && field.validators.required">*</span>
         </label>
 
         <!-- Input -->
         <app-tinymce
-                *ngIf="field.options.tinyMce == true"
+                *ngIf="field.options && field.options.tinyMce == true"
                 id="{{field.key}}"
                 formControlName="{{field.key}}"
         ></app-tinymce>
 
         <textarea
-                *ngIf="!field.options.tinyMce"
+                *ngIf="!field.options || !field.options.tinyMce"
                 formControlName="{{field.key}}"
                 id="{{field.key}}"
-                rows="{{field.options.rows}}"
-                cols="{{field.options.cols}}"
+                rows="{{field.options?.rows}}"
+                cols="{{field.options?.cols}}"
                 class="form-control"
                 placeholder="{{field.placeholder}}">
             {{field.value}}

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IMyDateModel, IMyOptions } from 'mydatepicker';
-import * as _ from 'lodash';
 
 @Component({
     selector: 'date-picker',
@@ -11,8 +10,6 @@ import * as _ from 'lodash';
 
 export class DatePicker implements OnInit{
 
-    static EMPTY_DATE_STRING: string = '';
-    static EMPTY_DATE_OBJ: any = {year: 0, month: 0, day: 0};
     static DEFAULT_DATE_FORMAT: string = 'dd/mm/yyyy';
 
     @Input() form: FormGroup;
@@ -21,7 +18,7 @@ export class DatePicker implements OnInit{
     options: IMyOptions = {
         dateFormat: DatePicker.DEFAULT_DATE_FORMAT
     };
-    selectedDate: any = DatePicker.EMPTY_DATE_STRING;
+    selectedDate = null;
 
     constructor() {}
 
@@ -39,30 +36,15 @@ export class DatePicker implements OnInit{
     }
 
     onDateChanged(event: IMyDateModel): void {
-        this.setDate(event.date);
+        this.setDate(event.jsdate);
     }
 
     setDate(value: any): void {
-        let dateObj: any = {};
-        if (value.hasOwnProperty('year') && value.hasOwnProperty('month') && value.hasOwnProperty('day')) {
-            dateObj.year = value.year;
-            dateObj.month = value.month;
-            dateObj.day = value.day;
+        if (value instanceof Date) {
+            this.selectedDate = value;
         } else {
-            let date = new Date(value);
-            dateObj.year = date.getFullYear();
-            dateObj.month = date.getMonth() + 1;
-            dateObj.day = date.getDate();
+            this.selectedDate = new Date(value);
         }
-
-        if (_.isEqual(dateObj, DatePicker.EMPTY_DATE_OBJ)) {
-            dateObj = DatePicker.EMPTY_DATE_STRING;
-        }
-
-        this.selectedDate = dateObj;
-
-        let jsonValue = {};
-        jsonValue[this.field.key] = dateObj;
-        this.form.patchValue(jsonValue);
+        this.form.controls[this.field.key].setValue(this.selectedDate);
     }
 }

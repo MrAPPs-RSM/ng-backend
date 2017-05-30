@@ -4,14 +4,13 @@
         <!-- Label -->
         <label>
             {{field.label}}
-            <span *ngIf="field.validators.required">*</span>
+            <span *ngIf="field.validators && field.validators.required">*</span>
         </label>
 
         <br>
         <!-- Input -->
         <my-date-picker
                 [options]="options"
-                [selDate]="selectedDate"
                 (dateChanged)="onDateChanged($event)"
         ></my-date-picker>
 

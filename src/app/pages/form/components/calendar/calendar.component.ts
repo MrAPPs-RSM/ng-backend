@@ -173,7 +173,6 @@ export class Calendar implements OnInit {
         });
 
         this.selectedDays = [];
-        console.log(indexes);
         if (indexes.length > 0) {
             indexes.forEach((index) => {
                 delete this.events[index];

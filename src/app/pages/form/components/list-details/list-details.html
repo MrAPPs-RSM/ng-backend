@@ -1,7 +1,7 @@
 <div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
     <div class="form-element">
         <label>{{field.label}}</label>
-        <span *ngIf="field.validators.required">*</span>
+        <span *ngIf="field.validators && field.validators.required">*</span>
         <ng-select
                 *ngIf="showSelect"
                 #ngSelect

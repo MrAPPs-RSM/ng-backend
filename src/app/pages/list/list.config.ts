@@ -5,6 +5,7 @@ export let listConfig = {
     },
     types: {
         BOOLEAN: 'boolean',
+        DATE: 'date',
         CUSTOM: 'custom'
     }
 };

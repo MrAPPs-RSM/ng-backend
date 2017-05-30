@@ -46,21 +46,28 @@ export class List implements OnInit {
     ngOnInit() {
         this.params = this._route.snapshot.data;
         this._titleChecker.setCorrectTitle(this._route, this.params);
-        this.loadActions();
-        this.settings.columns = this.params.table.columns;
+        this.loadSettings();
         this.loadData();
     }
 
-    loadActions(): void {
+    loadSettings(): void {
         let actions = {};
         Object.keys(this.params.table.actions).forEach((key) => {
             if (key === 'add' || key === 'edit' || key === 'delete') {
                 actions[key] = this.params.table.actions[key].enable;
+                if (this.params.table.actions[key].style) {
+                    let content = '<span class="btn btn-xs ' +
+                        this.params.table.actions[key].style.button
+                        + '"><i class="fa ' + this.params.table.actions[key].style.icon + '"></i></span>';
+                    let contentKey = key + 'ButtonContent';
+                    this.settings[key][contentKey] = content;
+                }
             } else {
                 actions[key] = this.params.table.actions[key];
             }
         });
         this.settings.actions = actions;
+        this.settings.columns = this.params.table.columns;
     }
 
     loadData(): void {
@@ -88,7 +95,7 @@ export class List implements OnInit {
             this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
                 .subscribe(
                     res => {
-                        this._toastManager.info('Item deleted successfully');
+                        this._toastManager.success('Item deleted successfully');
                         this.source.refresh();
                     },
                     error => {

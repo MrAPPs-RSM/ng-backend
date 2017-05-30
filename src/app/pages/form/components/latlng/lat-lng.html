@@ -22,7 +22,7 @@
         <!-- Label -->
         <label for="{{field.lat.key}}">
             {{field.lat.label}}
-            <span *ngIf="field.validators.required">*</span>
+            <span *ngIf="field.validators && field.validators.required">*</span>
         </label>
 
         <!-- Input -->
@@ -46,7 +46,7 @@
         <!-- Label -->
         <label for="{{field.lng.key}}">
             {{field.lng.label}}
-            <span *ngIf="field.validators.required">*</span>
+            <span *ngIf="field.validators && field.validators.required">*</span>
         </label>
 
         <!-- Input -->
