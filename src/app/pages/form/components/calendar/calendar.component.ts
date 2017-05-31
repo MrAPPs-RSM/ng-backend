@@ -3,9 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { CalendarEvent } from 'angular-calendar';
 import { setHours, setMinutes, isSameDay } from 'date-fns';
 import { Subject } from 'rxjs';
+import 'rxjs/add/operator/first';
 import { ApiService } from '../../../../api';
 import { isNullOrUndefined } from 'util';
 import { Utils } from '../../../../utils';
+import { ToastHandler } from '../../../../theme/services';
 
 @Component({
     selector: 'calendar',
@@ -51,7 +53,8 @@ export class Calendar implements OnInit {
     selectedDays: any[] = [];
     selectValues: any[] = [];
 
-    constructor(protected _apiService: ApiService) {
+    constructor(protected _apiService: ApiService,
+                protected _toastHandler: ToastHandler) {
     }
 
     ngOnInit() {
@@ -60,25 +63,82 @@ export class Calendar implements OnInit {
         }
         this.viewDate = new Date();
         this.EVENT_ICON = this.field.options.eventIcon;
-        this.COLORS.custom = this.field.options.eventColors;
-        this.loadSelectValues();
+        this.loadCalendar();
     }
 
-    loadSelectValues(): void {
-        if (this.field.options.select.values instanceof Array) {
-            this.selectValues = this.field.options.select.values;
-        } else {
-            this._apiService.get(this.field.options.select.values, false)
-                .subscribe(
-                    data => {
-                        this.selectValues = data;
-                    },
-                    error => {
-                        console.log(error);
-                        // TODO
-                    }
-                );
-        }
+    loadEventsColors(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.field.options.eventColors instanceof Object) {
+                this.COLORS.custom = this.field.options.eventColors;
+                resolve();
+            } else {
+                this._apiService.get(this.field.options.eventColors, false)
+                    .subscribe(
+                        data => {
+                            this.COLORS.custom = data;
+                            resolve();
+                        },
+                        error => {
+                            this._toastHandler.error(error);
+                            reject();
+                        }
+                    );
+            }
+        });
+    }
+
+    loadSelectValues(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.field.options.select.values instanceof Array) {
+                this.selectValues = this.field.options.select.values;
+                resolve();
+            } else {
+                this._apiService.get(this.field.options.select.values, false)
+                    .subscribe(
+                        data => {
+                            this.selectValues = data;
+                            resolve();
+                        },
+                        error => {
+                            this._toastHandler.error(error);
+                            reject();
+                        }
+                    );
+            }
+        });
+    }
+
+    loadCalendar(): void {
+        this.form.controls[this.field.key].valueChanges
+            .first()
+            .subscribe(data => {
+                this.loadSelectValues().then(() => {
+                    this.loadEventsColors().then(() => {
+                        data.forEach((item) => {
+                            // TODO: actually not-standard
+                            let event = {
+                                id: null,
+                                title: null,
+                                color: !isNullOrUndefined(this.COLORS.custom[item.bidoneId]) ?
+                                    this.COLORS.custom[item.bidoneId] : this.COLORS.default,
+                                start: new Date(item.giorno),
+                                icon: this.EVENT_ICON,
+                                actions: this.EVENT_ACTIONS
+                            };
+                            this.selectValues.forEach((selectValue) => {
+                                if (item.bidoneId === selectValue.id) {
+                                    event.id = item.id;
+                                    event.title = selectValue.text;
+                                }
+                            });
+
+                            this.events.push(event);
+                        });
+                        this.refresh.next();
+                        this.refreshFormValue();
+                    });
+                });
+            });
     }
 
     onEventClick(mouseEvent: MouseEvent, calendarEvent: CalendarEvent): void {
@@ -165,8 +225,8 @@ export class Calendar implements OnInit {
         this.selectedDays.forEach((day) => {
             this.events.forEach((event, index) => {
                 if (event.start.getDate() === day.date.getDate()
-                && event.start.getMonth() === day.date.getMonth()
-                && event.start.getUTCFullYear() === day.date.getUTCFullYear()) {
+                    && event.start.getMonth() === day.date.getMonth()
+                    && event.start.getUTCFullYear() === day.date.getUTCFullYear()) {
                     indexes.push(index);
                 }
             });

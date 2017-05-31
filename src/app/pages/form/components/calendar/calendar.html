@@ -61,7 +61,7 @@
                     (click)="clearAllEventsByDay()"
                     [disabled]="selectedDays.length === 0 || events.length === 0">
                 <i class="fa fa-ban"></i>
-                {{ field.options?.labels?.clear ? field.options.labels.clear : 'Clear day events'}}
+                {{ field.options?.labels?.clear ? field.options.labels.clear : 'Clear events of selected daysd'}}
             </button>
 
             <div *ngIf="showSelect">

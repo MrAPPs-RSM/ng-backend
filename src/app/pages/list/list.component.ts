@@ -67,6 +67,7 @@ export class List implements OnInit {
             }
         });
         this.settings.actions = actions;
+        this.settings.noDataMessage = this.params.table.noDataMessage;
         this.settings.columns = this.params.table.columns;
     }
 

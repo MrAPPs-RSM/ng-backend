@@ -37,9 +37,9 @@ export class Form implements OnInit {
         this.formConfig = formConfig;
         this.params = this._route.snapshot.data;
         this._titleChecker.setCorrectTitle(this._route, this.params);
-        this.checkEditOrCreate();
         this.fields = this.params.form.fields;
         this.form = this._loaderService.createFormGroup(this.fields);
+        this.checkEditOrCreate();
 
         this.ngOnChange();
     }
@@ -67,13 +67,7 @@ export class Form implements OnInit {
                     data => {
                         Object.keys(data).forEach((key) => {
                             if (this.form.controls[key]) {
-                                if (!isNaN(data[key]) && new Date(data[key] * 1000).getTime() > 0) {
-                                    this.form.controls[key].setValue(
-                                        NguiDatetime.formatDate(new Date(data[key]))
-                                    );
-                                } else {
-                                    this.form.controls[key].setValue(data[key]);
-                                }
+                                this.form.controls[key].setValue(data[key]);
                             }
                         });
                     },

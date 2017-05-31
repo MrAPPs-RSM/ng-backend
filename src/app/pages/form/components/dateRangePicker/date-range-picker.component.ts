@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { NguiDatetime } from '@ngui/datetime-picker';
+import 'rxjs/add/operator/first';
 
 @Component({
     selector: 'date-range-picker',
@@ -16,6 +18,20 @@ export class DateRangePicker implements OnInit {
     }
 
     ngOnInit() {
+        this.form.controls[this.field.startDate.key].valueChanges
+            .first()
+            .subscribe(value => {
+                this.form.controls[this.field.key].setValue(
+                    NguiDatetime.formatDate(new Date(value))
+                );
+            });
+        this.form.controls[this.field.endDate.key].valueChanges
+            .first()
+            .subscribe(value => {
+                this.form.controls[this.field.key].setValue(
+                    NguiDatetime.formatDate(new Date(value))
+                );
+            });
     }
 
     isValidRange() {

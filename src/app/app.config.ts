@@ -2,7 +2,7 @@ export let config = {
     env: 'dev',
     api: {
         dev: {
-            baseUrl: 'http://0.0.0.0:5555/api/'
+            baseUrl: 'http://192.168.10.90:5555/api/'
         },
         prod: {
             baseUrl: 'api/backend/'

@@ -70,29 +70,19 @@ export class ListDetails implements OnInit {
     }
 
     loadSelectValues(): void {
-        if (this.field.options.data instanceof Array) {
-            this.transformSelectValues(this.field.options.data);
+        if (this.field.options.values instanceof Array) {
+            this.selectValues = this.field.options.values;
         } else {
-            this._apiService.get(this.field.options.data)
+            this._apiService.get(this.field.options.values)
                 .subscribe(
                     data => {
-                        this.transformSelectValues(data);
+                        this.selectValues = data;
                     },
                     error => {
                         this._toastHandler.error(error);
                     }
                 );
         }
-    }
-
-    transformSelectValues(data: any[]): void {
-        data.forEach((item) => {
-            this.selectValues.push({
-                id: item[this.tableKeys[0]],
-                text: item[this.tableKeys[1]]
-            });
-        });
-        console.log(this.selectValues);
     }
 
     /**

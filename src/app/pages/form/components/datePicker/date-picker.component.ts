@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NguiDatetime } from '@ngui/datetime-picker';
+import 'rxjs/add/operator/first';
 
 @Component({
     selector: 'date-picker',
@@ -22,6 +23,12 @@ export class DatePicker implements OnInit {
     }
 
     ngOnInit() {
-        // TODO fix when pre-selected value in edit forms
+        this.form.controls[this.field.key].valueChanges
+            .first()
+            .subscribe(value => {
+                this.form.controls[this.field.key].setValue(
+                    NguiDatetime.formatDate(new Date(value))
+                );
+            });
     }
 }
