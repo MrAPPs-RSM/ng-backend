@@ -14,6 +14,13 @@
   .dropdown-toggle::after {
     display: none;
   }
+  
+  .logout {
+    position: fixed;
+    z-index: 905;
+    top: calc(66px*0.25);
+    right: 20px;
+  }
 }
 
 .blur {
@@ -94,7 +101,7 @@ a.collapse-menu-link {
 
   &:hover {
     text-decoration: none;
-    color: $warning;
+    color: $primary;
   }
 }
 

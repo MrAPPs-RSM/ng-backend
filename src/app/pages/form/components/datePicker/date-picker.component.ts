@@ -24,11 +24,12 @@ export class DatePicker implements OnInit {
 
     ngOnInit() {
         this.form.controls[this.field.key].valueChanges
-            .first()
             .subscribe(value => {
-                this.form.controls[this.field.key].setValue(
-                    NguiDatetime.formatDate(new Date(value))
-                );
+                if (value && !isNaN(value)) {
+                    this.form.controls[this.field.key].setValue(
+                        NguiDatetime.formatDate(new Date(value))
+                    );
+                }
             });
     }
 }

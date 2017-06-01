@@ -49,7 +49,7 @@ export class ListDetails implements OnInit {
 
     ngOnInit() {
         this.loadTable();
-        this.loadSelectValues();
+        this.loadData();
     }
 
     /**
@@ -69,21 +69,57 @@ export class ListDetails implements OnInit {
         this.dataSource.load([]);
     }
 
-    loadSelectValues(): void {
-        if (this.field.options.values instanceof Array) {
-            this.selectValues = this.field.options.values;
-        } else {
-            this._apiService.get(this.field.options.values)
-                .subscribe(
-                    data => {
-                        this.selectValues = data;
-                    },
-                    error => {
-                        this._toastHandler.error(error);
-                    }
-                );
-        }
+    /**
+     * Load select options
+     * @returns {Promise<T>}
+     */
+    loadSelectValues(): Promise<any> {
+        return new Promise ((resolve, reject) => {
+            if (this.field.options.values instanceof Array) {
+                this.selectValues = this.field.options.values;
+                resolve();
+            } else {
+                this._apiService.get(this.field.options.values)
+                    .subscribe(
+                        data => {
+                            this.selectValues = data;
+                            resolve();
+                        },
+                        error => {
+                            this._toastHandler.error(error);
+                            reject();
+                        }
+                    );
+            }
+        });
     }
+
+    /**
+     * Load pre-selected data (if present) and select options for list
+     */
+    loadData(): void {
+        this.form.controls[this.field.key].valueChanges
+            .first()
+            .subscribe(
+                data => {
+                    this.loadSelectValues()
+                        .then(() => {
+                            data.forEach((item) => {
+                                this.setSelectedItem({
+                                    id: item.id,
+                                    text: item.nome
+                                });
+                                this.addItem();
+                            });
+                        })
+                        .catch((error) => {
+                            this._toastHandler.error(error);
+                        });
+
+                }
+            );
+    }
+
 
     /**
      * Set the active item by the select option

@@ -5,35 +5,36 @@ import 'style-loader!./baPageTop.scss';
 import { AuthService } from '../../../auth';
 
 @Component({
-  selector: 'ba-page-top',
-  templateUrl: './baPageTop.html',
+    selector: 'ba-page-top',
+    templateUrl: './baPageTop.html',
 })
-export class BaPageTop implements OnInit{
+export class BaPageTop implements OnInit {
 
-  @Input() title: string;
+    @Input() title: string;
 
-  public isScrolled: boolean = false;
-  public isMenuCollapsed: boolean = false;
+    public isScrolled: boolean = false;
+    public isMenuCollapsed: boolean = false;
 
-  constructor(private _state: GlobalState, private _authService: AuthService) {}
+    constructor(private _state: GlobalState, private _authService: AuthService) {
+    }
 
-  ngOnInit() {
-    this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
-      this.isMenuCollapsed = isCollapsed;
-    });
-  }
+    ngOnInit() {
+        this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
+            this.isMenuCollapsed = isCollapsed;
+        });
+    }
 
-  public logout() {
-    this._authService.logout();
-  }
+    public logout() {
+        this._authService.logout();
+    }
 
-  public toggleMenu() {
-    this.isMenuCollapsed = !this.isMenuCollapsed;
-    this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
-    return false;
-  }
+    public toggleMenu() {
+        this.isMenuCollapsed = !this.isMenuCollapsed;
+        this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
+        return false;
+    }
 
-  public scrolledChanged(isScrolled) {
-    this.isScrolled = isScrolled;
-  }
+    public scrolledChanged(isScrolled) {
+        this.isScrolled = isScrolled;
+    }
 }

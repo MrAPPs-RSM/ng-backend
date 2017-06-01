@@ -15,7 +15,7 @@ export class List implements OnInit {
 
     settings = {
         mode: 'external',
-        noDataMessage: 'No data found',
+        noDataMessage: '',
         add: {
             addButtonContent: '<span class="btn btn-xs btn-success"><i class="fa fa-plus-circle"></i></span>'
         },
@@ -67,7 +67,8 @@ export class List implements OnInit {
             }
         });
         this.settings.actions = actions;
-        this.settings.noDataMessage = this.params.table.noDataMessage;
+        this.settings.noDataMessage =
+            this.params.table.noDataMessage ? this.params.table.noDataMessage : 'No data found';
         this.settings.columns = this.params.table.columns;
     }
 

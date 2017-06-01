@@ -166,6 +166,26 @@ export class ApiService {
     }
 
     /**
+     * PATCH request
+     * @param endpoint
+     * @param body
+     * @param requestOptions
+     * @returns {Observable<R>}
+     */
+    public patch(endpoint: string,
+               body: any,
+               requestOptions?: RequestOptionsArgs): Observable<any> {
+        return this._http
+            .patch(
+                this.composeUrl(endpoint),
+                body,
+                this.setOptions(requestOptions)
+            )
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
+    }
+
+    /**
      * DELETE request
      * @param endpoint
      * @param requestOptions

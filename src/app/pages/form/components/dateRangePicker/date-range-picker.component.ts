@@ -19,18 +19,21 @@ export class DateRangePicker implements OnInit {
 
     ngOnInit() {
         this.form.controls[this.field.startDate.key].valueChanges
-            .first()
             .subscribe(value => {
-                this.form.controls[this.field.key].setValue(
-                    NguiDatetime.formatDate(new Date(value))
-                );
+                if (value && !isNaN(value)) {
+                    this.form.controls[this.field.key].setValue(
+                        NguiDatetime.formatDate(new Date(value))
+                    );
+                }
             });
         this.form.controls[this.field.endDate.key].valueChanges
             .first()
             .subscribe(value => {
-                this.form.controls[this.field.key].setValue(
-                    NguiDatetime.formatDate(new Date(value))
-                );
+                if (value && !isNaN(value)) {
+                    this.form.controls[this.field.key].setValue(
+                        NguiDatetime.formatDate(new Date(value))
+                    );
+                }
             });
     }
 

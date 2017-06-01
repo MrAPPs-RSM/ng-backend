@@ -79,8 +79,7 @@ export class Calendar implements OnInit {
                             resolve();
                         },
                         error => {
-                            this._toastHandler.error(error);
-                            reject();
+                            reject(error);
                         }
                     );
             }
@@ -100,8 +99,7 @@ export class Calendar implements OnInit {
                             resolve();
                         },
                         error => {
-                            this._toastHandler.error(error);
-                            reject();
+                            reject(error);
                         }
                     );
             }
@@ -115,28 +113,30 @@ export class Calendar implements OnInit {
                 this.loadSelectValues().then(() => {
                     this.loadEventsColors().then(() => {
                         data.forEach((item) => {
-                            // TODO: actually not-standard
                             let event = {
                                 id: null,
                                 title: null,
-                                color: !isNullOrUndefined(this.COLORS.custom[item.bidoneId]) ?
-                                    this.COLORS.custom[item.bidoneId] : this.COLORS.default,
-                                start: new Date(item.giorno),
+                                color: !isNullOrUndefined(this.COLORS.custom[item[this.field.options.eventKeys.id]]) ?
+                                    this.COLORS.custom[item[this.field.options.eventKeys.id]] : this.COLORS.default,
+                                start: new Date(item[this.field.options.eventKeys.date]),
                                 icon: this.EVENT_ICON,
                                 actions: this.EVENT_ACTIONS
                             };
                             this.selectValues.forEach((selectValue) => {
-                                if (item.bidoneId === selectValue.id) {
-                                    event.id = item.id;
+                                if (item[this.field.options.eventKeys.id] === selectValue.id) {
+                                    event.id = item[this.field.options.eventKeys.id];
                                     event.title = selectValue.text;
                                 }
                             });
-
                             this.events.push(event);
                         });
                         this.refresh.next();
                         this.refreshFormValue();
+                    }).catch((error) => {
+                        this._toastHandler.error(error);
                     });
+                }).catch((error) => {
+                    this._toastHandler.error(error);
                 });
             });
     }
@@ -213,32 +213,32 @@ export class Calendar implements OnInit {
         let data = [];
         this.events.forEach((event) => {
             data.push({
-                eventId: event.id,
+                id: event.id,
                 date: event.start
             });
         });
         this.form.controls[this.field.key].setValue(data);
     }
 
-    clearAllEventsByDay(): void {
-        let indexes: number[] = [];
-        this.selectedDays.forEach((day) => {
-            this.events.forEach((event, index) => {
-                if (event.start.getDate() === day.date.getDate()
-                    && event.start.getMonth() === day.date.getMonth()
-                    && event.start.getUTCFullYear() === day.date.getUTCFullYear()) {
-                    indexes.push(index);
-                }
-            });
-        });
+    /* clearAllEventsByDay(): void {
+     let indexes: number[] = [];
+     this.selectedDays.forEach((day) => {
+     this.events.forEach((event, index) => {
+     if (event.start.getDate() === day.date.getDate()
+     && event.start.getMonth() === day.date.getMonth()
+     && event.start.getUTCFullYear() === day.date.getUTCFullYear()) {
+     indexes.push(index);
+     }
+     });
+     });
 
-        this.selectedDays = [];
-        if (indexes.length > 0) {
-            indexes.forEach((index) => {
-                delete this.events[index];
-            });
-            this.refresh.next();
-            this.refreshFormValue();
-        }
-    }
+     this.selectedDays = [];
+     if (indexes.length > 0) {
+     indexes.forEach((index) => {
+     delete this.events[index];
+     });
+     this.refresh.next();
+     this.refreshFormValue();
+     }
+     } */
 }

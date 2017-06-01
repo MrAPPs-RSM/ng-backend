@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { URLSearchParams } from '@angular/http';
 
 import { formConfig } from './form.config';
 import { FormLoaderService, FormHelperService } from './services';
 import { ApiService } from '../../api';
 import { ToastHandler } from '../../theme/services';
 import { TitleChecker } from '../services';
-import { NguiDatetime } from '@ngui/datetime-picker';
 
 @Component({
     selector: '',
@@ -58,11 +58,17 @@ export class Form implements OnInit {
 
     checkEditOrCreate(): void {
         let urlParams = this._route.snapshot.params;
-        // Check if edit or create
         if (urlParams && urlParams['id']) {
             this.id = urlParams['id'];
 
-            this._apiService.get(this.params.api.endpoint + '/' + this.id)
+            let requestOptions = null;
+            if (this.params.api.filter) {
+                requestOptions = {
+                    search: new URLSearchParams()
+                };
+                requestOptions.search.set('filter', this.params.api.filter);
+            }
+            this._apiService.get(this.params.api.endpoint + '/' + this.id, requestOptions)
                 .subscribe(
                     data => {
                         Object.keys(data).forEach((key) => {
@@ -83,22 +89,41 @@ export class Form implements OnInit {
     }
 
     onSubmit() {
-        this._apiService.put(
-            this.id ? this.params.api.endpoint + '/' + this.id : this.params.api.endpoint,
-            this.payLoad
-        )
-            .subscribe(
-                data => {
-                    this._toastManager.success();
-                    if (this.params.form.options.submit.redirectAfter) {
-                        this._router.navigate(
-                            ['pages/' + this.params.form.options.submit.redirectAfter]);
+        if (this.id) {
+            this._apiService.patch(
+                this.params.api.endpoint + '/' + this.id,
+                this.payLoad
+            )
+                .subscribe(
+                    data => {
+                        this._toastManager.success();
+                        if (this.params.form.options.submit.redirectAfter) {
+                            this._router.navigate(
+                                ['pages/' + this.params.form.options.submit.redirectAfter]);
+                        }
+                    },
+                    error => {
+                        this._toastManager.error(error);
                     }
-                },
-                error => {
-                    this._toastManager.error(error);
-                }
-            );
+                );
+        } else {
+            this._apiService.put(
+                this.params.api.endpoint,
+                this.payLoad
+            )
+                .subscribe(
+                    data => {
+                        this._toastManager.success();
+                        if (this.params.form.options.submit.redirectAfter) {
+                            this._router.navigate(
+                                ['pages/' + this.params.form.options.submit.redirectAfter]);
+                        }
+                    },
+                    error => {
+                        this._toastManager.error(error);
+                    }
+                );
+        }
     }
 
 }

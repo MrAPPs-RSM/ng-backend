@@ -55,14 +55,14 @@
                 {{ field.options?.labels?.add ? field.options.labels.add : 'Add event'}}
             </button>
 
-            <button
+           <!-- <button
                     *ngIf="!showSelect"
                     class="btn btn-sm btn-danger"
                     (click)="clearAllEventsByDay()"
                     [disabled]="selectedDays.length === 0 || events.length === 0">
                 <i class="fa fa-ban"></i>
                 {{ field.options?.labels?.clear ? field.options.labels.clear : 'Clear events of selected daysd'}}
-            </button>
+            </button> -->
 
             <div *ngIf="showSelect">
                 <button
