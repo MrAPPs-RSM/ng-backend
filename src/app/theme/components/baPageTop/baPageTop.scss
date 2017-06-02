@@ -9,7 +9,7 @@
   height: 66px;
   width: 100%;
   min-width: $resMin;
-  padding: 0 32px 0 40px;
+  padding: 0 32px 0 15px;
 
   .dropdown-toggle::after {
     display: none;
@@ -19,7 +19,7 @@
     position: fixed;
     z-index: 905;
     top: calc(66px*0.25);
-    right: 20px;
+    right: 15px;
   }
 }
 
@@ -34,6 +34,7 @@ a.al-logo {
   display: block;
   font-size: 24px;
   font-family: $font-family;
+  font-weight: $font-bold;
   white-space: nowrap;
   float: left;
   outline: none !important;

@@ -1,5 +1,6 @@
 @import '../../../theme/sass/conf/conf';
 $height: 45px;
+$heightS: 35px;
 
 .ba-back-top {
   position: fixed;
@@ -9,16 +10,25 @@ $height: 45px;
   z-index: 9999;
   display: none;
   text-decoration: none;
-  right: 40px;
-  bottom: 40px !important;
+  right: 20px;
+  bottom: 20px !important;
   font-size: 36px;
   text-align: center;
   opacity: 0.5;
   color: $primary;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: $sidebar;
   border-radius: 50%;
   line-height: 40px;
   &:hover {
     opacity: 0.95;
+  }
+}
+
+@media screen and (max-width: $resS) {
+  .ba-back-top {
+    width: $heightS;
+    height: $heightS;
+    font-size: 30px;
+    line-height: 32px;
   }
 }

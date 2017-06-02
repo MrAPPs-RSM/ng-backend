@@ -17,13 +17,12 @@ export class ApiService {
         return res.json() || {};
     }
 
-    static handleError(error: Response): Observable<any> {
+    static handleError(error: Response): Observable<any> | any {
         let errMsg: string;
         const body = error.json() || '';
         const err = body.error || {message: 'Server error, try again later'};
         errMsg = err['message'] ? err['message'] : String(err);
         return Observable.throw(errMsg);
-
     }
 
     /**
