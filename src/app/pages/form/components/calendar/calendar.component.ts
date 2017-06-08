@@ -148,7 +148,10 @@ export class Calendar implements OnInit {
         this.eventClicked.emit({event: calendarEvent});
     }
 
-    onDayEventsClicked({date, events}: { date: Date, events: CalendarEvent[] }): void {
+    onDayEventsClicked(mouseEvent: MouseEvent, {date, events}: { date: Date, events: CalendarEvent[] }): void {
+        if (mouseEvent.stopPropagation) {
+            mouseEvent.stopPropagation();
+        }
         if (
             (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
             events.length === 0
@@ -168,6 +171,7 @@ export class Calendar implements OnInit {
             delete day.cssClass;
             this.selectedDays = this.selectedDays.filter(selDay => selDay !== day);
         }
+        console.log( this.selectedDays );
     }
 
     confirmCreation(): void {

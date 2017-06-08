@@ -82,11 +82,17 @@ export class ApiService {
     /**
      * Creates standard request options
      */
-    protected setOptions(requestOptions: RequestOptionsArgs): any {
-        return {
+    protected setOptions(requestOptions: RequestOptionsArgs, withoutHeaders?: boolean): any {
+        let options = {
             search: ApiService.setAuth(requestOptions && requestOptions.search ? requestOptions.search : null),
             headers: this.headers
         };
+        if (!withoutHeaders) {
+            return options;
+        } else {
+            delete options.headers;
+            return options;
+        }
     }
 
     /**
@@ -97,12 +103,16 @@ export class ApiService {
      */
     public postFile(endpoint: string, file: any): Observable<any> {
         let formData: FormData = new FormData();
-        formData.append('uploadFile', file, file.name);
+        formData.append('file', file, file.name);
         let headers = new Headers;
-        headers.append('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
-        let options = new RequestOptions({headers: headers});
-        return this._http.post(this.composeUrl(endpoint), formData, options)
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        let requestOptions = new RequestOptions({headers: headers});
+        return this._http.post(
+            this.composeUrl(endpoint),
+            formData,
+            this.setOptions(requestOptions, true)
+        )
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
     }

@@ -101,7 +101,7 @@
                     <i [class]="event.icon" [style.color]="event.color.secondary"></i>
                 </div>
             </div>
-            <div (click)="onDayEventsClicked(day)" class="cal-event edit-events">
+            <div (click)="onDayEventsClicked($event, day)" class="cal-event edit-events">
                 ...
             </div>
         </div>
