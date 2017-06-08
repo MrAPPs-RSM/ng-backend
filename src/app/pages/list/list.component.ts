@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../api';
-import { ToastHandler } from '../../theme/services';
+import { ToastHandler, ModalHandler } from '../../theme/services';
 import { ServerDataSource } from './data-source';
 import { TitleChecker } from '../services';
 
@@ -40,6 +40,7 @@ export class List implements OnInit {
                 protected _titleChecker: TitleChecker,
                 protected _route: ActivatedRoute,
                 protected _apiService: ApiService,
+                protected _modalHandler: ModalHandler,
                 protected _toastManager: ToastHandler
     ) {}
 
@@ -91,6 +92,8 @@ export class List implements OnInit {
     }
 
     onDelete(event: any): void {
+
+        this._modalHandler.confirm();
 
         // TODO: add a real dialog
         if (window.confirm('Are you sure you want to delete?')) {

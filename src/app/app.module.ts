@@ -5,8 +5,8 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
-import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -26,12 +26,14 @@ import { FormLoaderService } from './pages/form/services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService, LoginGuard, TokenManager } from './auth';
 import { ToastHandler } from './theme/services';
+import { ModalHandler } from './theme/services/modalHandler/modalHandler.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
     AppState,
     GlobalState,
     ToastHandler,
+    ModalHandler,
     AuthService,
     LoginGuard,
     TokenManager,
@@ -66,6 +68,7 @@ export type StoreType = {
         NgaModule.forRoot(),
         ToastModule.forRoot(),
         ModalModule.forRoot(),
+        BootstrapModalModule,
         PagesModule
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection

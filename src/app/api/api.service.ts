@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response, Headers, RequestOptions, URLSearchParams, RequestOptionsArgs } from '@angular/http';
+import { Http, Response, Headers, URLSearchParams, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -48,7 +48,7 @@ export class ApiService {
      * @param endpoint
      * @returns {string}
      */
-    protected composeUrl(endpoint: string): string {
+    public composeUrl(endpoint: string): string {
         return this.config.baseUrl + endpoint;
     }
 
@@ -93,28 +93,6 @@ export class ApiService {
             delete options.headers;
             return options;
         }
-    }
-
-    /**
-     * POST file request
-     * @param endpoint
-     * @param file
-     * @returns {Observable<R>}
-     */
-    public postFile(endpoint: string, file: any): Observable<any> {
-        let formData: FormData = new FormData();
-        formData.append('file', file, file.name);
-        let headers = new Headers;
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        let requestOptions = new RequestOptions({headers: headers});
-        return this._http.post(
-            this.composeUrl(endpoint),
-            formData,
-            this.setOptions(requestOptions, true)
-        )
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
     }
 
     /**
