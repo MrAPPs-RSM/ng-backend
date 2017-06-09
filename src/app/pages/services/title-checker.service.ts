@@ -18,6 +18,5 @@ export class TitleChecker {
             breadcrumbLevel: params.menu.breadcrumbLevel
         };
         this._state.notifyDataChanged('menu.activeLink', activeLink);
-
     }
 }

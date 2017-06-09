@@ -1,29 +1,70 @@
-import { Component, ElementRef, EventEmitter, Input, Renderer, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Renderer, ViewChild } from '@angular/core';
 import { UploadOutput, UploadInput, UploadFile } from 'ngx-uploader';
+import { ToastHandler, ModalHandler } from '../../../../theme/services';
+
 import { FormGroup } from '@angular/forms';
-import { ToastHandler } from '../../../../theme/services';
-import { ApiService } from '../../../../api';
-import { Utils } from '../../../../utils';
+import { Utils } from '../../../../utils/utils';
+import { ApiService } from '../../../../api/api.service';
+import { config } from '../../../../app.config';
 
 @Component({
     selector: 'file-uploader',
-    styleUrls: ['./file.scss'],
     templateUrl: './file.html',
+    styleUrls: ['./file.scss']
 })
-export class File {
+export class File implements OnInit {
 
     @Input() form: FormGroup;
     @Input() field: any = {};
     @ViewChild('fileUpload') public _fileUpload: ElementRef;
 
     files: UploadFile[] = [];
-    uploadedFiles: UploadedFile[] = [];
     uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
     dragOver: boolean;
+    uploadedFiles: UploadedFile[] = [];
+
+    // TODO: this must be a backend logic (it's ok only is backend is loopback)
+    static composeFilePath(file: any) {
+        return config.api[config.env].baseFilesUrl + file.container + '/' + file.name;
+    }
 
     constructor(protected _renderer: Renderer,
                 protected _apiService: ApiService,
+                protected _modalHandler: ModalHandler,
                 protected _toastManager: ToastHandler) {
+    }
+
+    ngOnInit() {
+        this.form.controls[this.field.key].valueChanges
+            .first()
+            .subscribe(
+                data => {
+                    if (this.uploadedFiles.length === 0) {
+                        if (data instanceof Array) {
+                            data.forEach((item) => {
+                                this.addToUpdatedFiles({
+                                    id: item.id,
+                                    container: item.container,
+                                    path: File.composeFilePath(item),
+                                    remoteName: item.name,
+                                    name: item.originalName,
+                                    type: item.type
+                                });
+                            });
+                        } else {
+                            this.addToUpdatedFiles({
+                                id: data.id,
+                                container: data.container,
+                                path: File.composeFilePath(data),
+                                remoteName: data.name,
+                                name: data.originalName,
+                                type: data.type
+                            });
+                        }
+                        this.updateFormValue();
+                    }
+                }
+            );
     }
 
     /**
@@ -38,12 +79,28 @@ export class File {
     onUploadOutput(output: UploadOutput): void {
         switch (output.type) {
             case 'allAddedToQueue': {
-                this._fileUpload.nativeElement.value = ''; // Clear always file input value to avoid errors
+                this.startUpload();
+                this._fileUpload.nativeElement.value = '';
             }
                 break;
             case 'addedToQueue': {
-                this.files.push(output.file);
-                this.startUpload(output.file);
+                // TODO fix with drag & drop and only single file
+                if (this.field.options.multiple ||
+                    (!this.field.options.multiple && this.uploadedFiles.length === 0)) {
+                    this.files.push(output.file);
+                } else {
+                    this._fileUpload.nativeElement.value = '';
+                    this._modalHandler.alert('Alert', 'Max number of files: 1');
+                }
+            }
+                break;
+            case 'uploading': {
+                const index = this.files.findIndex(file => file.id === output.file.id);
+                this.files[index] = output.file;
+            }
+                break;
+            case 'removed': {
+                this.files = this.files.filter((file: UploadFile) => file !== output.file);
             }
                 break;
             case 'dragOver': {
@@ -58,48 +115,63 @@ export class File {
                 this.dragOver = false;
             }
                 break;
+            case 'done': {
+                this.handleResponse(output.file);
+            }
+                break;
             default: {
             }
                 break;
         }
     }
 
-    startUpload(file: UploadFile): void {
-        this._apiService.postFile(this.field.options.api.upload, file).subscribe(
-            data => {
-                this._toastManager.success(file.name + ' uploaded');
-                this.addToUpdatedFiles(file);
-            },
-            error => {
-                this._toastManager.error("Can't upload " + file.name);
-            }
-        );
+    startUpload(): void {
+        const event: UploadInput = {
+            type: 'uploadAll',
+            url: this._apiService.composeUrl(this.field.options.api.upload),
+            method: 'POST',
+            concurrency: 1
+        };
+
+        this.uploadInput.emit(event);
     }
 
-    cancelUpload(deletedFile: UploadFile): void {
-        this._apiService.post(this.field.options.api.delete, deletedFile, false).subscribe(
-            data => {
-                this._toastManager.success(deletedFile.name + ' removed');
-                this.files = this.files.filter((file: UploadFile) => file !== deletedFile);
-                this.removeFromUpdatedFiles(deletedFile);
-            },
-            error => {
-                this._toastManager.error("Can't remove " + deletedFile.name);
-            }
-        );
+    cancelUpload(file: UploadedFile): void {
+        this._apiService.delete(this.field.options.api.delete + '/' + file.id)
+            .subscribe(
+                res => {
+                    this._toastManager.success(file.name + ' deleted successfully');
+                    this.removeFromUpdatedFiles(file);
+                },
+                error => {
+                    this._toastManager.error("Can't delete " + file.name + ', try again later');
+                }
+            );
     }
 
-    removeFromUpdatedFiles(deletedFile: UploadFile): void {
-        this.uploadedFiles = Utils.removeObjectFromArray(
-            {name: deletedFile.name, type: deletedFile.type}, this.uploadedFiles);
+    handleResponse(file: UploadFile): void {
+        if (file.response.error) {
+            this._toastManager.error(file.response.error.message);
+        } else {
+            this.addToUpdatedFiles({
+                id: file.response.id,
+                container: file.response.container,
+                path: File.composeFilePath(file.response),
+                remoteName: file.response.name,
+                name: file.response.originalName,
+                type: file.response.type
+            });
+            this._toastManager.success(file.name + ' uploaded');
+        }
+    }
+
+    removeFromUpdatedFiles(deletedFile: UploadedFile): void {
+        this.uploadedFiles = Utils.removeObjectFromArray(deletedFile, this.uploadedFiles);
         this.updateFormValue();
     }
 
-    addToUpdatedFiles(file: UploadFile): void {
-        this.uploadedFiles.push({
-            name: file.name,
-            type: file.type
-        });
+    addToUpdatedFiles(file: any): void {
+        this.uploadedFiles.push(file);
         this.updateFormValue();
     }
 
@@ -109,6 +181,10 @@ export class File {
 }
 
 export interface UploadedFile {
+    id: number;
+    path: string;
+    remoteName: string;
     name: string;
     type: string;
+    container: string;
 }

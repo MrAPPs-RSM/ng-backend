@@ -39,14 +39,16 @@ a.al-logo {
   float: left;
   outline: none !important;
   line-height: 60px;
+  &:hover {
+    color: $primary;
+  }
 
   span {
     color: $primary;
+    &:hover {
+      color: white;
+    }
   }
-}
-
-a.al-logo:hover {
-  color: $primary;
 }
 
 .user-profile {

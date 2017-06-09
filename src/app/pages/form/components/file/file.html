@@ -15,7 +15,7 @@
                      [uploadInput]="uploadInput"
                      [ngClass]="{ 'is-drag-over': dragOver }"
                 >
-                    {{ field.options?.dragMessage ? field.options.dragMessage : 'Drag & Drop file(s) here'}}
+                    {{ field.options?.labels?.dragDrop ? field.options.labels.dragDrop : 'Drag & Drop file(s) here'}}
                 </div>
             </div>
             <div class="col-sm-6">
@@ -31,7 +31,7 @@
                         class="btn btn-primary btn-block"
                         type="button"
                         (click)="bringFileSelector()">
-                    {{ field.options?.selectFilesMessage ? field.options.selectFilesMessage : 'or select file(s)'}}
+                    {{ field.options?.labels?.select ? field.options.labels.select : 'or select file(s)'}}
                     <i class="ion-search"></i>
                 </button>
             </div>
@@ -41,12 +41,12 @@
     </div>
 
     <!-- Uploaded files -->
-    <div *ngIf="files.length > 0"
+    <div *ngIf="uploadedFiles.length > 0"
          class="row vertical-align uploaded-files">
         <div class="col-sm-12 no-padding">
             <label>{{ field.options?.labels?.uploadedFiles ?  field.options.labels.uploadedFiles : 'Uploaded files'}}:</label>
             <ul class="uploaded-files-list">
-                <li *ngFor="let file of files">
+                <li *ngFor="let file of uploadedFiles">
                     <div class="uploaded-files-list-item">
                         <div class="list-item-wrapper">
                             <span (click)="cancelUpload(file)" class="delete-file">
@@ -57,8 +57,8 @@
                                 <i *ngSwitchCase="'application/msword'" class="fa fa-file-text-o txt"></i>
                                 <i *ngSwitchCase="'text/csv'" class="fa fa-file-code-o code"></i>
                                 <i *ngSwitchCase="'application/pdf'" class="fa fa-file-pdf-o pdf"></i>
-                                <i *ngSwitchCase="'image/jpeg'" class="fa fa-file-image-o img"></i>
-                                <i *ngSwitchCase="'image/png'" class="fa fa-file-image-o img"></i>
+                                <img *ngSwitchCase="'image/jpeg'" src="{{ file.path }}" />
+                                <img *ngSwitchCase="'image/png'" src="{{ file.path }}" />
                                 <i *ngSwitchCase="'application/zip'" class="fa fa-file-zip-o zip"></i>
                                 <i *ngSwitchDefault class="fa fa-file-o default"></i>
                             </div>

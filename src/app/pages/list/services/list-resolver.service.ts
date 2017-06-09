@@ -16,7 +16,6 @@ export class ListResolver implements Resolve<List> {
         return this.loadColumns(route.data['table']);
     }
 
-    // TODO: missing date rendering
     loadColumns(params: any): Promise<any> {
         return new Promise((resolve, reject) => {
             let requests = [];

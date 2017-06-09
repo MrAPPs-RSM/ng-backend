@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 
 import { GlobalState } from './global.state';
-import { BaImageLoaderService, BaThemePreloader } from './theme/services';
+import { BaImageLoaderService, BaThemePreloader, ModalHandler } from './theme/services';
 import { BaThemeConfig } from './theme/theme.config';
 import { layoutPaths } from './theme/theme.constants';
 
@@ -30,9 +30,11 @@ export class App implements OnInit {
                 private _state: GlobalState,
                 private _imageLoader: BaImageLoaderService,
                 private _toastManager: ToastsManager,
+                private _modalHandler: ModalHandler,
                 private themeConfig: BaThemeConfig
     ) {
         this._toastManager.setRootViewContainerRef(vcr);
+        this._modalHandler.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {

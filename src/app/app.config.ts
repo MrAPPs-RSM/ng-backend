@@ -2,6 +2,7 @@ export let config = {
     env: 'dev',
     api: {
         dev: {
+            baseFilesUrl: 'http://192.168.10.142:5555/files/output/',
             baseUrl: 'http://192.168.10.142:5555/api/'
         },
         prod: {

@@ -1,57 +1,44 @@
-import {Component} from '@angular/core';
-
-import {PieChartService} from './pieChart.service';
+import { Component, Input } from '@angular/core';
 
 import 'easy-pie-chart/dist/jquery.easypiechart.js';
 import 'style-loader!./pieChart.scss';
 
 @Component({
-  selector: 'pie-chart',
-  templateUrl: './pieChart.html'
+    selector: 'pie-chart',
+    templateUrl: './pieChart.html'
 })
-// TODO: move easypiechart to component
+
 export class PieChart {
 
-  public charts: Array<Object>;
-  private _init = false;
+    @Input() charts: Array<Object>;
+    private _init = false;
 
-  constructor(private _pieChartService: PieChartService) {
-    this.charts = this._pieChartService.getData();
-  }
-
-  ngAfterViewInit() {
-    if (!this._init) {
-      this._loadPieCharts();
-      this._updatePieCharts();
-      this._init = true;
+    constructor() {
     }
-  }
 
-  private _loadPieCharts() {
+    ngAfterViewInit() {
+        if (!this._init) {
+            this._loadPieCharts();
+            this._init = true;
+        }
+    }
 
-    jQuery('.chart').each(function () {
-      let chart = jQuery(this);
-      chart.easyPieChart({
-        easing: 'easeOutBounce',
-        onStep: function (from, to, percent) {
-          jQuery(this.el).find('.percent').text(Math.round(percent));
-        },
-        barColor: jQuery(this).attr('data-rel'),
-        trackColor: 'rgba(0,0,0,0)',
-        size: 84,
-        scaleLength: 0,
-        animation: 2000,
-        lineWidth: 9,
-        lineCap: 'round',
-      });
-    });
-  }
-
-  private _updatePieCharts() {
-    let getRandomArbitrary = (min, max) => { return Math.random() * (max - min) + min; };
-
-    jQuery('.pie-charts .chart').each(function(index, chart) {
-      jQuery(chart).data('easyPieChart').update(getRandomArbitrary(55, 90));
-    });
-  }
+    private _loadPieCharts() {
+        jQuery('.chart').each(function () {
+            let chart = jQuery(this);
+            chart.easyPieChart({
+                easing: 'easeOutBounce',
+                onStep: function (from, to, percent) {
+                    jQuery(this.el).find('.percent').text(Math.round(percent));
+                },
+                barColor: '#209e91',
+                trackColor: 'rgba(0,0,0,0)',
+                size: 84,
+                scaleLength: 0,
+                animation: 2000,
+                lineWidth: 8,
+                lineCap: 'round',
+            });
+        });
+    }
 }

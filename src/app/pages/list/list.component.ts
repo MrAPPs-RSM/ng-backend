@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../api';
-import { ToastHandler } from '../../theme/services';
+import { ToastHandler, ModalHandler } from '../../theme/services';
 import { ServerDataSource } from './data-source';
 import { TitleChecker } from '../services';
 
@@ -40,10 +40,11 @@ export class List implements OnInit {
                 protected _titleChecker: TitleChecker,
                 protected _route: ActivatedRoute,
                 protected _apiService: ApiService,
-                protected _toastManager: ToastHandler
-    ) {}
+                protected _modalHandler: ModalHandler,
+                protected _toastManager: ToastHandler) {
+    }
 
-    ngOnInit() {
+    ngOnInit() {
         this.params = this._route.snapshot.data;
         this._titleChecker.setCorrectTitle(this._route, this.params);
         this.loadSettings();
@@ -91,20 +92,20 @@ export class List implements OnInit {
     }
 
     onDelete(event: any): void {
-
-        // TODO: add a real dialog
-        if (window.confirm('Are you sure you want to delete?')) {
-
-            this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
-                .subscribe(
-                    res => {
-                        this._toastManager.success('Item deleted successfully');
-                        this.source.refresh();
-                    },
-                    error => {
-                        this._toastManager.error("Can't delete item, try again later");
-                    }
-                );
-        }
+        this._modalHandler.confirm('Delete item ' + event.data.id)
+            .then(() => {
+                this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
+                    .subscribe(
+                        res => {
+                            this._toastManager.success('Item deleted successfully');
+                            this.source.refresh();
+                        },
+                        error => {
+                            this._toastManager.error("Can't delete item, try again later");
+                        }
+                    );
+            })
+            .catch(() => {
+            });
     }
 }
