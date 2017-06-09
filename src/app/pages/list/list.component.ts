@@ -41,10 +41,10 @@ export class List implements OnInit {
                 protected _route: ActivatedRoute,
                 protected _apiService: ApiService,
                 protected _modalHandler: ModalHandler,
-                protected _toastManager: ToastHandler
-    ) {}
+                protected _toastManager: ToastHandler) {
+    }
 
-    ngOnInit() {
+    ngOnInit() {
         this.params = this._route.snapshot.data;
         this._titleChecker.setCorrectTitle(this._route, this.params);
         this.loadSettings();
@@ -92,22 +92,20 @@ export class List implements OnInit {
     }
 
     onDelete(event: any): void {
-
-        this._modalHandler.confirm();
-
-        // TODO: add a real dialog
-        if (window.confirm('Are you sure you want to delete?')) {
-
-            this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
-                .subscribe(
-                    res => {
-                        this._toastManager.success('Item deleted successfully');
-                        this.source.refresh();
-                    },
-                    error => {
-                        this._toastManager.error("Can't delete item, try again later");
-                    }
-                );
-        }
+        this._modalHandler.confirm('Delete item ' + event.data.id)
+            .then(() => {
+                this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
+                    .subscribe(
+                        res => {
+                            this._toastManager.success('Item deleted successfully');
+                            this.source.refresh();
+                        },
+                        error => {
+                            this._toastManager.error("Can't delete item, try again later");
+                        }
+                    );
+            })
+            .catch(() => {
+            });
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TitleChecker } from '../services';
 import { ActivatedRoute } from '@angular/router';
+import { dashboardConfig } from './dashboard.config';
 
 @Component({
     selector: 'dashboard',
@@ -9,7 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class Dashboard implements OnInit {
 
-    params: any = {}; // Setup params
+    public dashboardConfig: any = {};
+    public components: any = {};
+    private params: any = {}; // Setup params
 
     constructor(
         protected _route: ActivatedRoute,
@@ -17,12 +20,9 @@ export class Dashboard implements OnInit {
     }
 
     ngOnInit() {
-        this.params = {
-            menu: {
-                title: 'Dashboard',
-                breadcrumbLevel: 1
-            }
-        };
+        this.dashboardConfig = dashboardConfig;
+        this.params = this._route.snapshot.data.params;
+        this.components = this.params.components;
         this._titleChecker.setCorrectTitle(this._route, this.params);
     }
 

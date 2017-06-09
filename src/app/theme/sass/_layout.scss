@@ -247,3 +247,22 @@ a {
 .no-padding-right {
   padding-right: 0;
 }
+
+/* Modals */
+.modal-header-custom {
+  padding: 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-body-custom {
+  padding: 10px;
+}
+
+.modal-footer-custom {
+  padding: 10px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+  button {
+    margin: 0 5px 0 5px;
+  }
+}

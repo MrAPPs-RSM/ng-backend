@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Renderer, ViewChild } from '@angular/core';
 import { UploadOutput, UploadInput, UploadFile } from 'ngx-uploader';
-import { ToastHandler } from '../../../../theme/services';
+import { ToastHandler, ModalHandler } from '../../../../theme/services';
 
 import { FormGroup } from '@angular/forms';
 import { Utils } from '../../../../utils/utils';
@@ -14,8 +14,6 @@ import { config } from '../../../../app.config';
 })
 export class File implements OnInit {
 
-    // TODO handle multiple / non multiple upload
-
     @Input() form: FormGroup;
     @Input() field: any = {};
     @ViewChild('fileUpload') public _fileUpload: ElementRef;
@@ -25,12 +23,14 @@ export class File implements OnInit {
     dragOver: boolean;
     uploadedFiles: UploadedFile[] = [];
 
+    // TODO: this must be a backend logic (it's ok only is backend is loopback)
     static composeFilePath(file: any) {
         return config.api[config.env].baseFilesUrl + file.container + '/' + file.name;
     }
 
     constructor(protected _renderer: Renderer,
                 protected _apiService: ApiService,
+                protected _modalHandler: ModalHandler,
                 protected _toastManager: ToastHandler) {
     }
 
@@ -77,15 +77,21 @@ export class File implements OnInit {
     }
 
     onUploadOutput(output: UploadOutput): void {
-
         switch (output.type) {
             case 'allAddedToQueue': {
                 this.startUpload();
-                this._fileUpload.nativeElement.value = ''; // Clear always file input value to avoid errors
+                this._fileUpload.nativeElement.value = '';
             }
                 break;
             case 'addedToQueue': {
-                this.files.push(output.file);
+                // TODO fix with drag & drop and only single file
+                if (this.field.options.multiple ||
+                    (!this.field.options.multiple && this.uploadedFiles.length === 0)) {
+                    this.files.push(output.file);
+                } else {
+                    this._fileUpload.nativeElement.value = '';
+                    this._modalHandler.alert('Alert', 'Max number of files: 1');
+                }
             }
                 break;
             case 'uploading': {

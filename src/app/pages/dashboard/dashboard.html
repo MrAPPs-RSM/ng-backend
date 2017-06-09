@@ -1,10 +1,15 @@
-<!--<div class="row">
-  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <pie-chart></pie-chart>
-  </div>
+<div class="row">
+    <div *ngFor="let component of components">
+        <div [ngSwitch]="component.type">
+            <pie-chart
+                    *ngSwitchCase="dashboardConfig.types.PIE_CHARTS"
+                    [charts]="component.items"
+            ></pie-chart>
+        </div>
+    </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
                      title="Acquisition Channels" baCardClass="traffic-panel medium-card">
     <traffic-chart></traffic-chart>
@@ -37,12 +42,10 @@
     </ba-card>
   </div>
 
-</div> -->
+</div>
 
 <div class="row shift-up">
   <ba-card class="col-xlg-3 col-lg-6 col-md-12 col-sm-12 col-xs-12" title="To Do List"
            baCardClass="xmedium-card feed-comply-panel with-scroll todo-panel">
     <todo></todo>
-  </ba-card>
-</div>
-
+  </ba-card> -->

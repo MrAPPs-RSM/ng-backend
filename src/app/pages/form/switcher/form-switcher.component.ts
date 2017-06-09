@@ -9,6 +9,7 @@ export class FormSwitcher {
     @Input() form: FormGroup;
     @Input() fields: any = [];
     @Input() formConfig: any = {};
+    @Input() isEdit: boolean;
 
     constructor() {}
 }

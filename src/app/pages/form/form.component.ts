@@ -6,7 +6,7 @@ import { URLSearchParams } from '@angular/http';
 import { formConfig } from './form.config';
 import { FormLoaderService, FormHelperService } from './services';
 import { ApiService } from '../../api';
-import { ToastHandler } from '../../theme/services';
+import { ToastHandler, ModalHandler } from '../../theme/services';
 import { TitleChecker } from '../services';
 
 @Component({
@@ -30,6 +30,7 @@ export class Form implements OnInit {
                 protected _titleChecker: TitleChecker,
                 protected _loaderService: FormLoaderService,
                 protected _apiService: ApiService,
+                protected _modalHandler: ModalHandler,
                 protected _toastManager: ToastHandler) {
     }
 
@@ -89,41 +90,46 @@ export class Form implements OnInit {
     }
 
     onSubmit() {
-        if (this.id) {
-            this._apiService.patch(
-                this.params.api.endpoint + '/' + this.id,
-                this.payLoad
-            )
-                .subscribe(
-                    data => {
-                        this._toastManager.success();
-                        if (this.params.form.options.submit.redirectAfter) {
-                            this._router.navigate(
-                                ['pages/' + this.params.form.options.submit.redirectAfter]);
-                        }
-                    },
-                    error => {
-                        this._toastManager.error(error);
-                    }
-                );
-        } else {
-            this._apiService.put(
-                this.params.api.endpoint,
-                this.payLoad
-            )
-                .subscribe(
-                    data => {
-                        this._toastManager.success();
-                        if (this.params.form.options.submit.redirectAfter) {
-                            this._router.navigate(
-                                ['pages/' + this.params.form.options.submit.redirectAfter]);
-                        }
-                    },
-                    error => {
-                        this._toastManager.error(error);
-                    }
-                );
-        }
+        this._modalHandler.confirm('Confirm save')
+            .then(() => {
+                if (this.id) {
+                    this._apiService.patch(
+                        this.params.api.endpoint + '/' + this.id,
+                        this.payLoad
+                    )
+                        .subscribe(
+                            data => {
+                                this._toastManager.success();
+                                if (this.params.form.options.submit.redirectAfter) {
+                                    this._router.navigate(
+                                        ['pages/' + this.params.form.options.submit.redirectAfter]);
+                                }
+                            },
+                            error => {
+                                this._toastManager.error(error);
+                            }
+                        );
+                } else {
+                    this._apiService.put(
+                        this.params.api.endpoint,
+                        this.payLoad
+                    )
+                        .subscribe(
+                            data => {
+                                this._toastManager.success();
+                                if (this.params.form.options.submit.redirectAfter) {
+                                    this._router.navigate(
+                                        ['pages/' + this.params.form.options.submit.redirectAfter]);
+                                }
+                            },
+                            error => {
+                                this._toastManager.error(error);
+                            }
+                        );
+                }
+            })
+            .catch(() => {
+            });
     }
 
 }

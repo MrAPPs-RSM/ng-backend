@@ -14,6 +14,7 @@ import { ToastHandler } from '../../../../theme/services';
 export class ListDetails implements OnInit {
     @Input() form: FormGroup;
     @Input() field: any = {};
+    @Input() isEdit: boolean;
     @ViewChild('ngSelect') public ngSelect: SelectComponent;
 
     formValue: any[] = [];
@@ -43,7 +44,7 @@ export class ListDetails implements OnInit {
                 protected _toastHandler: ToastHandler) {
     }
 
-    get confirmDisabled(){
+    get confirmDisabled() {
         return Utils.isEmptyObject(this.selectedItem);
     }
 
@@ -74,7 +75,7 @@ export class ListDetails implements OnInit {
      * @returns {Promise<T>}
      */
     loadSelectValues(): Promise<any> {
-        return new Promise ((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             if (this.field.options.values instanceof Array) {
                 this.selectValues = this.field.options.values;
                 resolve();
@@ -86,8 +87,7 @@ export class ListDetails implements OnInit {
                             resolve();
                         },
                         error => {
-                            this._toastHandler.error(error);
-                            reject();
+                            reject(error);
                         }
                     );
             }
@@ -95,37 +95,43 @@ export class ListDetails implements OnInit {
     }
 
     /**
-     * Load pre-selected data (if present) and select options for list
+     * Load pre-selected data (if present)
      */
     loadData(): void {
-        this.form.controls[this.field.key].valueChanges
-            .first()
-            .subscribe(
-                data => {
-                    this.loadSelectValues()
-                        .then(() => {
-                            data.forEach((item) => {
-                                this.setSelectedItem({
-                                    id: item.id,
-                                    text: item.nome
+        if (this.isEdit) {
+            this.form.controls[this.field.key].valueChanges
+                .first()
+                .subscribe(
+                    data => {
+                        this.loadSelectValues()
+                            .then(() => {
+                                data.forEach((item) => {
+                                    this.setSelectedItem({
+                                        id: item.id,
+                                        text: item.nome
+                                    });
+                                    this.addItem();
                                 });
-                                this.addItem();
+                            })
+                            .catch((error) => {
+                                this._toastHandler.error(error);
                             });
-                        })
-                        .catch((error) => {
-                            this._toastHandler.error(error);
-                        });
-
-                }
-            );
+                    }
+                );
+        } else {
+            this.loadSelectValues()
+                .then(() => {})
+                .catch((error) => {
+                    this._toastHandler.error(error);
+                });
+        }
     }
-
 
     /**
      * Set the active item by the select option
      * @param value
      */
-    setSelectedItem(value: any): void {
+    setSelectedItem(value: any): void {
         this.selectedItem[this.tableKeys[0]] = value.id;
         this.selectedItem[this.tableKeys[1]] = value.text;
     }
@@ -170,6 +176,9 @@ export class ListDetails implements OnInit {
      * Confirm option after select options (add the selected item to the list)
      */
     addItem(): void {
+        console.log('ADD item');
+        console.log(this.selectValues);
+        console.log(this.selectedItem);
         this.dataSource.append(this.selectedItem);
         this.removeValueFromSelect();
         this.updateFormValue(this.selectedItem, true);

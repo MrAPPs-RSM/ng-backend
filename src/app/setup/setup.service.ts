@@ -50,10 +50,10 @@ export class SetupService {
         // Pages defined from retrieved data
         let apiPages = this.getPages(data.sections).children;
 
-        apiPages.map(function (item) {
+        apiPages.map((item) => {
             if (item.type === pageTypes.group) {
                 if (item.children) {
-                    item.children.map(function (child) {
+                    item.children.map((child) => {
                         for (let j = 0; j < standardPages.length; j++) {
                             if (standardPages[j].path === pageTypes[child.type]) {
                                 let childPage = {
@@ -76,6 +76,10 @@ export class SetupService {
                             data: item.params
                         };
                         standardPages.push(page);
+                        if (pageTypes[item.type] === 'dashboard') {
+                            // TODO handle better this
+                            localStorage.setItem('dashboard', JSON.stringify(item.params));
+                        }
                         break;
                     }
                 }

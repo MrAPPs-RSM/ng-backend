@@ -15,35 +15,36 @@ import { Feed } from './feed';
 import { Todo } from './todo';
 import { FeedService } from './feed/feed.service';
 import { LineChartService } from './lineChart/lineChart.service';
-import { PieChartService } from './pieChart/pieChart.service';
 import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
+import { DashboardResolver } from './services';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgaModule,
-    routing
-  ],
-  declarations: [
-    PopularApp,
-    PieChart,
-    TrafficChart,
-    UsersMap,
-    LineChart,
-    Feed,
-    Todo,
-    Dashboard
-  ],
-  providers: [
-    FeedService,
-    LineChartService,
-    PieChartService,
-    TodoService,
-    TrafficChartService,
-    UsersMapService
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgaModule,
+        routing
+    ],
+    declarations: [
+        PopularApp,
+        PieChart,
+        TrafficChart,
+        UsersMap,
+        LineChart,
+        Feed,
+        Todo,
+        Dashboard
+    ],
+    providers: [
+        DashboardResolver,
+        FeedService,
+        LineChartService,
+        TodoService,
+        TrafficChartService,
+        UsersMapService
+    ]
 })
-export class DashboardModule {}
+export class DashboardModule {
+}
