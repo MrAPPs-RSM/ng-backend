@@ -56,7 +56,7 @@ export class DoughnutChart {
                 this.items = data;
                 this._loadColors();
 
-                let el = jQuery('.chart-area').get(0) as HTMLCanvasElement;
+                let el = jQuery('.chart-area-' + this.config.id).get(0) as HTMLCanvasElement;
                 new Chart(el.getContext('2d')).Doughnut(this.items, {
                     segmentShowStroke: false,
                     percentageInnerCutout: 64,

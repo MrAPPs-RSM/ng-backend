@@ -1,6 +1,6 @@
 @import '../../../theme/sass/conf/conf';
 
-.chart-bg {
+/*.chart-bg {
   position: absolute;
   width: 180px;
   height: 180px;
@@ -8,7 +8,7 @@
   top: 60px;
   background-color: transparent;
   border-radius: 100px;
-}
+}*/
 
 .ng2, .blur {
   .doughnut-chart .canvas-holder {
@@ -32,27 +32,6 @@
   display: inline-block;
   padding: 70px 0 0 0;
   width: 160px;
-}
-
-.doughnut-legend ul.doughnut-legend {
-  li {
-    list-style: none;
-    font-size: 12px;
-    margin-bottom: 12px;
-    line-height: 16px;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 120px;
-    span {
-      float: left;
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
-    }
-  }
 }
 
 .canvas-holder {

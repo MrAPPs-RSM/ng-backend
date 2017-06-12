@@ -30,7 +30,7 @@ export class Select implements OnInit {
                     },
                     error => {
                         console.log(error);
-                        // TODO
+                        // TODO handle api error
                     }
                 );
         }
