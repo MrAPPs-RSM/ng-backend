@@ -1,11 +1,5 @@
 @import '../../../theme/sass/conf/conf';
 
-.channels-block {
-  width: 100%;
-  position: relative;
-}
-
-
 .chart-bg {
   position: absolute;
   width: 180px;
@@ -17,7 +11,7 @@
 }
 
 .ng2, .blur {
-  .traffic-chart .canvas-holder {
+  .doughnut-chart .canvas-holder {
     border: 15px solid rgba(0, 0, 0, 0.2);
     border-radius: 150px;
   }
@@ -27,45 +21,20 @@
   }
 }
 
-.channels-info {
-  display: inline-block;
-  width: calc(100% - 370px);
-  margin-left: 70px;
-  margin-top: -20px;
-}
-
-.small-container {
-  .channels-info {
-    display: none;
-  }
-}
-
-.channels-info-item {
-  p {
-    margin-bottom: 9px;
-    font-size: 18px;
-    opacity: 0.9;
-  }
-  .channel-number {
-    display: inline-block;
-    float: right;
-  }
-}
-
-.traffic-chart {
+.doughnut-chart {
   width: 300px;
   position: relative;
   min-height: 300px;
   float: left;
 }
 
-.traffic-legend {
+.doughnut-legend {
   display: inline-block;
   padding: 70px 0 0 0;
   width: 160px;
 }
 
-.traffic-legend ul.doughnut-legend {
+.doughnut-legend ul.doughnut-legend {
   li {
     list-style: none;
     font-size: 12px;
@@ -94,7 +63,7 @@
   float: left;
 }
 
-.traffic-text {
+.doughnut-text {
   width: 100%;
   height: 40px;
   position: absolute;
@@ -112,48 +81,31 @@
   }
 }
 
-.channel-change {
-  display: block;
-  margin-bottom: 12px;
-}
+.list-info {
+  list-style: none;
+  padding-left: 0;
 
-.channel-progress {
-  height: 4px;
-  border-radius: 0;
-  width: 100%;
-  margin-bottom: 0;
-  background-color: $progress-background;
-  box-shadow: none;
-  .progress-bar {
-    height: 4px;
-    background-color: $progress-default;
-    box-shadow: none;
+  li {
+    padding: 5px 0 0 0;
+    font-size: 15px;
+    .item-color{
+      width: 15px;
+      height: 15px;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+      position: relative;
+      border-radius: 15px;
+    }
   }
 }
 
-.legend-color {
-  width: 30px;
-  height: 30px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
-  position: relative;
-  top: 27px;
-  border-radius: 15px;
-  left: -45px;
-}
 
 @media (max-width: $resM) {
 
-  .card.medium-card.traffic-panel {
+  .card.medium-card.doughnut-panel {
     height: auto;
   }
 
-  div.channels-info {
-    display: block;
-    width: calc(100% - 88px);
-    margin-top: -65px;
-    margin-bottom: 10px;
-  }
-  .traffic-chart {
+  .doughnut-chart {
     position: inherit;
     float: none;
     margin: 0 auto;
@@ -165,10 +117,7 @@
 
 @media (max-width: 1465px) and (min-width: 1199px) {
 
-  .channels-info {
-    display: none;
-  }
-  .traffic-chart {
+  .doughnut-chart {
     position: inherit;
     float: none;
     margin: 0 auto;
@@ -181,7 +130,7 @@
 
 @media (max-width: 380px) {
 
-  .traffic-chart {
+  .doughnut-chart {
     width: 240px;
   }
 

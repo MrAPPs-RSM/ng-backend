@@ -8,7 +8,7 @@ import { routing }       from './dashboard.routing';
 
 import { PopularApp } from './popularApp';
 import { PieChart } from './pieChart';
-import { TrafficChart } from './trafficChart';
+import { DoughnutChart } from './doughnutChart';
 import { UsersMap } from './usersMap';
 import { LineChart } from './lineChart';
 import { Feed } from './feed';
@@ -16,7 +16,6 @@ import { Todo } from './todo';
 import { FeedService } from './feed/feed.service';
 import { LineChartService } from './lineChart/lineChart.service';
 import { TodoService } from './todo/todo.service';
-import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
 import { DashboardResolver } from './services';
 
@@ -30,7 +29,7 @@ import { DashboardResolver } from './services';
     declarations: [
         PopularApp,
         PieChart,
-        TrafficChart,
+        DoughnutChart,
         UsersMap,
         LineChart,
         Feed,
@@ -42,7 +41,6 @@ import { DashboardResolver } from './services';
         FeedService,
         LineChartService,
         TodoService,
-        TrafficChartService,
         UsersMapService
     ]
 })
