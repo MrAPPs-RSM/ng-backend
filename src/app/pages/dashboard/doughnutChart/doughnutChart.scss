@@ -1,23 +1,9 @@
 @import '../../../theme/sass/conf/conf';
 
-/*.chart-bg {
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  left: 60px;
-  top: 60px;
-  background-color: transparent;
-  border-radius: 100px;
-}*/
-
 .ng2, .blur {
   .doughnut-chart .canvas-holder {
     border: 15px solid rgba(0, 0, 0, 0.2);
     border-radius: 150px;
-  }
-
-  .chart-bg {
-    background-color: rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -36,8 +22,8 @@
 
 .canvas-holder {
   display: inline-block;
-  width: 300px;
-  height: 300px;
+  width: 275px;
+  height: 275px;
   position: relative;
   float: left;
 }
@@ -77,57 +63,13 @@
   }
 }
 
-
-@media (max-width: $resM) {
-
-  .card.medium-card.doughnut-panel {
-    height: auto;
-  }
-
-  .doughnut-chart {
-    position: inherit;
-    float: none;
-    margin: 0 auto;
-  }
-  .chart-bg {
-    left: calc(50% - 90px);
-  }
+.chart-area {
+  height: 275px;
+  width: 275px;
 }
 
-@media (max-width: 1465px) and (min-width: 1199px) {
-
-  .doughnut-chart {
-    position: inherit;
-    float: none;
-    margin: 0 auto;
-  }
-
-  .chart-bg {
-    left: calc(50% - 90px);
-  }
-}
-
-@media (max-width: 380px) {
-
-  .doughnut-chart {
-    width: 240px;
-  }
-
-  .canvas-holder {
-    width: 240px;
-    height: 240px;
-  }
-
-  .chart-bg {
-    top: 30px;
-  }
-}
-
-@media (max-width: 320px) {
-  .chart-bg {
-    left: 50px;
-    top: 50px;
-    width: 142px;
-    height: 142px;
-  }
+.doughnut-chart {
+  position: inherit;
+  float: none;
+  margin: 0 auto;
 }

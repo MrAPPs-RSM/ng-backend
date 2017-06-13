@@ -9,9 +9,9 @@ export let config = {
             baseUrl: 'api/backend/'
         }
     },
+    title: 'SM-Differenzia',
     auth: {
         config: {
-            title: 'SM-Differenzia',
             api: 'persons/login'
         },
         fields: [

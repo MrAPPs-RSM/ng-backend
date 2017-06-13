@@ -5,114 +5,88 @@ import { RouterModule } from '@angular/router';
 import { NgUploaderModule } from 'ngx-uploader';
 
 import {
-  BaThemeConfig
+    BaThemeConfig
 } from './theme.config';
 
 import {
-  BaThemeConfigProvider
+    BaThemeConfigProvider
 } from './theme.configProvider';
 
 import {
-  BaAmChart,
-  BaBackTop,
-  BaCard,
-  BaChartistChart,
-  BaCheckbox,
-  BaContentTop,
-  BaFullCalendar,
-  BaMenuItem,
-  BaMenu,
-  BaMsgCenter,
-  BaMultiCheckbox,
-  BaPageTop,
-  BaSidebar
+    BackToTop,
+    BaCard,
+    ContentTop,
+    MenuItem,
+    Menu,
+    PageTop,
+    Sidebar
 } from './components';
 
 import { BaCardBlur } from './components/baCard/baCardBlur.directive';
 
 import {
-  BaScrollPosition,
-  BaSlimScroll,
-  BaThemeRun
+    BaScrollPosition,
+    BaSlimScroll,
+    BaThemeRun
 } from './directives';
 
 import {
-  BaAppPicturePipe,
-  BaKameleonPicturePipe,
-  BaProfilePicturePipe
-} from './pipes';
-
-import {
-  BaImageLoaderService,
-  BaMenuService,
-  BaThemePreloader,
-  BaThemeSpinner
+    BaImageLoaderService,
+    BaMenuService,
+    BaThemePreloader,
+    BaThemeSpinner
 } from './services';
 
 const NGA_COMPONENTS = [
-  BaAmChart,
-  BaBackTop,
-  BaCard,
-  BaChartistChart,
-  BaCheckbox,
-  BaContentTop,
-  BaFullCalendar,
-  BaMenuItem,
-  BaMenu,
-  BaMsgCenter,
-  BaMultiCheckbox,
-  BaPageTop,
-  BaSidebar
+    BackToTop,
+    BaCard,
+    ContentTop,
+    MenuItem,
+    Menu,
+    PageTop,
+    Sidebar
 ];
 
 const NGA_DIRECTIVES = [
-  BaScrollPosition,
-  BaSlimScroll,
-  BaThemeRun,
-  BaCardBlur
-];
-
-const NGA_PIPES = [
-  BaAppPicturePipe,
-  BaKameleonPicturePipe,
-  BaProfilePicturePipe
+    BaScrollPosition,
+    BaSlimScroll,
+    BaThemeRun,
+    BaCardBlur
 ];
 
 const NGA_SERVICES = [
-  BaImageLoaderService,
-  BaThemePreloader,
-  BaThemeSpinner,
-  BaMenuService
+    BaImageLoaderService,
+    BaThemePreloader,
+    BaThemeSpinner,
+    BaMenuService
 ];
 
 @NgModule({
-  declarations: [
-    ...NGA_PIPES,
-    ...NGA_DIRECTIVES,
-    ...NGA_COMPONENTS
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgUploaderModule,
-  ],
-  exports: [
-    ...NGA_PIPES,
-    ...NGA_DIRECTIVES,
-    ...NGA_COMPONENTS
-  ]
+    declarations: [
+        ...NGA_DIRECTIVES,
+        ...NGA_COMPONENTS
+    ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgUploaderModule,
+    ],
+    exports: [
+        ...NGA_DIRECTIVES,
+        ...NGA_COMPONENTS
+    ]
 })
 export class NgaModule {
-  static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders> {
-      ngModule: NgaModule,
-      providers: [
-        BaThemeConfigProvider,
-        BaThemeConfig,
-        ...NGA_SERVICES
-      ],
-    };
-  }
+    static forRoot(): ModuleWithProviders {
+        return <ModuleWithProviders> {
+            ngModule: NgaModule,
+            providers: [
+                BaThemeConfigProvider,
+                BaThemeConfig,
+                ...NGA_SERVICES
+            ],
+        };
+    }
 }

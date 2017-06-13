@@ -1,17 +1,18 @@
-<ba-sidebar></ba-sidebar>
-<ba-page-top
-    [title]="params.title"
-></ba-page-top>
+<sidebar></sidebar>
+
+<page-top [title]="title"></page-top>
+
 <div class="al-main">
     <div class="al-content">
-        <ba-content-top></ba-content-top>
+        <content-top></content-top>
         <router-outlet></router-outlet>
     </div>
 </div>
-<!--<footer class="al-footer clearfix">
+
+<!-- <footer class="al-footer clearfix">
   <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
   <div class="al-footer-main clearfix">
-    <div class="al-copy">&copy; <a href="http://akveo.com">Akveo</a> 2016</div>
+    <div class="al-copy">&copy; <a href="http://www.mr-apps.com">MrApps</a> 2017</div>
     <ul class="al-share clearfix">
       <li><i class="socicon socicon-facebook"></i></li>
       <li><i class="socicon socicon-twitter"></i></li>
@@ -19,5 +20,6 @@
       <li><i class="socicon socicon-github"></i></li>
     </ul>
   </div>
-</footer>-->
-<ba-back-top position="200"></ba-back-top>
+</footer> -->
+
+<back-to-top [position]="200"></back-to-top>

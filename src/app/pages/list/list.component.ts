@@ -71,6 +71,8 @@ export class List implements OnInit {
         this.settings.noDataMessage =
             this.params.table.noDataMessage ? this.params.table.noDataMessage : 'No data found';
         this.settings.columns = this.params.table.columns;
+        this.settings.pager.perPage =
+            this.params.table.perPage ? this.params.table.perPage : this.settings.pager.perPage;
     }
 
     loadData(): void {

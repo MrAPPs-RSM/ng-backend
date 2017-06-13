@@ -1,15 +1,15 @@
-<ba-card class="col-sm-12" title="{{ config.title }}" baCardClass="doughnut-panel">
-
+<ba-card class="col-md-6 col-sm-12 col-xs-12" title="{{ config.title }}" baCardClass="doughnut-panel">
     <div class="row">
-        <div class="col-md-6 col-sm-12 col-xs-12" width="350px">
-            <div class="chart-bg"></div>
+        <div class="col-sm-12">
             <div class="doughnut-chart" id="doughnutChart">
                 <div class="canvas-holder">
-                    <canvas class="chart-area-{{ config.id }}" width="300px" height="300px"></canvas>
+                    <canvas id="chart-area-{{ config.id }}" class="chart-area"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-12 col-xs-12">
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
             <ul class="list-info">
                 <li *ngFor="let item of items">
                     <i class="fa fa-circle" [ngStyle]="{'color': item.color }"></i>
@@ -18,5 +18,4 @@
             </ul>
         </div>
     </div>
-
 </ba-card>

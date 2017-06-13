@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SelectComponent } from 'ng2-select';
 import { ApiService } from '../../../../api';
+import { ToastHandler } from '../../../../theme/services';
 
 @Component({
     selector: 'ui-select',
@@ -16,7 +17,8 @@ export class Select implements OnInit {
     items: any[] = [];
     value: any = {};
 
-    constructor(protected _apiService: ApiService) {
+    constructor(protected _apiService: ApiService,
+                protected _toastHandler: ToastHandler) {
     }
 
     ngOnInit() {
@@ -29,8 +31,7 @@ export class Select implements OnInit {
                         this.items = data;
                     },
                     error => {
-                        console.log(error);
-                        // TODO handle api error
+                        this._toastHandler.error(error);
                     }
                 );
         }

@@ -36,11 +36,7 @@ export class SetupService {
         });
     }
 
-    public loadRoutes(data: BackendData) {
-        console.log('[SETUP SERVICE]: Loading routes...');
-
-        // TODO handle more complicated paths
-
+    public loadRoutes(data: any[]) {
         let routerConfig = this._router.config;
 
         // Pages defined in pages.routing
@@ -48,7 +44,7 @@ export class SetupService {
         let standardPages = pagesRoute.children;
 
         // Pages defined from retrieved data
-        let apiPages = this.getPages(data.sections).children;
+        let apiPages = this.getPages(data).children;
 
         apiPages.map((item) => {
             if (item.type === pageTypes.group) {
@@ -104,12 +100,4 @@ export class SetupService {
         });
         return pages;
     }
-}
-
-// Interface for type safety
-interface BackendData {
-    settings: {
-        title?: string
-    },
-    sections: any[];
 }

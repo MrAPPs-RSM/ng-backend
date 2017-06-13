@@ -20,7 +20,6 @@ export class AuthService {
     }
 
     public login(body: string): Promise<any> {
-        console.log('[AUTH SERVICE]: Action: login');
         return new Promise((resolve, reject) => {
             this._apiService.post(
                 config.auth.config.api,

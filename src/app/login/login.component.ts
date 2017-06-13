@@ -15,6 +15,7 @@ import { ToastHandler } from '../theme/services';
 })
 export class Login implements OnInit {
 
+    public title: string;
     public config: any;
     public fields: any[];
     public form: FormGroup;
@@ -25,6 +26,7 @@ export class Login implements OnInit {
                 protected _authService: AuthService,
                 protected _router: Router,
                 protected _toastManager: ToastHandler) {
+        this.title = config.title;
     }
 
     public isValidField(key: any) {

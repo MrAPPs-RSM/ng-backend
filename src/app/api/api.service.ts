@@ -4,6 +4,7 @@ import { Http, Response, Headers, URLSearchParams, RequestOptionsArgs } from '@a
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
 
 import { config } from '../app.config';
 

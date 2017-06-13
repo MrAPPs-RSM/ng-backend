@@ -14,7 +14,7 @@ export class BaMenuService {
 
     public loadSidebar(data: any) {
         // Creating sidebar and pages
-        let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data.sections));
+        let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(data));
         this.menuItems.next(convertedRoutes);
     }
 

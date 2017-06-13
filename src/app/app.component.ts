@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 
 import { GlobalState } from './global.state';
-import { BaImageLoaderService, BaThemePreloader, ModalHandler } from './theme/services';
+import { ModalHandler } from './theme/services';
 import { BaThemeConfig } from './theme/theme.config';
-import { layoutPaths } from './theme/theme.constants';
 
 import 'style-loader!./app.scss';
 import 'style-loader!./theme/initial.scss';
 import { ToastsManager } from 'ng2-toastr';
+import { Title } from '@angular/platform-browser';
+import { config } from './app.config';
 
 /*
  * App Component
@@ -28,26 +29,21 @@ export class App implements OnInit {
 
     constructor(vcr: ViewContainerRef,
                 private _state: GlobalState,
-                private _imageLoader: BaImageLoaderService,
                 private _toastManager: ToastsManager,
                 private _modalHandler: ModalHandler,
-                private themeConfig: BaThemeConfig
+                private themeConfig: BaThemeConfig,
+                private _browserTitleService: Title
     ) {
+        this._browserTitleService.setTitle(config.title);
         this._toastManager.setRootViewContainerRef(vcr);
         this._modalHandler.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
         this.themeConfig.config();
-        this._loadImages();
         this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
             this.isMenuCollapsed = isCollapsed;
         });
-    }
-
-    private _loadImages(): void {
-        // register some loaders
-        BaThemePreloader.registerLoader(this._imageLoader.load(layoutPaths.images.root + 'sky-bg.jpg'));
     }
 
 }

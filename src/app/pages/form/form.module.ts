@@ -49,7 +49,7 @@ import {
         NguiDatetimePickerModule,
         TinymceModule.withConfig({}),
         AgmCoreModule.forRoot({
-            apiKey: '' // TODO: set google maps apiKey (but works also without it)
+            apiKey: '' // INFO: set google maps apiKey (but works also without it)
         }),
         CalendarModule.forRoot(),
         NgUploaderModule,

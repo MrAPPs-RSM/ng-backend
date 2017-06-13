@@ -1,6 +1,6 @@
 <div class="auth-main">
     <div class="auth-block">
-        <h1>{{ config.title }}</h1>
+        <h1>{{ title }}</h1>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
 
@@ -35,7 +35,7 @@
 
             <div class="form-group row">
                 <div class="offset-sm-2 col-sm-10">
-                    <button [disabled]="!form.valid" type="submit" class="btn btn-primary">Sign in</button>
+                    <button [disabled]="!form.valid" type="submit" class="btn btn-primary pull-right">Login</button>
                 </div>
             </div>
         </form>
