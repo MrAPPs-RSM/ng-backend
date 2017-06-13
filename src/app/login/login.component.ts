@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import 'style-loader!./login.scss';
@@ -19,7 +19,9 @@ export class Login implements OnInit {
     public config: any;
     public fields: any[];
     public form: FormGroup;
+    public isPwdShown: boolean = false;
     private payload: string = '';
+    @ViewChild('passwordInput') passwordInput;
 
     constructor(protected _loaderService: FormLoaderService,
                 protected _spinner: BaThemeSpinner,
@@ -57,5 +59,10 @@ export class Login implements OnInit {
                     this._toastManager.error(error);
                 });
         }
+    }
+
+    public changePwdType(): void {
+        this.isPwdShown = !this.isPwdShown;
+        this.passwordInput.nativeElement.type = this.isPwdShown ? 'text' : 'password';
     }
 }

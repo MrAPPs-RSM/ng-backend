@@ -1,1 +1,11 @@
 @import '../theme/sass/auth';
+
+.show-pwd-button{
+  cursor: pointer;
+  position: absolute;
+  top: 9px;
+  right: 25px;
+  z-index: 1;
+  font-size: 15px;
+  color: black;
+}

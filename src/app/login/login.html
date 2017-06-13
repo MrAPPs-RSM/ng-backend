@@ -8,7 +8,6 @@
                 <label for="{{ fields[0].key }}" class="col-sm-2 form-control-label">{{ fields[0].label }}</label>
                 <div class="col-sm-10">
                     <input
-                            value="root"
                             formControlName="{{ fields[0].key }}"
                             type="{{ fields[0].type }}"
                             class="form-control"
@@ -18,12 +17,18 @@
                 </div>
             </div>
 
-            <div [ngClass]="{'has-error': !isValidField(fields[1].key) && isTouchedField(fields[1].key), 'has-success': isValidField(fields[1].key) && isTouchedField(fields[1].key)}" class="form-group row">
+            <div [ngClass]="{'has-error': !isValidField(fields[1].key) && isTouchedField(fields[1].key), 'has-success': isValidField(fields[1].key) && isTouchedField(fields[1].key)}" class="form-group row"
+            style="position: relative">
                 <label for="{{ fields[1].key }}" class="col-sm-2 form-control-label">{{ fields[1].label }}</label>
+
+                <span class="show-pwd-button"
+                      (click)="changePwdType()">
+                    <i class="fa" [ngClass]="{'fa-eye': !isPwdShown, 'fa-eye-slash': isPwdShown}"></i>
+                </span>
 
                 <div class="col-sm-10">
                     <input
-                            value="root"
+                            #passwordInput
                             formControlName="{{ fields[1].key }}"
                             type="{{ fields[1].type }}"
                             class="form-control"
