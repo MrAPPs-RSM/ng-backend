@@ -176,9 +176,6 @@ export class ListDetails implements OnInit {
      * Confirm option after select options (add the selected item to the list)
      */
     addItem(): void {
-        console.log('ADD item');
-        console.log(this.selectValues);
-        console.log(this.selectedItem);
         this.dataSource.append(this.selectedItem);
         this.removeValueFromSelect();
         this.updateFormValue(this.selectedItem, true);

@@ -1,14 +1,17 @@
 <ba-card class="col-md-6 col-sm-12 col-xs-12" title="{{ config.title }}" baCardClass="doughnut-panel">
     <div class="row">
         <div class="col-sm-12">
-            <div class="doughnut-chart" id="doughnutChart">
+            <div [hidden]="!items.length > 0" class="doughnut-chart" id="doughnutChart">
                 <div class="canvas-holder">
                     <canvas id="chart-area-{{ config.id }}" class="chart-area"></canvas>
                 </div>
             </div>
+            <div [hidden]="items.length > 0" class="noChart">
+                <p class="alert alert-warning">No data found</p>
+            </div>
         </div>
     </div>
-    <div class="row">
+    <div [hidden]="!items.length > 0" class="row">
         <div class="col-sm-12">
             <ul class="list-info">
                 <li *ngFor="let item of items">

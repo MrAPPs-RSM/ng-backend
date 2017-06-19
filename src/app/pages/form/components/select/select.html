@@ -1,6 +1,5 @@
 <div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
-
-    <label>{{field.label}}</label>
+    <label class="select-label">{{field.label}}</label>
     <span *ngIf="field.validators && field.validators.required">*</span>
 
     <div class="form-group form-element ui-select-wrapper"
@@ -14,11 +13,10 @@
 
         <ng-select
                 #ngSelect
-                [multiple]="field.multiple"
-                [items]="items"
+                [multiple]="false"
+                [items]="selectValues"
                 (data)="refreshValue($event)"
-                placeholder="{{field.placeholder}}"
-                [formControlName]="field.key">
+                placeholder="{{field.placeholder}}">
         </ng-select>
     </div>
 

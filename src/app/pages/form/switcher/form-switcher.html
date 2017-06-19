@@ -47,7 +47,8 @@
         <ui-select
                 *ngSwitchCase="formConfig.types.SELECT"
                 [form]="form"
-                [field]="field">
+                [field]="field"
+                [isEdit]="isEdit">
         </ui-select>
 
         <date-range-picker

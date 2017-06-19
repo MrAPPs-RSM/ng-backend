@@ -92,7 +92,15 @@ export class BaMenuService {
             item.route.paths = item.route.path;
         } else {
             item.route.paths = parent && parent.route && parent.route.paths ? parent.route.paths.slice(0) : ['/'];
-            if (!!item.route.path) item.route.paths.push(item.route.path);
+            if (!!item.route.path) {
+                if (item.route.path.indexOf('/') !== -1) {
+                    item.route.path.split('/').forEach((itemRoute) => {
+                        item.route.paths.push(itemRoute);
+                    });
+                } else {
+                    item.route.paths.push(item.route.path);
+                }
+            }
         }
 
         if (object.children && object.children.length > 0) {

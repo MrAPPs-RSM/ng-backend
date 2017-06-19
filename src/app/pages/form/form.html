@@ -11,16 +11,21 @@
                 </form-switcher>
             </div>
 
-            <br>
-
-            <div class="row">
+            <div class="row button-row">
                 <div class="col-sm-12">
-                    <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-raised btn-hover pull-right"
-                            [disabled]="!isFormValid"> {{ params.form.options?.submit?.label ? params.form.options.submit.label : 'Save'}}
+                    <div *ngFor="let button of params.form.buttons">
+                        <button (click)="onButtonClick(button.redirectTo)" class="btn {{button.class}}">
+                            {{ button.content }}
+                            <i *ngIf="button.icon" class="fa {{button.icon}}"></i>
+                        </button>
+                    </div>
+                    <button type="button" (click)="onSubmit()" class="btn btn-primary pull-right"
+                            [disabled]="!isFormValid"> {{ params.form.options?.submit?.label ?
+                        params.form.options.submit.label : 'Save'}}
                     </button>
                 </div>
             </div>
-
         </form>
     </ba-card>
+
 </div>

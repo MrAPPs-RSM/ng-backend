@@ -176,7 +176,7 @@ export class File implements OnInit {
     }
 
     updateFormValue(): void {
-        this.form.controls[this.field.key].setValue(this.uploadedFiles);
+        this.form.controls[this.field.key].setValue(this.uploadedFiles.length > 0 ? this.uploadedFiles : null);
     }
 }
 

@@ -53,7 +53,7 @@ export class SetupService {
                         for (let j = 0; j < standardPages.length; j++) {
                             if (standardPages[j].path === pageTypes[child.type]) {
                                 let childPage = {
-                                    path: item.path + '/' + child.path,
+                                    path: child.path,
                                     loadChildren: standardPages[j].loadChildren,
                                     data: child.params
                                 };

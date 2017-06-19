@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../../../api';
 import { List }  from '../list.component';
 import { listConfig } from '../list.config';
-import { BooleanRender, DateRender } from '../views';
+import { BooleanRender, DateRender, ImageRender } from '../views';
 
 @Injectable()
 export class ListResolver implements Resolve<List> {
@@ -42,6 +42,11 @@ export class ListResolver implements Resolve<List> {
                         case listConfig.types.DATE: {
                             params.columns[key].type = listConfig.types.CUSTOM;
                             params.columns[key].renderComponent = DateRender;
+                        }
+                            break;
+                        case listConfig.types.IMAGE: {
+                            params.columns[key].type = listConfig.types.CUSTOM;
+                            params.columns[key].renderComponent = ImageRender;
                         }
                             break;
                         default: {

@@ -1,6 +1,6 @@
 @import "../../theme/sass/conf/conf";
 
-ba-card {
+ba-card  {
   position: relative;
   .loading {
     position: absolute;
@@ -91,8 +91,23 @@ ng2-smart-table {
     }
   }
 
+  a.ng2-smart-action {
+    &.ng2-smart-action-edit-edit {
+      button {
+        &.custom-action {
+          margin-left: 14px !important;
+        }
+      }
+    }
+  }
+
   nav.ng2-smart-pagination-nav {
     display: flex;
     justify-content: center;
   }
+}
+
+.list-image {
+  max-width: 75px;
+  max-height: 75px;
 }

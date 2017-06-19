@@ -40,8 +40,8 @@
   .list-item-wrapper {
     position: relative;
     img {
-      width: 60px;
-      height: 60px;
+      max-width: 75px;
+      max-height: 75px;
     }
     i {
       font-size: 50px;

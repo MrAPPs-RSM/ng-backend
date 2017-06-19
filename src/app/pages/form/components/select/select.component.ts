@@ -12,54 +12,99 @@ import { ToastHandler } from '../../../../theme/services';
 export class Select implements OnInit {
     @Input() form: FormGroup;
     @Input() field: any = {};
+    @Input() isEdit: boolean;
     @ViewChild('ngSelect') public ngSelect: SelectComponent;
 
-    items: any[] = [];
-    value: any = {};
+    selectValues: any[] = [];
+    value: any = null;
 
     constructor(protected _apiService: ApiService,
                 protected _toastHandler: ToastHandler) {
     }
 
-    ngOnInit() {
-        if (this.field.options instanceof Array) {
-            this.items = this.field.options;
-        } else {
-            this._apiService.get(this.field.options, false)
-                .subscribe(
-                    data => {
-                        this.items = data;
-                    },
-                    error => {
-                        this._toastHandler.error(error);
-                    }
-                );
-        }
-    }
-
     get isValid() {
         if (this.field.validators && this.field.validators.required) {
-            if (this.field.multiple) {
-                return this.value.length > 0;
-            } else {
-                return this.value.hasOwnProperty('id') && this.value.hasOwnProperty('text');
-            }
+            return this.value !== null;
         } else {
             return true;
         }
     }
 
-    public showClearButton() {
-        return this.field.multiple ? false : this.value.hasOwnProperty('id') && this.value.hasOwnProperty('text');
+    ngOnInit() {
+        this.loadData();
     }
 
-    public clearValue(): void {
+    /**
+     * Load select options
+     * @returns {Promise<T>}
+     */
+    loadSelectValues(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.field.values instanceof Array) {
+                this.selectValues = this.field.values;
+                resolve();
+            } else {
+                this._apiService.get(this.field.values)
+                    .subscribe(
+                        data => {
+                            this.selectValues = data;
+                            resolve();
+                        },
+                        error => {
+                            reject(error);
+                        }
+                    );
+            }
+        });
+    }
+
+    /**
+     * Load pre-selected data (if present)
+     */
+    loadData(): void {
+        if (this.isEdit) {
+            this.form.controls[this.field.key].valueChanges
+                .first()
+                .subscribe(
+                    value => {
+                        this.loadSelectValues()
+                            .then(() => {
+                                this.selectValues.forEach((item, index) => {
+                                    if (item.id === value) {
+                                        this.ngSelect.active = [this.selectValues[index]];
+                                        this.refreshValue(this.selectValues[index]);
+                                    }
+                                });
+                            })
+                            .catch((error) => {
+                                this._toastHandler.error(error);
+                            });
+                    }
+                );
+        } else {
+            this.loadSelectValues()
+                .then(() => {})
+                .catch((error) => {
+                    this._toastHandler.error(error);
+                });
+        }
+    }
+
+    showClearButton(): boolean {
+        return this.value !== null;
+    }
+
+    clearValue(): void {
         this.ngSelect.active = [];
-        this.form.controls[this.field.key].reset();
-        this.refreshValue({});
+        this.refreshValue(null);
     }
 
-    public refreshValue(value: any): void {
-        this.value = value;
+    refreshValue(value: any): void {
+        this.value = value ? value.id : null;
+        this.refreshFormValue();
+    }
+
+    refreshFormValue(): void {
+        this.form.controls[this.field.key].setValue(this.value);
     }
 }

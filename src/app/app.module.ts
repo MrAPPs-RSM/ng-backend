@@ -7,6 +7,7 @@ import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularcla
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+
 /*
  * Platform and Environment providers/directives/pipes
  */

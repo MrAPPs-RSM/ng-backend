@@ -132,4 +132,10 @@ export class Form implements OnInit {
             });
     }
 
+    onButtonClick(redirectTo: string): void {
+        if (redirectTo.indexOf(':id') !== -1) {
+            redirectTo = redirectTo.replace(':id', this.id);
+        }
+        this._router.navigate(['pages/' + redirectTo]);
+    }
 }
