@@ -53,7 +53,7 @@ module.exports = function (env) {
        * See: http://webpack.github.io/docs/configuration.html#output-path
        */
       path: helpers.root('dist'),
-      publicPath: 'assets/',
+      publicPath: 'admin/assets/',
 
       /**
        * Specifies the name of each output file on disk.
