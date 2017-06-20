@@ -23,7 +23,8 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
   host: HOST,
   port: PORT,
   ENV: ENV,
-  HMR: false
+  HMR: false,
+  baseUrl: 'admin/'
 });
 
 module.exports = function (env) {
@@ -220,7 +221,6 @@ module.exports = function (env) {
         minimize: true,
         debug: false,
         options: {
-          metadata: {baseUrl: 'admin/'},
           context: helpers.root('src'),
           output: {
             path: helpers.root('dist'),
