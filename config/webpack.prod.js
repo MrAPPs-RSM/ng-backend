@@ -220,6 +220,7 @@ module.exports = function (env) {
         minimize: true,
         debug: false,
         options: {
+          metadata: {baseUrl: 'admin/'},
           context: helpers.root('src'),
           output: {
             path: helpers.root('dist'),
