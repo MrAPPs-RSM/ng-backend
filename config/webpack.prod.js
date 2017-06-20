@@ -222,7 +222,8 @@ module.exports = function (env) {
         options: {
           context: helpers.root('src'),
           output: {
-            path: helpers.root('dist')
+            path: helpers.root('dist'),
+            publicPath: helpers.root('dist')+'/assets/'
           },
 
           /**
