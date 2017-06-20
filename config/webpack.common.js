@@ -81,6 +81,10 @@ module.exports = function (options) {
 
     },
 
+    output: {
+      publicPath: '/dist/assets/'
+    },
+
     /*
      * Options affecting the normal modules.
      *
