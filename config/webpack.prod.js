@@ -26,7 +26,7 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
   port: PORT,
   ENV: ENV,
   HMR: false,
-  baseUrl: '/admin/'
+  baseUrl: 'admin/'
 });
 
 module.exports = function (env) {
@@ -53,7 +53,7 @@ module.exports = function (env) {
        * See: http://webpack.github.io/docs/configuration.html#output-path
        */
       path: helpers.root('dist'),
-      publicPath: 'assets/',
+      publicPath: 'admin/',
 
       /**
        * Specifies the name of each output file on disk.
