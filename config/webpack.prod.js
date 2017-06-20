@@ -23,8 +23,7 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
   host: HOST,
   port: PORT,
   ENV: ENV,
-  HMR: false,
-  baseUrl: 'admin/'
+  HMR: false
 });
 
 module.exports = function (env) {
@@ -224,7 +223,7 @@ module.exports = function (env) {
           context: helpers.root('src'),
           output: {
             path: helpers.root('dist'),
-            publicPath: helpers.root('dist')+'/assets/'
+            publicPath: helpers.root('dist')+'/assetsaaa/'
           },
 
           /**
