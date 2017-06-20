@@ -7,6 +7,7 @@ import { ViewCell } from 'ng2-smart-table';
 })
 export class BooleanRender implements ViewCell {
 
+    rowData: any;
     renderValue: boolean;
 
     @Input() value: any;

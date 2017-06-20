@@ -7,6 +7,7 @@ import { NguiDatetime } from '@ngui/datetime-picker';
 })
 export class DateRender implements ViewCell {
 
+    rowData: any;
     renderValue: string;
 
     @Input() value: any;

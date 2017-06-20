@@ -8,6 +8,7 @@ import { config } from '../../../../app.config';
 })
 export class ImageRender implements ViewCell {
 
+    rowData: any;
     renderValue: string;
 
     @Input() value: any;
