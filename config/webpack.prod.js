@@ -13,6 +13,8 @@ const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplaceme
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
+//const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 /**
  * Webpack Constants
  */
@@ -23,7 +25,8 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
   host: HOST,
   port: PORT,
   ENV: ENV,
-  HMR: false
+  HMR: false,
+  baseUrl: '/admin/'
 });
 
 module.exports = function (env) {
@@ -50,6 +53,7 @@ module.exports = function (env) {
        * See: http://webpack.github.io/docs/configuration.html#output-path
        */
       path: helpers.root('dist'),
+      publicPath: helpers.root('dist')+'/assets/',
 
       /**
        * Specifies the name of each output file on disk.
@@ -223,7 +227,7 @@ module.exports = function (env) {
           context: helpers.root('src'),
           output: {
             path: helpers.root('dist'),
-            publicPath: helpers.root('dist')+'/assetsaaa/'
+            publicPath: helpers.root('dist')+'/assets/'
           },
 
           /**
