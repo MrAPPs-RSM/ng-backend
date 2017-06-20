@@ -1,6 +1,5 @@
 <aside class="al-sidebar" (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
-    <div class="main-navigation">
-        <i class="fa fa-caret-right" [hidden]="!sidebarCollapsed"></i>
+    <div class="main-navigation" [hidden]="sidebarCollapsed">
         <span [hidden]="sidebarCollapsed">Menu</span>
     </div>
     <ul id="al-sidebar-list" class="al-sidebar-list" baSlimScroll [baSlimScrollOptions]="{height: menuHeight}">

@@ -1,24 +1,23 @@
-<ba-card class="col-md-6 col-sm-12 col-xs-12" title="{{ config.title }}" baCardClass="doughnut-panel">
-    <div class="row">
-        <div class="col-sm-12">
-            <div [hidden]="!items.length > 0" class="doughnut-chart" id="doughnutChart">
-                <div class="canvas-holder">
-                    <canvas id="chart-area-{{ config.id }}" class="chart-area"></canvas>
+<div *ngIf="isDataAvailable">
+    <ba-card class="col-md-6 col-sm-12 col-xs-12" title="{{ config.title }}" baCardClass="doughnut-panel">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="doughnut-chart" id="doughnutChart">
+                    <div class="canvas-holder">
+                        <canvas id="chart-area-{{ config.id }}" class="chart-area"></canvas>
+                    </div>
                 </div>
             </div>
-            <div [hidden]="items.length > 0" class="noChart">
-                <p class="alert alert-warning">No data found</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="list-info">
+                    <li *ngFor="let item of items">
+                        <i class="fa fa-circle" [ngStyle]="{'color': item.color }"></i>
+                        <strong>{{ item.label }}</strong> - {{ item.percentage }} %
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
-    <div [hidden]="!items.length > 0" class="row">
-        <div class="col-sm-12">
-            <ul class="list-info">
-                <li *ngFor="let item of items">
-                    <i class="fa fa-circle" [ngStyle]="{'color': item.color }"></i>
-                    <strong>{{ item.label }}</strong> - {{ item.percentage }} %
-                </li>
-            </ul>
-        </div>
-    </div>
-</ba-card>
+    </ba-card>
+</div>

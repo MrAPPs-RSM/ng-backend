@@ -1,12 +1,13 @@
 export let config = {
-    env: 'dev',
+    env: 'prod',
     api: {
         dev: {
             baseFilesUrl: 'http://192.168.10.142:5555/files/output/',
             baseUrl: 'http://192.168.10.142:5555/api/'
         },
         prod: {
-            baseUrl: 'api/backend/'
+            baseFilesUrl: 'http://192.168.10.142:5555/files/output/',
+            baseUrl: 'http://192.168.10.142:5555/api/'
         }
     },
     title: 'SM-Differenzia',

@@ -21,7 +21,7 @@ export class Dashboard implements OnInit {
 
     ngOnInit() {
         this.dashboardConfig = dashboardConfig;
-        this.params = this._route.snapshot.data.params;
+        this.params = this._route.snapshot.data['params'];
         this.components = this.params.components;
         this._titleChecker.setCorrectTitle(this._route, this.params);
     }

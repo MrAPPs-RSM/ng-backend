@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import 'style-loader!./doughnutChart.scss';
 import { colorHelper } from '../../../theme/theme.constants';
@@ -11,17 +11,30 @@ import { ToastHandler } from '../../../theme/services/';
     templateUrl: './doughnutChart.html'
 })
 
-export class DoughnutChart {
+export class DoughnutChart implements OnInit {
 
     @Input() config: any;
     items: any[] = [];
+    isDataAvailable: boolean = false;
 
     constructor(protected _apiService: ApiService,
                 protected _toastManager: ToastHandler) {
     }
 
-    ngAfterViewInit() {
-        this._loadDoughnutCharts();
+    ngOnInit() {
+        this._loadItems()
+            .then((data) => {
+                this.items = data;
+                this._loadColors();
+                this.isDataAvailable = true;
+
+                setTimeout(() => {
+                    this._loadDoughnutCharts();
+                }, 200);
+            })
+            .catch((error) => {
+                this._toastManager.error(error);
+            });
     }
 
     private _loadItems(): Promise<any> {
@@ -50,21 +63,11 @@ export class DoughnutChart {
     }
 
     private _loadDoughnutCharts(): void {
-
-        this._loadItems()
-            .then((data) => {
-                this.items = data;
-                this._loadColors();
-
-                let el = jQuery('#chart-area-' + this.config.id).get(0) as HTMLCanvasElement;
-                new Chart(el.getContext('2d')).Doughnut(this.items, {
-                    segmentShowStroke: false,
-                    percentageInnerCutout: 64,
-                    responsive: true
-                });
-            })
-            .catch((error) => {
-                this._toastManager.error(error);
-            });
+        let el = jQuery('#chart-area-' + this.config.id).get(0) as HTMLCanvasElement;
+        new Chart(el.getContext('2d')).Doughnut(this.items, {
+            segmentShowStroke: false,
+            percentageInnerCutout: 64,
+            responsive: true
+        });
     }
 }
