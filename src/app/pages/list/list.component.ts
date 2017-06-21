@@ -4,7 +4,7 @@ import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../api';
 import { ToastHandler, ModalHandler } from '../../theme/services';
-import { ServerDataSource } from './data-source';
+import { ServerDataSource } from './../ng2-smart-table';
 import { TitleChecker } from '../services';
 
 @Component({
@@ -83,6 +83,10 @@ export class List implements OnInit {
             this._apiService,
             this.params.api
         );
+    }
+
+    onRowDrop(event: any): void {
+        console.log(event);
     }
 
     onCreate(): void {

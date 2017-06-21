@@ -1,9 +1,10 @@
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource } from '../local/local.data-source';
 import { RequestOptionsArgs } from '@angular/http/src/interfaces';
 import { URLSearchParams } from '@angular/http';
-import { ApiService } from '../../../api';
 import { ActivatedRoute } from '@angular/router';
-import { ToastHandler } from '../../../theme/services';
+import { ToastHandler } from '../../../../../theme/services';
+import { ApiService } from '../../../../../api';
+import { isNullOrUndefined } from 'util';
 
 export class ServerDataSource extends LocalDataSource {
 
@@ -199,8 +200,6 @@ export class ServerDataSource extends LocalDataSource {
     }
 
     protected emitOnChanged(action: string): void {
-
-        console.log(action);
         if (this.timeoutHandler) {
             clearTimeout(this.timeoutHandler);
         }

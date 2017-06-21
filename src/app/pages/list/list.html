@@ -2,6 +2,8 @@
     <ng2-smart-table
             [settings]="settings"
             [source]="source"
+            [dragulaRows]="'1'"
+            (dragulaRowDrop)="onRowDrop($event)"
             (create)="onCreate()"
             (delete)="onDelete($event)"
             (edit)="onEdit($event)"

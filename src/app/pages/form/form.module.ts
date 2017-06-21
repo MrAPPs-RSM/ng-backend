@@ -7,9 +7,9 @@ import { TinymceModule } from 'angular2-tinymce';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { AgmCoreModule } from '@agm/core';
 import { NgUploaderModule } from 'ngx-uploader';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CalendarModule } from 'angular-calendar';
 import { ColorPickerModule } from 'angular2-color-picker';
+import { Ng2SmartTableModule } from '../ng2-smart-table';
 
 import { routing } from './form.routing';
 
@@ -47,6 +47,7 @@ import {
         CommonModule,
         ReactiveFormsModule,
         NgaModule,
+        Ng2SmartTableModule,
         SelectModule,
         NguiDatetimePickerModule,
         TinymceModule.withConfig({}),
@@ -56,7 +57,6 @@ import {
         CalendarModule.forRoot(),
         ColorPickerModule,
         NgUploaderModule,
-        Ng2SmartTableModule,
         routing
     ],
     declarations: [
