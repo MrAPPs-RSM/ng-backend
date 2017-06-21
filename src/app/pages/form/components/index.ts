@@ -2,6 +2,7 @@ export * from './text';
 export * from './textarea';
 export * from './email';
 export * from './url';
+export * from './colorPicker';
 export * from './number';
 export * from './password';
 export * from './checkbox';

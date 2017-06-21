@@ -9,6 +9,7 @@ import { AgmCoreModule } from '@agm/core';
 import { NgUploaderModule } from 'ngx-uploader';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CalendarModule } from 'angular-calendar';
+import { ColorPickerModule } from 'angular2-color-picker';
 
 import { routing } from './form.routing';
 
@@ -16,13 +17,14 @@ import { Form } from './form.component';
 import { FormSwitcher } from './switcher';
 
 import { Text, TextArea, Email, Url, Number, Password, CheckBox, Select, DatePicker,
-DateRangePicker, LatLng, File, ListDetails, Calendar } from './components';
+DateRangePicker, LatLng, File, ListDetails, Calendar, ColorPicker } from './components';
 
 const FORM_COMPONENTS = [
     Text,
     TextArea,
     Email,
     Url,
+    ColorPicker,
     Number,
     Password,
     CheckBox,
@@ -52,6 +54,7 @@ import {
             apiKey: '' // INFO: set google maps apiKey (but works also without it)
         }),
         CalendarModule.forRoot(),
+        ColorPickerModule,
         NgUploaderModule,
         Ng2SmartTableModule,
         routing

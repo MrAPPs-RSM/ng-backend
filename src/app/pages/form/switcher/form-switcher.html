@@ -8,6 +8,13 @@
                 [field]="field">
         </input-text>
 
+        <color-picker
+                *ngSwitchCase="formConfig.types.COLOR"
+                [form]="form"
+                [field]="field"
+                [isEdit]="isEdit">
+        </color-picker>
+
         <input-text-area
                 *ngSwitchCase="formConfig.types.TEXTAREA"
                 [form]="form"

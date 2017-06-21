@@ -6,7 +6,7 @@
             (delete)="onDelete($event)"
             (edit)="onEdit($event)"
     ></ng2-smart-table>
-    <div id="list-spinner" [hidden]="source.dataLoaded">
+    <div id="list-spinner" [hidden]="!source.isLoading">
         <div></div>
     </div>
 </ba-card>

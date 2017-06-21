@@ -19,7 +19,7 @@ export class ServerDataSource extends LocalDataSource {
     protected pagingConf: any = {};
 
     protected timeoutHandler: any;
-    protected isLoading = false;
+    protected isLoading: boolean = false;
 
     protected conf: any = {
         api: {
@@ -33,8 +33,6 @@ export class ServerDataSource extends LocalDataSource {
     };
 
     protected lastRequestCount: number = 0;
-
-    public dataLoaded: boolean = false;
 
     constructor(
         protected _toastHandler: ToastHandler,
@@ -57,7 +55,6 @@ export class ServerDataSource extends LocalDataSource {
     }
 
     getElements(): Promise<any> {
-        this.dataLoaded = false;
         return new Promise((resolve, reject) => {
             this._apiService.get(
                 this.conf.api.endpoint + '/count',
@@ -71,7 +68,6 @@ export class ServerDataSource extends LocalDataSource {
                     ).subscribe(
                         data => {
                             this.data = data;
-                            this.dataLoaded = true;
                             resolve(this.data);
                         },
                         error => {
@@ -204,6 +200,7 @@ export class ServerDataSource extends LocalDataSource {
 
     protected emitOnChanged(action: string): void {
 
+        console.log(action);
         if (this.timeoutHandler) {
             clearTimeout(this.timeoutHandler);
         }
