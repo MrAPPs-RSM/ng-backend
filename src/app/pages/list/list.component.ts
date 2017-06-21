@@ -7,7 +7,6 @@ import { ToastHandler, ModalHandler } from '../../theme/services';
 import { ServerDataSource } from './data-source';
 import { TitleChecker } from '../services';
 
-
 @Component({
     selector: 'list',
     templateUrl: './list.html',

@@ -21,6 +21,7 @@ export class Form implements OnInit {
     public fields: any = {};
     public form: FormGroup;
     public payLoad: string = '';
+    public dataLoaded: boolean = false;
 
     private params: any = {}; // Setup params
     private id: number = null;
@@ -77,6 +78,7 @@ export class Form implements OnInit {
                                 this.form.controls[key].setValue(data[key]);
                             }
                         });
+                        this.dataLoaded = true;
                     },
                     error => {
                         this._toastManager.error(error);

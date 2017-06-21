@@ -26,11 +26,13 @@ export class DoughnutChart implements OnInit {
             .then((data) => {
                 this.items = data;
                 this._loadColors();
-                this.isDataAvailable = true;
 
-                setTimeout(() => {
-                    this._loadDoughnutCharts();
-                }, 200);
+                if (this.items.length > 0) {
+                    this.isDataAvailable = true;
+                    setTimeout(() => {
+                        this._loadDoughnutCharts();
+                    }, 200);
+                }
             })
             .catch((error) => {
                 this._toastManager.error(error);

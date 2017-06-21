@@ -26,6 +26,9 @@
                 </div>
             </div>
         </form>
+        <div *ngIf="id" id="form-spinner" [hidden]="dataLoaded">
+            <div></div>
+        </div>
     </ba-card>
 
 </div>
