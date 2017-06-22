@@ -1,0 +1,51 @@
+<div [ngSwitch]="getEditorType()">
+    <select-editor *ngSwitchCase="'list'"
+                   [cell]="cell"
+                   [inputClass]="inputClass"
+                   (onClick)="onClick($event)"
+                   (onEdited)="onEdited($event)"
+                   (onStopEditing)="onStopEditing()">
+    </select-editor>
+
+    <textarea-editor *ngSwitchCase="'textarea'"
+                     [cell]="cell"
+                     [inputClass]="inputClass"
+                     (onClick)="onClick($event)"
+                     (onEdited)="onEdited($event)"
+                     (onStopEditing)="onStopEditing()">
+    </textarea-editor>
+
+    <checkbox-editor *ngSwitchCase="'checkbox'"
+                     [cell]="cell"
+                     [inputClass]="inputClass"
+                     (onClick)="onClick($event)">
+    </checkbox-editor>
+
+    <completer-editor *ngSwitchCase="'completer'"
+                      [cell]="cell">
+    </completer-editor>
+
+    <password-editor *ngSwitchCase="'password'"
+                     [cell]="cell"
+                     [inputClass]="inputClass"
+                     (onClick)="onClick($event)"
+                     (onEdited)="onEdited($event)"
+                     (onStopEditing)="onStopEditing()">
+    </password-editor>
+
+    <number-editor *ngSwitchCase="'number'"
+                [cell]="cell"
+                [inputClass]="inputClass"
+                (onClick)="onClick($event)"
+                (onEdited)="onEdited($event)"
+                (onStopEditing)="onStopEditing()">
+    </number-editor>
+
+    <input-editor *ngSwitchDefault
+                  [cell]="cell"
+                  [inputClass]="inputClass"
+                  (onClick)="onClick($event)"
+                  (onEdited)="onEdited($event)"
+                  (onStopEditing)="onStopEditing()">
+    </input-editor>
+</div>

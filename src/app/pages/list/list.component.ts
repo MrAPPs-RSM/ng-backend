@@ -4,7 +4,7 @@ import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../api';
 import { ToastHandler, ModalHandler } from '../../theme/services';
-import { ServerDataSource } from './data-source';
+import { ServerDataSource } from './../ng2-smart-table';
 import { TitleChecker } from '../services';
 
 @Component({
@@ -24,6 +24,9 @@ export class List implements OnInit {
         },
         delete: {
             deleteButtonContent: '<span class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></span>'
+        },
+        custom: {
+            customButtonContent: ''
         },
         actions: {},
         columns: {},
@@ -54,7 +57,7 @@ export class List implements OnInit {
     loadSettings(): void {
         let actions = {};
         Object.keys(this.params.table.actions).forEach((key) => {
-            if (key === 'add' || key === 'edit' || key === 'delete') {
+            if (key === 'add' || key === 'edit' || key === 'delete' || key === 'custom') {
                 actions[key] = this.params.table.actions[key].enable;
                 if (this.params.table.actions[key].style) {
                     let content = '<span class="btn btn-xs ' +
@@ -69,7 +72,7 @@ export class List implements OnInit {
         });
 
         this.settings.columns = this.params.table.columns;
-        this.settings.actions = actions;
+        this.settings.actions = this.params.table.actions;
         this.settings.noDataMessage =
             this.params.table.noDataMessage ? this.params.table.noDataMessage : 'No data found';
         this.settings.pager.perPage =
@@ -81,7 +84,23 @@ export class List implements OnInit {
             this._toastManager,
             this._route,
             this._apiService,
-            this.params.api
+            this.params.api,
+            this.params.table.enableDrag
+        );
+    }
+
+    onRowDrop(event: any): void {
+        this._apiService.patch(
+            this.params.api.endpoint + '/sort',
+            JSON.stringify({oldWeight: event.oldRowIndex, newWeight: event.newRowIndex})
+        ).subscribe(
+            res => {
+                this._toastManager.success('Sort successfully');
+                this.source.refresh();
+            },
+            error => {
+                this._toastManager.error('Error while sorting');
+            }
         );
     }
 
@@ -110,5 +129,13 @@ export class List implements OnInit {
             })
             .catch(() => {
             });
+    }
+
+    onCustom(event: any): void {
+        let redirectTo = this.params.table.actions.custom.path;
+        if (redirectTo.indexOf(':id') !== -1) {
+            redirectTo = redirectTo.replace(':id', event.data.id);
+        }
+        this._router.navigate(['pages/' + redirectTo]);
     }
 }

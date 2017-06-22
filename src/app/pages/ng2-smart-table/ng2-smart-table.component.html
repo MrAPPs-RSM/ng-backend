@@ -1,0 +1,53 @@
+<ng2-smart-table-pager *ngIf="grid.getSetting('pager.display') && (paginationPosition==='top' || paginationPosition==='top&bottom')"
+                       [source]="source"
+                       (changePage)="changePage($event)">
+</ng2-smart-table-pager>
+
+<table [id]="grid.getSetting('attr.id')" [ngClass]="grid.getSetting('attr.class')">
+
+    <thead ng2-st-thead *ngIf="!grid.getSetting('hideHeader') || !grid.getSetting('hideSubHeader')"
+           [grid]="grid"
+           [isAllSelected]="isAllSelected"
+           [source]="source"
+           (create)="create.emit($event)"
+           (selectAllRows)="onSelectAllRows($event)"
+           (sort)="sort($event)"
+           (filter)="filter($event)">
+    </thead>
+
+    <tbody ng2-st-tbody [grid]="grid"
+           [source]="source"
+           (custom)="custom.emit($event)"
+           (edit)="edit.emit($event)"
+           (delete)="delete.emit($event)"
+           (userSelectRow)="onUserSelectRow($event)"
+           (editRowSelect)="editRowSelect($event)"
+           (multipleSelectRow)="multipleSelectRow($event)"
+           (rowHover)="onRowHover($event)"
+           [enableDrag]="false"
+           *ngIf="!enableDrag">
+    </tbody>
+
+    <tbody ng2-st-tbody [grid]="grid"
+           [source]="source"
+           (custom)="custom.emit($event)"
+           (edit)="edit.emit($event)"
+           (delete)="delete.emit($event)"
+           (userSelectRow)="onUserSelectRow($event)"
+           (editRowSelect)="editRowSelect($event)"
+           (multipleSelectRow)="multipleSelectRow($event)"
+           (rowHover)="onRowHover($event)"
+           *ngIf="enableDrag"
+           [enableDrag]="true"
+           [dragula]="enableDrag"
+           [dragulaModel]="grid.getRows()"
+           [dragulaOptions]="dragulaRowsOptions">
+    </tbody>
+
+</table>
+
+<ng2-smart-table-pager *ngIf="grid.getSetting('pager.display') && (paginationPosition==='bottom' || paginationPosition==='top&bottom' || !paginationPosition)"
+                       [source]="source"
+                       (changePage)="changePage($event)"
+                       (changePerPage)="changePerPage($event)">
+</ng2-smart-table-pager>
