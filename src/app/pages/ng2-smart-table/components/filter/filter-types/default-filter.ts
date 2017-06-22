@@ -1,34 +1,34 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Column } from '../../../lib/data-set/column';
 
 export class DefaultFilter implements Filter, OnDestroy {
 
-  delay: number = 300;
-  changesSubscription: Subscription;
-  @Input() query: string;
-  @Input() inputClass: string;
-  @Input() column: Column;
-  @Output() filter = new EventEmitter<string>();
+    delay: number = 300;
+    changesSubscription: Subscription;
+    @Input() query: any;
+    @Input() inputClass: string;
+    @Input() column: Column;
+    @Output() filter = new EventEmitter<string>();
 
-  ngOnDestroy() {
-    if (this.changesSubscription) {
-      this.changesSubscription.unsubscribe();
+    ngOnDestroy() {
+        if (this.changesSubscription) {
+            this.changesSubscription.unsubscribe();
+        }
     }
-  }
 
-  setFilter() {
-    this.filter.emit(this.query);
-  }
+    setFilter() {
+        this.filter.emit(this.query);
+    }
 }
 
 export interface Filter {
 
-  delay?: number;
-  changesSubscription?: Subscription;
-  query: string;
-  inputClass: string;
-  column: Column;
-  filter: EventEmitter<string>;
+    delay?: number;
+    changesSubscription?: Subscription;
+    query: any;
+    inputClass: string;
+    column: Column;
+    filter: EventEmitter<string>;
 }

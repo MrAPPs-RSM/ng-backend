@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { ViewCell } from '../../../ng2-smart-table';
 import { NguiDatetime } from '@ngui/datetime-picker';
 
 @Component({

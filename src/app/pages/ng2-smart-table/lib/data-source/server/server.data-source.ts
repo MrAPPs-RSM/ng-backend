@@ -19,7 +19,6 @@ export class ServerDataSource extends LocalDataSource {
 
     protected pagingConf: any = {};
 
-    protected timeoutHandler: any;
     protected isLoading: boolean = false;
 
     protected conf: any = {
@@ -39,7 +38,8 @@ export class ServerDataSource extends LocalDataSource {
         protected _toastHandler: ToastHandler,
         protected _route: ActivatedRoute,
         protected _apiService: ApiService,
-        protected apiConfig: any) {
+        protected apiConfig: any,
+        protected enableDrag: boolean) {
         super();
 
         this.conf.api = apiConfig;
@@ -129,11 +129,15 @@ export class ServerDataSource extends LocalDataSource {
 
         let filterOptions = {};
 
-        /** SORTING */
-        if (this.sortConf) {
-            this.sortConf.forEach((fieldConf) => {
-                filterOptions[this.conf.sortKey] = fieldConf.field + ' ' + fieldConf.direction.toUpperCase();
-            });
+        /** SORTING (if drag enabled, always sort by weight ascending */
+        if (this.enableDrag) {
+            filterOptions[this.conf.sortKey] = 'weight ASC';
+        } else {
+            if (this.sortConf) {
+                this.sortConf.forEach((fieldConf) => {
+                    filterOptions[this.conf.sortKey] = fieldConf.field + ' ' + fieldConf.direction.toUpperCase();
+                });
+            }
         }
 
         filterOptions[this.conf.whereKey] = {
@@ -200,11 +204,6 @@ export class ServerDataSource extends LocalDataSource {
     }
 
     protected emitOnChanged(action: string): void {
-        if (this.timeoutHandler) {
-            clearTimeout(this.timeoutHandler);
-        }
-        this.timeoutHandler = setTimeout(() => {
-            this.refreshData(action);
-        }, action !== 'refresh' ? 500 : 0);
+        this.refreshData(action);
     }
 }

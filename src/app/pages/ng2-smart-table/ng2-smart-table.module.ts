@@ -13,23 +13,23 @@ import { Ng2SmartTableComponent } from './ng2-smart-table.component';
 import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CellModule,
-    FilterModule,
-    PagerModule,
-    TBodyModule,
-    THeadModule,
-    DragulaModule
-  ],
-  declarations: [
-    Ng2SmartTableComponent,
-  ],
-  exports: [
-    Ng2SmartTableComponent,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CellModule,
+        FilterModule,
+        PagerModule,
+        TBodyModule,
+        THeadModule,
+        DragulaModule
+    ],
+    declarations: [
+        Ng2SmartTableComponent,
+    ],
+    exports: [
+        Ng2SmartTableComponent,
+    ],
 })
 export class Ng2SmartTableModule {
 }

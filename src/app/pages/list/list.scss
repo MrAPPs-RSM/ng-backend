@@ -1,163 +1,60 @@
 @import "../../theme/sass/conf/conf";
 
-ba-card  {
-  position: relative;
-  .loading {
-    position: absolute;
-    i {
-      font-size: 20px;
-      color: black;
-    }
-  }
-}
-
-ng2-smart-table {
-
-  table {
-    border-collapse: separate !important;
-    border: 1px solid $border-light !important;
-    -webkit-border-radius: 5px !important;
-    -moz-border-radius: 5px !important;
-    border-radius: 5px !important;
-  }
-
-  th, td {
-    border: 0.5px solid $border-light !important;
-    line-height: 20px;
-    vertical-align: middle;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  table tr td {
-    padding: 0 8px;
-  }
-
-  color: $default-text;
-
-  input {
-    line-height: 1.5 !important;
-  }
-
-  ng2-smart-table-cell {
-    color: $default-text;
-    line-height: 35px;
-  }
-
-  tbody {
-    tr {
-      color: $default-text;
-    }
-    tr:hover {
-      background: rgba(0, 0, 0, 0.03);
-    }
-  }
-
-  a.ng2-smart-sort-link {
-    font-size: 14px !important;
-    color: $default-text;
-    font-weight: $font-bolder;
-    &.sort {
-      font-weight: $font-bolder !important;
-
-      &::after {
-        border-bottom-color: $default-text !important;
-      }
-    }
-  }
-
-  .ng2-smart-actions {
-    width: 70px;
-    text-align: center;
-    white-space: nowrap;
-    .actions {
-      float: none;
-      text-align: center;
-    }
-  }
-
-  .ng2-smart-actions-title-add {
-    text-align: center;
-  }
-
-  a.ng2-smart-action, .ng2-smart-title {
-    font-size: 14px !important;
-    color: $default-text;
-    padding: 0 5px;
-    display: inline-block;
-
-    &.ng2-smart-action-add-add {
-      font-size: 25px !important;
-    }
-  }
-
-  a.ng2-smart-action {
-    &.ng2-smart-action-edit-edit {
-      button {
-        &.custom-action {
-          margin-left: 14px !important;
-        }
-      }
-    }
-  }
-
-  nav.ng2-smart-pagination-nav {
-    display: flex;
-    justify-content: left;
-  }
-}
-
 .list-image {
   max-width: 75px;
   max-height: 75px;
 }
 
-#list-spinner {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 5px;
+.wrapper{
+  position: relative;
 
-  & > div {
-    display: block;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    width: 100px;
-    height: 100px;
-    margin: -50px 0 0 -50px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: $danger;
-    transform: translate3d(0, 0, 0);
-    animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
-    &:before {
-      content: "";
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      right: 5px;
-      bottom: 5px;
+  #list-spinner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+
+    & > div {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      width: 100px;
+      height: 100px;
+      margin: -50px 0 0 -50px;
       border-radius: 50%;
       border: 3px solid transparent;
-      border-top-color: $primary;
-      -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
-      animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: $success;
-      animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      border-top-color: $danger;
+      transform: translate3d(0, 0, 0);
+      animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      &:before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: $primary;
+        -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+        animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: $success;
+        animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      }
     }
   }
 }

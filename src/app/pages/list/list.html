@@ -1,14 +1,18 @@
 <ba-card baCardClass="with-scroll">
-    <ng2-smart-table
-            [settings]="settings"
-            [source]="source"
-            [dragulaRows]="'1'"
-            (dragulaRowDrop)="onRowDrop($event)"
-            (create)="onCreate()"
-            (delete)="onDelete($event)"
-            (edit)="onEdit($event)"
-    ></ng2-smart-table>
-    <div id="list-spinner" [hidden]="!source.isLoading">
-        <div></div>
+    <div class="wrapper">
+        <ng2-smart-table
+                [paginationPosition]="params.table.paginationPosition"
+                [settings]="settings"
+                [source]="source"
+                [enableDrag]="params.table.enableDrag"
+                (dragulaRowDrop)="onRowDrop($event)"
+                (create)="onCreate()"
+                (delete)="onDelete($event)"
+                (custom)="onCustom($event)"
+                (edit)="onEdit($event)"
+        ></ng2-smart-table>
+        <div id="list-spinner" [hidden]="!source.isLoading">
+            <div></div>
+        </div>
     </div>
 </ba-card>

@@ -1,10 +1,14 @@
+<ng2-smart-table-pager *ngIf="grid.getSetting('pager.display') && (paginationPosition==='top' || paginationPosition==='top&bottom')"
+                       [source]="source"
+                       (changePage)="changePage($event)">
+</ng2-smart-table-pager>
+
 <table [id]="grid.getSetting('attr.id')" [ngClass]="grid.getSetting('attr.class')">
 
     <thead ng2-st-thead *ngIf="!grid.getSetting('hideHeader') || !grid.getSetting('hideSubHeader')"
            [grid]="grid"
            [isAllSelected]="isAllSelected"
            [source]="source"
-           [createConfirm]="createConfirm"
            (create)="create.emit($event)"
            (selectAllRows)="onSelectAllRows($event)"
            (sort)="sort($event)"
@@ -13,37 +17,37 @@
 
     <tbody ng2-st-tbody [grid]="grid"
            [source]="source"
-           [deleteConfirm]="deleteConfirm"
-           [editConfirm]="editConfirm"
+           (custom)="custom.emit($event)"
            (edit)="edit.emit($event)"
            (delete)="delete.emit($event)"
            (userSelectRow)="onUserSelectRow($event)"
            (editRowSelect)="editRowSelect($event)"
            (multipleSelectRow)="multipleSelectRow($event)"
            (rowHover)="onRowHover($event)"
-           *ngIf="!dragulaRows">
+           [enableDrag]="false"
+           *ngIf="!enableDrag">
     </tbody>
 
     <tbody ng2-st-tbody [grid]="grid"
            [source]="source"
-           [deleteConfirm]="deleteConfirm"
-           [editConfirm]="editConfirm"
+           (custom)="custom.emit($event)"
            (edit)="edit.emit($event)"
            (delete)="delete.emit($event)"
            (userSelectRow)="onUserSelectRow($event)"
            (editRowSelect)="editRowSelect($event)"
            (multipleSelectRow)="multipleSelectRow($event)"
            (rowHover)="onRowHover($event)"
-           *ngIf="dragulaRows"
-           [dragula]="dragulaRows"
+           *ngIf="enableDrag"
+           [enableDrag]="true"
+           [dragula]="enableDrag"
            [dragulaModel]="grid.getRows()"
            [dragulaOptions]="dragulaRowsOptions">
     </tbody>
 
 </table>
 
-<ng2-smart-table-pager class="pull-right"
-                       *ngIf="grid.getSetting('pager.display')"
+<ng2-smart-table-pager *ngIf="grid.getSetting('pager.display') && (paginationPosition==='bottom' || paginationPosition==='top&bottom' || !paginationPosition)"
                        [source]="source"
-                       (changePage)="changePage($event)">
+                       (changePage)="changePage($event)"
+                       (changePerPage)="changePerPage($event)">
 </ng2-smart-table-pager>

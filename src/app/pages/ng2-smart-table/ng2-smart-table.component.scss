@@ -18,9 +18,31 @@
       margin: 0;
     }
 
+    color: $default-text;
+
+    input {
+      line-height: 1.5 !important;
+    }
+
+    ng2-smart-table-cell {
+      color: $default-text;
+      line-height: 35px;
+    }
+
+    tbody {
+      tr {
+        color: $default-text;
+      }
+      tr:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+    }
+
     table {
+      border-collapse: separate;
+      border: 1px solid $border-light;
+      border-radius: 5px;
       line-height: 1.5em;
-      border-collapse: collapse;
       border-spacing: 0;
       display: table;
       width: 100%;
@@ -37,20 +59,67 @@
           font-size: .75em;
           font-weight: bold;
         }
-        td,
-        th {
+        td, th {
           font-size: .875em;
           margin: 0;
           padding: 0.5em 1em;
+          border: 0.5px solid $border-light;
+          line-height: 20px;
+          vertical-align: middle;
+          text-align: center;
+          white-space: nowrap;
+        },
+        td {
+          padding: 0 8px;
         }
       }
     }
 
-    a {
-      color: #1e6bb8;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
+    a.ng2-smart-sort-link {
+      font-size: 14px !important;
+      color: $default-text;
+      font-weight: $font-bolder;
+      &.sort {
+        font-weight: $font-bolder !important;
+
+        &::after {
+          border-bottom-color: $default-text !important;
+        }
+      }
+    }
+
+    .ng2-smart-actions {
+      width: 70px;
+      text-align: center;
+      white-space: nowrap;
+      .actions {
+        float: none;
+        text-align: center;
+      }
+    }
+
+    .ng2-smart-actions-title-add {
+      text-align: center;
+    }
+
+    a.ng2-smart-action, .ng2-smart-title {
+      font-size: 14px !important;
+      color: $default-text;
+      padding: 0 5px;
+      display: inline-block;
+
+      &.ng2-smart-action-add-add {
+        font-size: 25px !important;
+      }
+    }
+
+    a.ng2-smart-action {
+      &.ng2-smart-action-edit-edit {
+        button {
+          &.custom-action {
+            margin-left: 14px !important;
+          }
+        }
       }
     }
   }

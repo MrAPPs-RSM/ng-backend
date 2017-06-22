@@ -2,37 +2,41 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { DefaultFilter } from './default-filter';
-import { Column } from '../../../lib/data-set/column';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
+import { isNullOrUndefined } from 'util';
 
 @Component({
-  selector: 'select-filter',
-  template: `
-    <select [ngClass]="inputClass"
-            class="form-control"
-            [(ngModel)]="query"
-            [formControl]="inputControl">
+    selector: 'select-filter',
+    template: `
+        <select [ngClass]="inputClass"
+                class="form-control"
+                [(ngModel)]="query"
+                [formControl]="inputControl">
 
-        <option value="">{{ column.getFilterConfig().selectText }}</option>
-        <option *ngFor="let option of column.getFilterConfig().list" [value]="option.value">
-          {{ option.title }}
-        </option>
-    </select>
-  `,
+            <option value="">{{ column.getFilterConfig().selectText }}</option>
+            <option *ngFor="let option of column.getFilterConfig().list" [value]="option.value">
+                {{ option.title }}
+            </option>
+        </select>
+    `,
 })
 export class SelectFilterComponent extends DefaultFilter implements OnInit {
 
-  inputControl = new FormControl();
+    inputControl = new FormControl();
 
-  constructor() {
-    super();
-  }
+    constructor() {
+        super();
+    }
 
-  ngOnInit() {
-    this.inputControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(this.delay)
-      .subscribe((value: string) => this.setFilter());
-  }
+    ngOnInit() {
+        this.inputControl.valueChanges
+            .distinctUntilChanged()
+            .debounceTime(this.delay)
+            .subscribe((value: any) => {
+                if (!isNullOrUndefined(value)) {
+                    this.setFilter();
+                }
+            });
+    }
 }

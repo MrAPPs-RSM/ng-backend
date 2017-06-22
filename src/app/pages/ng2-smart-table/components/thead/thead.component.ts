@@ -11,7 +11,6 @@ export class Ng2SmartTableTheadComponent {
     @Input() grid: Grid;
     @Input() source: any;
     @Input() isAllSelected: boolean;
-    @Input() createConfirm: EventEmitter<any>;
 
     @Output() sort = new EventEmitter<any>();
     @Output() selectAllRows = new EventEmitter<any>();
