@@ -72,7 +72,7 @@ export class List implements OnInit {
         });
 
         this.settings.columns = this.params.table.columns;
-        this.settings.actions = this.params.table.actions;
+        this.settings.actions = actions;
         this.settings.noDataMessage =
             this.params.table.noDataMessage ? this.params.table.noDataMessage : 'No data found';
         this.settings.pager.perPage =

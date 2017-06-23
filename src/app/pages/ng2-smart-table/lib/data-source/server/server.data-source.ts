@@ -130,7 +130,7 @@ export class ServerDataSource extends LocalDataSource {
         let filterOptions = {};
 
         /** SORTING (if drag enabled, always sort by weight ascending */
-        if (this.enableDrag) {
+        if (this.enableDrag === true) {
             filterOptions[this.conf.sortKey] = 'weight ASC';
         } else {
             if (this.sortConf) {
