@@ -1,15 +1,6 @@
-export let config = {
-    env: 'dev',
-    api: {
-        dev: {
-            baseFilesUrl: 'http://192.168.10.142:5555/files/output/',
-            baseUrl: 'http://192.168.10.142:5555/api/'
-        },
-        prod: {
-            baseFilesUrl: 'http://api-differenzia.mr-apps.com/files/output/',
-            baseUrl: 'http://api-differenzia.mr-apps.com/api/'
-        }
-    },
+import { env } from './app.env';
+
+export let config = Object.assign({}, env, {
     title: 'SM-Differenzia',
     auth: {
         config: {
@@ -37,5 +28,4 @@ export let config = {
             }
         ]
     }
-};
-
+});
