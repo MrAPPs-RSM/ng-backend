@@ -73,8 +73,7 @@ export class List implements OnInit {
 
         this.settings.columns = this.params.table.columns;
         this.settings.actions = actions;
-        this.settings.noDataMessage =
-            this.params.table.noDataMessage ? this.params.table.noDataMessage : 'No data found';
+        this.settings.noDataMessage = this.params.table.messages && this.params.table.messages.noData && this.params.table.messages.noData ? this.params.table.messages.noData : 'No data found';
         this.settings.pager.perPage =
             this.params.table.perPage ? this.params.table.perPage : this.settings.pager.perPage;
     }
@@ -91,15 +90,15 @@ export class List implements OnInit {
 
     onRowDrop(event: any): void {
         this._apiService.patch(
-            this.params.api.endpoint + '/sort',
-            JSON.stringify({oldWeight: event.oldRowIndex, newWeight: event.newRowIndex})
+            this.params.api.sortEndpoint,
+            JSON.stringify({oldIndex: event.oldRowIndex, newIndex: event.newRowIndex})
         ).subscribe(
             res => {
-                this._toastManager.success('Sort successfully');
                 this.source.refresh();
             },
             error => {
-                this._toastManager.error('Error while sorting');
+                this._toastManager
+                    .error(this.params.table.messages.dragError ? this.params.table.messages.dragError : 'Error while sorting');
             }
         );
     }
@@ -114,16 +113,21 @@ export class List implements OnInit {
     }
 
     onDelete(event: any): void {
-        this._modalHandler.confirm('Delete item ' + event.data.id)
+        this._modalHandler.confirm(
+            this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.modalTitle ? this.params.table.messages.delete.modalTitle + event.data.id : 'Delete item ' + event.data.id,
+            this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.modalBody ? this.params.table.messages.delete.modalBody : null,
+            this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.modalConfirm ? this.params.table.messages.delete.modalConfirm : null,
+            this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.modalDismiss ? this.params.table.messages.delete.modalDismiss : null
+        )
             .then(() => {
                 this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
                     .subscribe(
                         res => {
-                            this._toastManager.success('Item deleted successfully');
+                            this._toastManager.success(this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.success ? this.params.table.messages.delete.success : null);
                             this.source.refresh();
                         },
                         error => {
-                            this._toastManager.error("Can't delete item, try again later");
+                            this._toastManager.error(this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.fail ? this.params.table.messages.delete.fail : error);
                         }
                     );
             })

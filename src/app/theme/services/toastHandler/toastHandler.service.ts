@@ -7,7 +7,7 @@ export class ToastHandler {
     private defaultOptions: any = {
         showCloseButton: true,
         animate: 'flyRight',
-        toastLife: 3500
+        toastLife: 2800
     };
 
     constructor(protected _toastManager: ToastsManager) {

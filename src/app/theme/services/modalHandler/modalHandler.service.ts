@@ -13,12 +13,12 @@ export class ModalHandler {
         this.overlay.defaultViewContainer = vcr;
     }
 
-    public confirm(title: string, body?: string, confirm?: string, dismiss?: string): Promise<any> {
+    public confirm(title?: string, body?: string, confirm?: string, dismiss?: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.modal.confirm()
                 .size('sm')
                 .showClose(false)
-                .title(title)
+                .title(title ? title : 'Confirm action')
                 .body(body ? body : 'Are you sure?')
                 .okBtn(confirm ? confirm : 'Confirm')
                 .okBtnClass('btn btn-sm btn-primary')

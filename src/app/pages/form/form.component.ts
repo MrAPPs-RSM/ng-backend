@@ -92,46 +92,66 @@ export class Form implements OnInit {
     }
 
     onSubmit() {
-        this._modalHandler.confirm('Confirm save')
-            .then(() => {
-                if (this.id) {
+        if (this.id) {
+            this._modalHandler.confirm(
+                this.params.form.messages && this.params.form.messages.modalTitle ? this.params.form.messages.modalTitle : 'Confirm edit',
+                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalBody : null,
+                this.params.form.messages && this.params.form.messages.modalConfirm ? this.params.form.messages.modalConfirm : null,
+                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalDismiss : null
+        )
+                .then(() => {
                     this._apiService.patch(
                         this.params.api.endpoint + '/' + this.id,
                         this.payLoad
                     )
                         .subscribe(
                             data => {
-                                this._toastManager.success();
+                                this._toastManager.success(
+                                    this.params.form.messages && this.params.form.messages.success ?
+                                        this.params.form.messages.success : null);
                                 if (this.params.form.options.submit.redirectAfter) {
                                     this._router.navigate(
                                         ['pages/' + this.params.form.options.submit.redirectAfter]);
                                 }
                             },
                             error => {
-                                this._toastManager.error(error);
+                                this._toastManager.error(
+                                    this.params.form.messages && this.params.form.messages.fail ?
+                                        this.params.form.messages.fail : error
+                                );
                             }
                         );
-                } else {
+                })
+                .catch(() => {
+                });
+        } else {
+            this._modalHandler.confirm(
+                this.params.form.messages && this.params.form.messages.modalTitle ? this.params.form.messages.modalTitle : 'Confirm save',
+                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalBody : null,
+                this.params.form.messages && this.params.form.messages.modalConfirm ? this.params.form.messages.modalConfirm : null,
+                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalDismiss : null
+            )
+                .then(() => {
                     this._apiService.put(
                         this.params.api.endpoint,
                         this.payLoad
                     )
                         .subscribe(
                             data => {
-                                this._toastManager.success();
+                                this._toastManager.success(this.params.form.messages && this.params.form.messages.success ? this.params.form.messages.success : null);
                                 if (this.params.form.options.submit.redirectAfter) {
                                     this._router.navigate(
                                         ['pages/' + this.params.form.options.submit.redirectAfter]);
                                 }
                             },
                             error => {
-                                this._toastManager.error(error);
+                                this._toastManager.error(this.params.form.messages && this.params.form.messages.fail ? this.params.form.messages.fail : error);
                             }
                         );
-                }
-            })
-            .catch(() => {
-            });
+                })
+                .catch(() => {
+                });
+        }
     }
 
     onButtonClick(redirectTo: string): void {
