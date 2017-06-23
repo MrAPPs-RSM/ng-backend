@@ -154,9 +154,13 @@ export class Form implements OnInit {
         }
     }
 
-    onButtonClick(redirectTo: string): void {
+    onButtonClick(button: any): void {
+        let redirectTo = button.redirectTo;
         if (redirectTo.indexOf(':id') !== -1) {
             redirectTo = redirectTo.replace(':id', this.id.toString());
+        }
+        if (redirectTo.indexOf(':title') !== -1 && button.titleField) {
+            redirectTo = redirectTo.replace(':title', this.form.controls[button.titleField].value);
         }
         this._router.navigate(['pages/' + redirectTo]);
     }

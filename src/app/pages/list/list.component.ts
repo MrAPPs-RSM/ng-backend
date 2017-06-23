@@ -108,8 +108,14 @@ export class List implements OnInit {
     }
 
     onEdit(event: any): void {
-        this._router.navigate(
-            ['pages/' + this.params.table.actions.edit.path + '/' + event.data.id]);
+        let redirectTo = this.params.table.actions.edit.path;
+        if (redirectTo.indexOf(':id') !== -1) {
+            redirectTo = redirectTo.replace(':id', event.data.id);
+        }
+        if (redirectTo.indexOf(':title') !== -1 && this.params.table.actions.edit.titleField) {
+            redirectTo = redirectTo.replace(':title', event.data[this.params.table.actions.edit.titleField]);
+        }
+        this._router.navigate(['pages/' + redirectTo]);
     }
 
     onDelete(event: any): void {
@@ -139,6 +145,9 @@ export class List implements OnInit {
         let redirectTo = this.params.table.actions.custom.path;
         if (redirectTo.indexOf(':id') !== -1) {
             redirectTo = redirectTo.replace(':id', event.data.id);
+        }
+        if (redirectTo.indexOf(':title') !== -1 && this.params.table.actions.custom.titleField) {
+            redirectTo = redirectTo.replace(':title', event.data[this.params.table.actions.custom.titleField]);
         }
         this._router.navigate(['pages/' + redirectTo]);
     }

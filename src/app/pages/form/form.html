@@ -14,7 +14,7 @@
             <div class="row button-row">
                 <div class="col-sm-12">
                     <div *ngFor="let button of params.form.buttons">
-                        <button (click)="onButtonClick(button.redirectTo)" class="btn {{button.class}}">
+                        <button (click)="onButtonClick(button)" class="btn {{button.class}}">
                             {{ button.content }}
                             <i *ngIf="button.icon" class="fa {{button.icon}}"></i>
                         </button>

@@ -5,15 +5,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Injectable()
 export class TitleChecker {
 
-    constructor(
-        protected _state: GlobalState,
-        protected _router: Router
-    ) {}
+    constructor(protected _state: GlobalState,
+                protected _router: Router) {
+    }
 
     public setCorrectTitle(route: ActivatedRoute, params: any): void {
         let urlParams = route.snapshot.params;
+        let title = params.menu.title;
+        if (urlParams) {
+            if (urlParams['title']) {
+                title += ' ' + urlParams['title'];
+            } else if (urlParams['id']) {
+                title += ' ' + urlParams['id'];
+            }
+        }
         let activeLink = {
-            title: urlParams && urlParams['id'] ? params.menu.title + ' ' + urlParams['id'] : params.menu.title,
+            title: title,
             route: this._router.url,
             breadcrumbLevel: params.menu.breadcrumbLevel
         };
