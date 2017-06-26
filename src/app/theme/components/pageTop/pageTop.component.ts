@@ -11,6 +11,7 @@ import { TokenManager } from '../../../auth/token-manager.service';
 export class PageTop implements OnInit {
 
     @Input() title: string;
+    @Input() icon: string;
 
     public isScrolled: boolean = false;
     public isMenuCollapsed: boolean = false;

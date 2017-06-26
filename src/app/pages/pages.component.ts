@@ -10,15 +10,16 @@ import { config } from '../app.config';
 export class Pages implements OnInit {
 
     public title: string;
+    public icon: string;
     public params: any = {};
 
     constructor(protected _route: ActivatedRoute,
                 protected _spinner: BaThemeSpinner) {
         this.title = config.title;
+        this.icon = config.icon ? config.icon : null;
     }
 
     ngOnInit() {
-        console.log('[COMPONENT INIT]: Pages');
         this._spinner.hide();
         this.params = this._route.snapshot.data['settings'];
     }

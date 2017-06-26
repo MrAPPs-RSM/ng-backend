@@ -25,13 +25,10 @@ import {
 import { BaCardBlur } from './components/baCard/baCardBlur.directive';
 
 import {
-    BaScrollPosition,
-    BaSlimScroll,
     BaThemeRun
 } from './directives';
 
 import {
-    BaImageLoaderService,
     BaMenuService,
     BaThemePreloader,
     BaThemeSpinner
@@ -48,14 +45,11 @@ const NGA_COMPONENTS = [
 ];
 
 const NGA_DIRECTIVES = [
-    BaScrollPosition,
-    BaSlimScroll,
     BaThemeRun,
     BaCardBlur
 ];
 
 const NGA_SERVICES = [
-    BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
     BaMenuService

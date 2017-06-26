@@ -1,6 +1,6 @@
-<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+<div class="page-top clearfix" maxHeight="50" (scrollChange)="scrolledChanged($event)"
      [ngClass]="{scrolled: isScrolled}">
-    <a routerLink="/pages/dashboard" class="al-logo clearfix"><span>{{ title }}</span></a>
+    <a routerLink="/pages/dashboard" class="al-logo clearfix"><span><i *ngIf="icon" class="{{icon}}"></i> {{ title }}</span></a>
     <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
 
     <!-- <div class="search">

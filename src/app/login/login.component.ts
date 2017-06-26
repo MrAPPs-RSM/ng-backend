@@ -17,6 +17,7 @@ import { TokenManager } from '../auth';
 export class Login implements OnInit {
 
     public title: string;
+    public icon: string;
     public config: any;
     public fields: any[];
     public form: FormGroup;
@@ -31,6 +32,7 @@ export class Login implements OnInit {
                 protected _router: Router,
                 protected _toastManager: ToastHandler) {
         this.title = config.title;
+        this.icon = config.icon ? config.icon : null;
     }
 
     public isValidField(key: any) {
@@ -42,7 +44,6 @@ export class Login implements OnInit {
     }
 
     ngOnInit() {
-        console.log('[COMPONENT INIT]: Login');
         this._spinner.hide();
         this.config = config.auth.config;
         this.fields = config.auth.fields;
