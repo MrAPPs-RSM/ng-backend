@@ -6,7 +6,7 @@ import { Ng2SmartTableModule } from '../ng2-smart-table';
 import { routing } from './list.routing';
 
 import { List } from './list.component';
-import { ListResolver } from './services';
+import { ListResolver, ListPaging } from './services';
 import { BooleanRender, DateRender, ImageRender, ColorRender } from './views';
 
 @NgModule({
@@ -26,7 +26,8 @@ import { BooleanRender, DateRender, ImageRender, ColorRender } from './views';
         ColorRender
     ],
     providers: [
-        ListResolver
+        ListResolver,
+        ListPaging
     ]
 })
 export class ListModule {

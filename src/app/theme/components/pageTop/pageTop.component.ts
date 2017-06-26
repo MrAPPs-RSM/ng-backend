@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { GlobalState } from '../../../global.state';
 
 import 'style-loader!./pageTop.scss';
-import { AuthService } from '../../../auth';
+import { TokenManager } from '../../../auth/token-manager.service';
 
 @Component({
     selector: 'page-top',
@@ -15,7 +15,7 @@ export class PageTop implements OnInit {
     public isScrolled: boolean = false;
     public isMenuCollapsed: boolean = false;
 
-    constructor(private _state: GlobalState, private _authService: AuthService) {
+    constructor(private _state: GlobalState, private _tokenManager: TokenManager) {
     }
 
     ngOnInit() {
@@ -25,7 +25,8 @@ export class PageTop implements OnInit {
     }
 
     public logout() {
-        this._authService.logout();
+        this._tokenManager.removeToken();
+        location.reload();
     }
 
     public toggleMenu() {

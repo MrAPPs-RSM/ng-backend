@@ -17,7 +17,10 @@ export class ServerDataSource extends LocalDataSource {
         andOperator: true,
     };
 
-    protected pagingConf: any = {};
+    protected pagingConf: any = {
+        perPage: 15,
+        page: 2
+    };
 
     protected isLoading: boolean = false;
 

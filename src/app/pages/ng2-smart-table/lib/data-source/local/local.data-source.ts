@@ -88,6 +88,7 @@ export class LocalDataSource extends DataSource {
     }
 
     reset(silent = false) {
+        console.log('Reset data source called with silent:' + silent);
         if (silent) {
             this.filterConf = {
                 filters: [],

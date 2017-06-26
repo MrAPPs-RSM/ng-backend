@@ -5,9 +5,10 @@ import 'style-loader!./login.scss';
 import { BaThemeSpinner } from '../theme/services';
 import { config } from '../app.config';
 import { FormLoaderService } from '../pages/form/services';
-import { AuthService } from '../auth';
 import { Router } from '@angular/router';
 import { ToastHandler } from '../theme/services';
+import { ApiService } from '../api';
+import { TokenManager } from '../auth';
 
 @Component({
     selector: 'login',
@@ -25,7 +26,8 @@ export class Login implements OnInit {
 
     constructor(protected _loaderService: FormLoaderService,
                 protected _spinner: BaThemeSpinner,
-                protected _authService: AuthService,
+                protected _apiService: ApiService,
+                protected _tokenManager: TokenManager,
                 protected _router: Router,
                 protected _toastManager: ToastHandler) {
         this.title = config.title;
@@ -50,14 +52,17 @@ export class Login implements OnInit {
     public onSubmit(): void {
         if (this.form.valid) {
             this.payload = JSON.stringify(this.form.value);
-            this._authService.login(this.payload)
-                .then(() => {
-                    this._spinner.show();
-                    this._router.navigate(['pages']);
-                })
-                .catch((error) => {
-                    this._toastManager.error(error);
-                });
+            this._apiService.post(config.auth.config.api, this.payload)
+                .subscribe(
+                    response => {
+                        this._tokenManager.storeToken(response.id);
+                        this._spinner.show();
+                        this._router.navigate(['pages']);
+                    },
+                    error => {
+                        this._toastManager.error(error);
+                    }
+                );
         }
     }
 

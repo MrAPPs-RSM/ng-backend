@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,12 +6,13 @@ import { ApiService } from '../../api';
 import { ToastHandler, ModalHandler } from '../../theme/services';
 import { ServerDataSource } from './../ng2-smart-table';
 import { TitleChecker } from '../services';
+import { ListPaging } from './services';
 
 @Component({
     selector: 'list',
     templateUrl: './list.html',
 })
-export class List implements OnInit {
+export class List implements OnInit, OnDestroy {
 
     settings = {
         mode: 'external',
@@ -31,6 +32,7 @@ export class List implements OnInit {
         actions: {},
         columns: {},
         pager: {
+            page: 1,
             perPage: 10
         }
     };
@@ -41,6 +43,7 @@ export class List implements OnInit {
 
     constructor(protected _router: Router,
                 protected _titleChecker: TitleChecker,
+                protected _listPaging: ListPaging,
                 protected _route: ActivatedRoute,
                 protected _apiService: ApiService,
                 protected _modalHandler: ModalHandler,
@@ -52,6 +55,10 @@ export class List implements OnInit {
         this._titleChecker.setCorrectTitle(this._route, this.params);
         this.loadSettings();
         this.loadData();
+    }
+
+    ngOnDestroy() {
+        this._listPaging.setPaging(this.source.getPaging());
     }
 
     loadSettings(): void {
@@ -74,8 +81,7 @@ export class List implements OnInit {
         this.settings.columns = this.params.table.columns;
         this.settings.actions = actions;
         this.settings.noDataMessage = this.params.table.messages && this.params.table.messages.noData && this.params.table.messages.noData ? this.params.table.messages.noData : 'No data found';
-        this.settings.pager.perPage =
-            this.params.table.perPage ? this.params.table.perPage : this.settings.pager.perPage;
+        this.settings.pager = this._listPaging.getPaging();
     }
 
     loadData(): void {

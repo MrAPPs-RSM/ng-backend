@@ -4,7 +4,7 @@ import { pageTypes } from './pageTypes';
 import { ApiService } from '../api';
 import { Router } from '@angular/router';
 import { BaMenuService } from '../theme/services';
-import { AuthService } from '../auth';
+import { TokenManager } from '../auth';
 
 @Injectable()
 export class SetupService {
@@ -12,7 +12,7 @@ export class SetupService {
     private endpoint: string = 'setup';
 
     constructor(private _router: Router,
-                private _authService: AuthService,
+                private _tokenManager: TokenManager,
                 private _apiService: ApiService,
                 private _baMenuService: BaMenuService) {
     }
@@ -30,7 +30,8 @@ export class SetupService {
                     },
                     error => {
                         // Might never happen, in case, logout the user
-                        this._authService.logout();
+                        this._tokenManager.removeToken();
+                        location.reload();
                     }
                 );
         });

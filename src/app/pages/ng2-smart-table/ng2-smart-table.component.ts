@@ -73,7 +73,8 @@ export class Ng2SmartTableComponent implements OnChanges, OnInit {
         columns: {},
         pager: {
             display: true,
-            perPage: 10,
+            page: 1,
+            perPage: 10
         },
     };
 

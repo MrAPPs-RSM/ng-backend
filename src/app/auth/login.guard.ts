@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from './auth.service';
+import { TokenManager } from './token-manager.service';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
 
-    constructor(private _router: Router, private _authService: AuthService) { }
+    constructor(private _router: Router, private _tokenManager: TokenManager) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this._authService.isLogged()) {
+        if (this._tokenManager.getToken() !== null) {
             this._router.navigate(['pages']);
             return false;
         } else {
