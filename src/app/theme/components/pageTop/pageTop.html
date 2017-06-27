@@ -3,8 +3,8 @@
     <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
 
     <div class="search">
-        <i class="fa fa-search" ng-click="startSearch()"></i>
-        <input id="searchInput" type="text" placeholder="Search for...">
+        <input #searchInput (keyup.enter)="search()" type="text" placeholder="Search...">
+        <i class="fa fa-search" (click)="search()"></i>
     </div>
 
     <div class="logout">

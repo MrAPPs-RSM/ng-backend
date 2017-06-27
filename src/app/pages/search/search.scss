@@ -1,0 +1,17 @@
+@import '../../theme/sass/conf/conf';
+
+.result {
+  cursor: pointer;
+  text-align: center;
+  .result-title {
+    font-weight: $font-bolder;
+    font-size: 15px;
+    &:hover {
+      color: $primary
+    }
+  }
+}
+
+.no-results{
+  font-size: 15px;
+}

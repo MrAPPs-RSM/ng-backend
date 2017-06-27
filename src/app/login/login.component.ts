@@ -32,7 +32,7 @@ export class Login implements OnInit {
                 protected _router: Router,
                 protected _toastManager: ToastHandler) {
         this.title = config.title;
-        this.icon = config.icon ? config.icon : null;
+        this.icon = config['icon'] ? config['icon'] : null;
     }
 
     public isValidField(key: any) {

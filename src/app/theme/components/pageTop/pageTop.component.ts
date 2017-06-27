@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { GlobalState } from '../../../global.state';
 
 import 'style-loader!./pageTop.scss';
-import { TokenManager } from '../../../auth/token-manager.service';
+import { TokenManager } from '../../../auth';
+import { isNullOrUndefined } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'page-top',
@@ -12,11 +14,14 @@ export class PageTop implements OnInit {
 
     @Input() title: string;
     @Input() icon: string;
+    @ViewChild('searchInput') searchInput;
 
     public isScrolled: boolean = false;
     public isMenuCollapsed: boolean = false;
 
-    constructor(private _state: GlobalState, private _tokenManager: TokenManager) {
+    constructor(private _state: GlobalState,
+                private _router: Router,
+                private _tokenManager: TokenManager) {
     }
 
     ngOnInit() {
@@ -28,6 +33,13 @@ export class PageTop implements OnInit {
     public logout() {
         this._tokenManager.removeToken();
         location.reload();
+    }
+
+    public search() {
+        let value = this.searchInput.nativeElement.value;
+        if (value !== '' && !isNullOrUndefined(value)) {
+            this._router.navigate(['pages/search/' + value.toLowerCase()]);
+        }
     }
 
     public toggleMenu() {

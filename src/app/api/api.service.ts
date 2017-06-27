@@ -15,8 +15,7 @@ export class ApiService {
     config: any = config.env === 'dev' ? config.api.dev : config.api.prod;
     headers: Headers;
 
-    constructor(protected _http: Http,
-                protected _tokenManager: TokenManager) {
+    constructor(protected _http: Http) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
     }
@@ -162,7 +161,8 @@ export class ApiService {
     /** Response handlers */
     private handleError = (error: Response): Observable<any> | any  => {
         if (error.status === 401) { // Unauthorized
-            this._tokenManager.removeToken();
+            localStorage.removeItem('access_token');
+            // this._tokenManager.removeToken();
             location.reload();
         } else {
             let errMsg: string;
@@ -181,11 +181,11 @@ export class ApiService {
      * Add authorization
      */
     private setAuth(searchParams: URLSearchParams | any | null): URLSearchParams {
-        if (this._tokenManager.getToken() !== null) {
+        if (localStorage.getItem('access_token') !== null) {
             if (!searchParams) {
                 searchParams = new URLSearchParams();
             }
-            searchParams.set(this._tokenManager.accessTokenKey, this._tokenManager.getToken());
+            searchParams.set('access_token', localStorage.getItem('access_token'));
         }
         return searchParams;
     }

@@ -1,0 +1,10 @@
+<div class="col-sm-12" xmlns="http://www.w3.org/1999/html">
+    <div class="row" [hidden]="results.length <= 0">
+        <ba-card *ngFor="let item of results" class="col-sm-3 col-xs-6 result" (click)="onResultClick(item)">
+            <span class="result-title">{{ item.title }}</span>
+        </ba-card>
+    </div>
+    <div class="row" [hidden]="results.length > 0">
+        <span class="no-results">No results found</span>
+    </div>
+</div>

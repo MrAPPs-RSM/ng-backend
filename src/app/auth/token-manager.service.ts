@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class TokenManager {
 
     public accessTokenKey = 'access_token';
+    private setupKey = 'setup';
 
     constructor() {}
 
@@ -13,6 +14,7 @@ export class TokenManager {
 
     public removeToken(): void {
         localStorage.removeItem(this.accessTokenKey);
+        localStorage.removeItem(this.setupKey);
     }
 
     public getToken(): string {

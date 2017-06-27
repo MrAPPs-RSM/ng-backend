@@ -20,14 +20,13 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
-import { SetupService } from './setup/setup.service';
 import { Login } from './login';
 import { FormLoaderService } from './pages/form/services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginGuard, TokenManager } from './auth';
+import { AuthGuard, LoginGuard, TokenManager } from './auth';
 import { ApiService } from './api';
-import { ToastHandler } from './theme/services';
-import { ModalHandler } from './theme/services/modalHandler/modalHandler.service';
+import { SetupService } from './setup';
+import { ToastHandler, ModalHandler } from './theme/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -35,6 +34,7 @@ const APP_PROVIDERS = [
     GlobalState,
     ToastHandler,
     ModalHandler,
+    AuthGuard,
     LoginGuard,
     TokenManager,
     ApiService,
