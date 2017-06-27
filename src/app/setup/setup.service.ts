@@ -9,6 +9,7 @@ import { TokenManager } from '../auth';
 @Injectable()
 export class SetupService {
 
+    public setupData: any = null;
     private endpoint: string = 'setup';
 
     constructor(private _router: Router,
@@ -24,6 +25,7 @@ export class SetupService {
             )
                 .subscribe(
                     data => {
+                        this.setupData = data;
                         this.loadRoutes(data);
                         this._baMenuService.loadSidebar(data);
                         resolve(data.settings);

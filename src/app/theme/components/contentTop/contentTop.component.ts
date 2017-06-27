@@ -18,24 +18,28 @@ export class ContentTop implements OnInit {
         this._state.subscribe('menu.activeLink', (activeLink) => {
             if (activeLink) {
                 this.activePageTitle = activeLink.title;
-                if (activeLink.breadcrumbLevel === 1) {
-                    this.breadcrumb = [];
-                    this.breadcrumb.push(activeLink);
-                } else {
-                    let indexesToDelete = [];
-                    this.breadcrumb.forEach((link, index) => {
-                        if (link.breadcrumbLevel > activeLink.breadcrumbLevel) {
-                            indexesToDelete.push(index);
-                        }
-                    });
-
-                    if (indexesToDelete.length) {
-                        indexesToDelete.forEach((index) => {
-                            this.breadcrumb.splice(index, 1);
-                        });
-                    } else {
+                if (activeLink.route) {
+                    if (activeLink.breadcrumbLevel === 1) {
+                        this.breadcrumb = [];
                         this.breadcrumb.push(activeLink);
+                    } else {
+                        let indexesToDelete = [];
+                        this.breadcrumb.forEach((link, index) => {
+                            if (link.breadcrumbLevel > activeLink.breadcrumbLevel) {
+                                indexesToDelete.push(index);
+                            }
+                        });
+
+                        if (indexesToDelete.length) {
+                            indexesToDelete.forEach((index) => {
+                                this.breadcrumb.splice(index, 1);
+                            });
+                        } else {
+                            this.breadcrumb.push(activeLink);
+                        }
                     }
+                } else {
+                    this.breadcrumb = [];
                 }
             }
         });

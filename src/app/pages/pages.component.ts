@@ -16,7 +16,7 @@ export class Pages implements OnInit {
     constructor(protected _route: ActivatedRoute,
                 protected _spinner: BaThemeSpinner) {
         this.title = config.title;
-        this.icon = config.icon ? config.icon : null;
+        this.icon = config['icon'] ? config['icon'] : null;
     }
 
     ngOnInit() {

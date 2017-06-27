@@ -125,12 +125,6 @@ a.al-sidebar-list-link {
   }
 }
 
-.slimScrollBar, .slimScrollRail {
-  border-radius: 0px !important;
-  width: $sidebar-scroll-width !important;
-  left: $sidebar-width - $sidebar-scroll-width;
-}
-
 @mixin layout-collapsed() {
   .al-main {
     margin-left: 50px;

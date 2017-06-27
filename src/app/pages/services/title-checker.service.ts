@@ -26,4 +26,8 @@ export class TitleChecker {
         };
         this._state.notifyDataChanged('menu.activeLink', activeLink);
     }
+
+    public setTitle(title: string): void {
+        this._state.notifyDataChanged('menu.activeLink', {title: title});
+    }
 }
