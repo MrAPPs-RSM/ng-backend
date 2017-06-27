@@ -103,7 +103,7 @@ a.al-sidebar-list-link {
     }
   }
   i {
-    margin-right: 18px;
+    margin-right: 14px;
     width: 16px;
     display: inline-block;
   }
@@ -140,6 +140,7 @@ a.al-sidebar-list-link {
   list-style: none;
   position: relative;
   display: none;
+  background-color: $sidebar-sub-list;
   &.expanded {
     display: block;
   }
@@ -155,7 +156,7 @@ a.al-sidebar-list-link {
       font-size: 13px;
       text-decoration: none;
       color: $sidebar-text;
-      padding-left: 52px;
+      padding-left: 46px;
       height: auto;
       line-height: 29px;
       &:hover {
