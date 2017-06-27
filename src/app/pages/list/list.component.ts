@@ -4,7 +4,7 @@ import 'style-loader!./list.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../api';
 import { ToastHandler, ModalHandler } from '../../theme/services';
-import { ServerDataSource } from './../ng2-smart-table';
+import { ServerDataSource } from './../components/ng2-smart-table';
 import { TitleChecker } from '../services';
 import { ListPaging } from './services';
 

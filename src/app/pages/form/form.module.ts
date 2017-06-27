@@ -9,7 +9,7 @@ import { AgmCoreModule } from '@agm/core';
 import { NgUploaderModule } from 'ngx-uploader';
 import { CalendarModule } from 'angular-calendar';
 import { ColorPickerModule } from 'angular2-color-picker';
-import { Ng2SmartTableModule } from '../ng2-smart-table';
+import { Ng2SmartTableModule } from '../components/ng2-smart-table';
 
 import { routing } from './form.routing';
 

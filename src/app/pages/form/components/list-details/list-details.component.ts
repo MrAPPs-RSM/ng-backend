@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SelectComponent } from 'ng2-select';
 import { ApiService } from '../../../../api';
-import { LocalDataSource } from '../../../ng2-smart-table';
+import { LocalDataSource } from '../../../components/ng2-smart-table';
 import { Utils } from '../../../../utils';
 import { ToastHandler } from '../../../../theme/services';
 
