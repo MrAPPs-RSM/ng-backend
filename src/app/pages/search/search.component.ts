@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import 'style-loader!./search.scss';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TitleChecker } from '../services';
-import { BaMenuService } from '../../theme/services/baMenu/baMenu.service';
+import { BaThemeSpinner, BaMenuService } from '../../theme/services';
+import { PageRefresh } from '../services';
+
 
 @Component({
     selector: 'search',
     templateUrl: './search.html'
 })
-export class Search implements OnInit {
+export class Search implements OnInit, OnDestroy {
 
     items: any = [];
     results: any = [];
@@ -17,17 +19,24 @@ export class Search implements OnInit {
 
     constructor(protected _route: ActivatedRoute,
                 protected _router: Router,
+                protected _pageRefreshService: PageRefresh,
+                protected _spinner: BaThemeSpinner,
                 protected _baMenuService: BaMenuService,
                 protected _titleChecker: TitleChecker) {
     }
 
     ngOnInit() {
+        this._spinner.hide();
         this._route.params.subscribe(params => {
             this.toSearch = params['value'];
             this._titleChecker.setTitle('Search: "' + this.toSearch + '"');
             this.results = [];
             this.search();
         });
+    }
+
+    ngOnDestroy() {
+        this._pageRefreshService.setLastPath(this._router.url);
     }
 
     search(): any {

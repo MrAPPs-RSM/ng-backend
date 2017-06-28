@@ -5,7 +5,7 @@ import { routing }       from './pages.routing';
 import { NgaModule } from '../theme/nga.module';
 
 import { Pages } from './pages.component';
-import { PagesResolver, TitleChecker } from './services';
+import { TitleChecker, PageRefresh, SetupGuard } from './services';
 import { AuthGuard } from '../auth';
 
 @NgModule({
@@ -19,8 +19,9 @@ import { AuthGuard } from '../auth';
     ],
     providers: [
         AuthGuard,
-        PagesResolver,
-        TitleChecker
+        SetupGuard,
+        TitleChecker,
+        PageRefresh
     ]
 })
 export class PagesModule {

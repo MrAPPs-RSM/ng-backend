@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
@@ -7,7 +7,8 @@ import { formConfig } from './form.config';
 import { FormLoaderService, FormHelperService } from './services';
 import { ApiService } from '../../api';
 import { ToastHandler, ModalHandler } from '../../theme/services';
-import { TitleChecker } from '../services';
+import { TitleChecker, PageRefresh } from '../services';
+import { BaThemeSpinner } from '../../theme/services';
 
 @Component({
     selector: '',
@@ -15,7 +16,7 @@ import { TitleChecker } from '../services';
     templateUrl: './form.html'
 })
 
-export class Form implements OnInit {
+export class Form implements OnInit, OnDestroy {
 
     public formConfig: any = {};
     public fields: any = {};
@@ -28,6 +29,8 @@ export class Form implements OnInit {
 
     constructor(protected _route: ActivatedRoute,
                 protected _router: Router,
+                protected _spinner: BaThemeSpinner,
+                protected _pageRefreshService: PageRefresh,
                 protected _titleChecker: TitleChecker,
                 protected _loaderService: FormLoaderService,
                 protected _apiService: ApiService,
@@ -36,6 +39,7 @@ export class Form implements OnInit {
     }
 
     ngOnInit() {
+        this._spinner.hide();
         this.formConfig = formConfig;
         this.params = this._route.snapshot.data;
         this._titleChecker.setCorrectTitle(this._route, this.params);
@@ -56,6 +60,10 @@ export class Form implements OnInit {
                     this.payLoad = JSON.stringify(this.form.value);
                 }
             );
+    }
+
+    ngOnDestroy() {
+        this._pageRefreshService.setLastPath(this._router.url);
     }
 
     checkEditOrCreate(): void {

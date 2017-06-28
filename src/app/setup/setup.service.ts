@@ -5,11 +5,10 @@ import { ApiService } from '../api';
 import { Router } from '@angular/router';
 import { BaMenuService } from '../theme/services';
 import { TokenManager } from '../auth';
+import { config } from '../app.config';
 
 @Injectable()
 export class SetupService {
-
-    private endpoint: string = 'setup';
 
     constructor(private _router: Router,
                 private _tokenManager: TokenManager,
@@ -20,13 +19,13 @@ export class SetupService {
     public setup(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._apiService.get(
-                this.endpoint
+                config.setupEndpoint
             )
                 .subscribe(
                     data => {
                         this.loadRoutes(data);
                         this._baMenuService.loadSidebar(data);
-                        resolve(data.settings);
+                        resolve();
                     },
                     error => {
                         // Might never happen, in case, logout the user

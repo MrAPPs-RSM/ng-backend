@@ -58,7 +58,7 @@ export class Login implements OnInit {
                     response => {
                         this._tokenManager.storeToken(response.id);
                         this._spinner.show();
-                        this._router.navigate(['pages']);
+                        this._router.navigate(['pages/dashboard']);
                     },
                     error => {
                         this._toastManager.error(error);

@@ -1,3 +1,3 @@
-export * from './pages-resolver.service';
 export * from './title-checker.service';
-
+export * from './page-refresh.service';
+export * from './setup.guard';

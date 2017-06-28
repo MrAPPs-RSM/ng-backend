@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
 import { config } from '../app.config';
-import { TokenManager } from '../auth';
+import { TokenManager, Logout } from '../auth';
 
 @Injectable()
 export class ApiService {
@@ -15,7 +15,9 @@ export class ApiService {
     config: any = config.env === 'dev' ? config.api.dev : config.api.prod;
     headers: Headers;
 
-    constructor(protected _http: Http, protected _tokenManager: TokenManager) {
+    constructor(protected _http: Http,
+                protected _tokenManager: TokenManager,
+                protected _logout: Logout) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
     }
@@ -161,8 +163,7 @@ export class ApiService {
     /** Response handlers */
     private handleError = (error: Response): Observable<any> | any  => {
         if (error.status === 401) { // Unauthorized
-            this._tokenManager.removeToken();
-            location.reload();
+            this._logout.logout();
         } else {
             let errMsg: string;
             const body = error.json() || '';

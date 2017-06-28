@@ -5,8 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../api';
 import { ToastHandler, ModalHandler } from '../../theme/services';
 import { ServerDataSource } from './../components/ng2-smart-table';
-import { TitleChecker } from '../services';
+import { TitleChecker, PageRefresh } from '../services';
 import { ListPaging } from './services';
+import { BaThemeSpinner } from '../../theme/services';
 
 @Component({
     selector: 'list',
@@ -43,7 +44,9 @@ export class List implements OnInit, OnDestroy {
 
     constructor(protected _router: Router,
                 protected _titleChecker: TitleChecker,
+                protected _spinner: BaThemeSpinner,
                 protected _listPaging: ListPaging,
+                protected _pageRefreshService: PageRefresh,
                 protected _route: ActivatedRoute,
                 protected _apiService: ApiService,
                 protected _modalHandler: ModalHandler,
@@ -51,6 +54,7 @@ export class List implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this._spinner.hide();
         this.params = this._route.snapshot.data;
         this._titleChecker.setCorrectTitle(this._route, this.params);
         this.loadSettings();
@@ -59,6 +63,7 @@ export class List implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this._listPaging.setPaging(this.source.getPaging());
+        this._pageRefreshService.setLastPath(this._router.url);
     }
 
     loadSettings(): void {

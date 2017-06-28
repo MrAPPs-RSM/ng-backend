@@ -23,7 +23,7 @@ import { PagesModule } from './pages/pages.module';
 import { Login } from './login';
 import { FormLoaderService } from './pages/form/services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthGuard, LoginGuard, TokenManager } from './auth';
+import { AuthGuard, LoginGuard, TokenManager, Logout } from './auth';
 import { ApiService } from './api';
 import { SetupService } from './setup';
 import { ToastHandler, ModalHandler } from './theme/services';
@@ -36,6 +36,7 @@ const APP_PROVIDERS = [
     ModalHandler,
     AuthGuard,
     LoginGuard,
+    Logout,
     TokenManager,
     ApiService,
     SetupService,

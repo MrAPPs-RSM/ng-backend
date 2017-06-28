@@ -2,9 +2,9 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { GlobalState } from '../../../global.state';
 
 import 'style-loader!./pageTop.scss';
-import { TokenManager } from '../../../auth';
 import { isNullOrUndefined } from 'util';
 import { Router } from '@angular/router';
+import { Logout } from '../../../auth';
 
 @Component({
     selector: 'page-top',
@@ -22,7 +22,7 @@ export class PageTop implements OnInit {
 
     constructor(private _state: GlobalState,
                 private _router: Router,
-                private _tokenManager: TokenManager) {
+                private _logout: Logout) {
     }
 
     ngOnInit() {
@@ -32,8 +32,7 @@ export class PageTop implements OnInit {
     }
 
     public logout() {
-        this._tokenManager.removeToken();
-        location.reload();
+        this._logout.logout();
     }
 
     public search(iconClick?: boolean) {
