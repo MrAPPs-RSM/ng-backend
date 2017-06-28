@@ -88,7 +88,6 @@ export class SetupService {
         pagesRoute.children = standardPages;
         routerConfig[1] = pagesRoute;
 
-        console.log(routerConfig);
         this._router.resetConfig(routerConfig);
     }
 

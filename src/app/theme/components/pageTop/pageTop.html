@@ -2,9 +2,9 @@
     <a routerLink="/pages/dashboard" class="al-logo clearfix"><span><i *ngIf="icon" class="{{icon}}"></i> {{ title }}</span></a>
     <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
 
-    <div class="search">
-        <input #searchInput (keyup.enter)="search()" type="text" placeholder="Search...">
-        <i class="fa fa-search" (click)="search()"></i>
+    <div class="search" [style.width]="isSearchClicked ? '300px' : '40px'">
+        <input #searchInput (keyup.enter)="search()" type="text">
+        <i class="fa fa-search" (click)="search(true)"></i>
     </div>
 
     <div class="logout">

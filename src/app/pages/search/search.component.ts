@@ -63,8 +63,6 @@ export class Search implements OnInit {
                 }
             });
         }
-
-        console.log(this.items);
     }
 
     onResultClick(item: any): void {

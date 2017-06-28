@@ -16,6 +16,7 @@ export class PageTop implements OnInit {
     @Input() icon: string;
     @ViewChild('searchInput') searchInput;
 
+    public isSearchClicked: boolean = false;
     public isScrolled: boolean = false;
     public isMenuCollapsed: boolean = false;
 
@@ -35,10 +36,14 @@ export class PageTop implements OnInit {
         location.reload();
     }
 
-    public search() {
+    public search(iconClick?: boolean) {
         let value = this.searchInput.nativeElement.value;
         if (value !== '' && !isNullOrUndefined(value)) {
             this._router.navigate(['pages/search/' + value.toLowerCase()]);
+        } else {
+            if (iconClick === true) {
+                this.isSearchClicked = !this.isSearchClicked;
+            }
         }
     }
 

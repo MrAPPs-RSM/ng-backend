@@ -2,9 +2,8 @@ import { LocalDataSource } from '../local/local.data-source';
 import { RequestOptionsArgs } from '@angular/http/src/interfaces';
 import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
-import { ToastHandler } from '../../../../../theme/services';
-import { ApiService } from '../../../../../api';
-import { isNullOrUndefined } from 'util';
+import { ToastHandler } from '../../../../../../theme/services';
+import { ApiService } from '../../../../../../api';
 
 export class ServerDataSource extends LocalDataSource {
 

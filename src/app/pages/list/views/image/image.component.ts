@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ViewCell } from '../../../ng2-smart-table';
+import { ViewCell } from '../../../components/ng2-smart-table';
 import { config } from '../../../../app.config';
 
 
@@ -15,6 +15,6 @@ export class ImageRender implements ViewCell {
 
     ngOnInit() {
         this.renderValue = this.value !== null ? config.api[config.env].baseFilesUrl + this.value :
-        '../../../assets/images/no-image.png'; // TODO service that load placehold url
+        '../../../assets/images/no-image.png'; // TODO service that load placeholder url ?
     }
 }
