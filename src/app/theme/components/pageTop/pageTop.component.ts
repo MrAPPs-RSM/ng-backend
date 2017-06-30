@@ -8,7 +8,7 @@ import { Logout } from '../../../auth';
 
 @Component({
     selector: 'page-top',
-    templateUrl: './pageTop.html',
+    templateUrl: './pageTop.html'
 })
 export class PageTop implements OnInit {
 

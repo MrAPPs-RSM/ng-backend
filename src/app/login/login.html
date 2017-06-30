@@ -2,7 +2,7 @@
     <div class="auth-block">
         <h1><i *ngIf="icon" class="{{icon}}"></i> {{ title }}</h1>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
 
             <div [ngClass]="{'has-error': !isValidField(fields[0].key) && isTouchedField(fields[0].key), 'has-success': isValidField(fields[0].key) && isTouchedField(fields[0].key)}" class="form-group row">
                 <label for="{{ fields[0].key }}" class="col-sm-2 form-control-label">{{ fields[0].label }}</label>

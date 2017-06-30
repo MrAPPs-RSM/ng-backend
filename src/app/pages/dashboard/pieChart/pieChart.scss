@@ -53,6 +53,8 @@
   }
 
   .chart {
+    background-color: $primary;
+    border-radius: 100%;
     position: relative;
     display: inline-block;
     width: 84px;
@@ -69,6 +71,7 @@
     display: inline-block;
     line-height: 84px;
     z-index: 2;
+    font-weight: $font-bold;
     font-size: 16px;
   }
   .percent:after {
