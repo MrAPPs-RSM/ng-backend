@@ -22,6 +22,7 @@ export class File implements OnInit {
     uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
     dragOver: boolean;
     uploadedFiles: UploadedFile[] = [];
+    showProgress: boolean = false;
 
     // TODO: this must be a backend logic (it's ok only is backend is loopback)
     static composeFilePath(file: any) {
@@ -77,6 +78,7 @@ export class File implements OnInit {
     }
 
     onUploadOutput(output: UploadOutput): void {
+        console.log(output.type);
         switch (output.type) {
             case 'allAddedToQueue': {
                 this.startUpload();
@@ -116,6 +118,7 @@ export class File implements OnInit {
             }
                 break;
             case 'done': {
+                this.showProgress = false;
                 this.handleResponse(output.file);
             }
                 break;
@@ -126,6 +129,7 @@ export class File implements OnInit {
     }
 
     startUpload(): void {
+        this.showProgress = true;
         const event: UploadInput = {
             type: 'uploadAll',
             url: this._apiService.composeUrl(this.field.options.api.upload),

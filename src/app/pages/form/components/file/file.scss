@@ -54,7 +54,7 @@
       &.img {
         color: $warning;
       }
-      &.zip {
+      &.zip  {
         color: purple;
       }
       &.code {
@@ -78,5 +78,56 @@
   p {
     font-size: 12px;
     margin-bottom: 0;
+  }
+}
+
+.progress-line {
+  height: 10px;
+  border-radius: 10px;
+  width: 100%;
+  margin: 0;
+  background-color: $sidebar;
+  display: -webkit-flex;
+  display: flex;
+
+  &:before {
+    height: 10px;
+    border-radius: 10px;
+    width: 100%;
+    margin: 0;
+    background-color: $primary;
+    content: '';
+    -webkit-animation: running-progress 1s cubic-bezier(0.50, 0.50, 0.50, 0.50) infinite;
+    animation: running-progress 1s cubic-bezier(0.50, 0.50, 0.50, 0.50) infinite;
+  }
+}
+
+@-webkit-keyframes running-progress {
+  0% {
+    margin-left: 0;
+    margin-right: 100%;
+  }
+  50% {
+    margin-left: 25%;
+    margin-right: 0;
+  }
+  100% {
+    margin-left: 100%;
+    margin-right: 0;
+  }
+}
+
+@keyframes running-progress {
+  0% {
+    margin-left: 0;
+    margin-right: 100%;
+  }
+  50% {
+    margin-left: 25%;
+    margin-right: 0;
+  }
+  100% {
+    margin-left: 100%;
+    margin-right: 0;
   }
 }

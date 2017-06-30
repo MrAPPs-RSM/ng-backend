@@ -1,4 +1,4 @@
-<div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'">
+<div [formGroup]="form" [class]="field.class ? field.class : 'col-sm-12'" style="margin-bottom: 15px;">
     <div class="form-group form-element">
         <!-- Label -->
         <label>
@@ -40,11 +40,14 @@
         <span *ngIf="field.description" class="help-block sub-little-text">{{field.description}}</span>
     </div>
 
+    <div *ngIf="showProgress" class="progress-line"></div>
+
     <!-- Uploaded files -->
     <div *ngIf="uploadedFiles.length > 0"
          class="row vertical-align uploaded-files">
         <div class="col-sm-12 no-padding">
-            <label>{{ field.options?.labels?.uploadedFiles ?  field.options.labels.uploadedFiles : 'Uploaded files'}}:</label>
+            <label>{{ field.options?.labels?.uploadedFiles ? field.options.labels.uploadedFiles : 'Uploaded
+                files'}}:</label>
             <ul class="uploaded-files-list">
                 <li *ngFor="let file of uploadedFiles">
                     <div class="uploaded-files-list-item">
@@ -57,8 +60,8 @@
                                 <i *ngSwitchCase="'application/msword'" class="fa fa-file-text-o txt"></i>
                                 <i *ngSwitchCase="'text/csv'" class="fa fa-file-code-o code"></i>
                                 <i *ngSwitchCase="'application/pdf'" class="fa fa-file-pdf-o pdf"></i>
-                                <img *ngSwitchCase="'image/jpeg'" src="{{ file.path }}" />
-                                <img *ngSwitchCase="'image/png'" src="{{ file.path }}" />
+                                <img *ngSwitchCase="'image/jpeg'" src="{{ file.path }}"/>
+                                <img *ngSwitchCase="'image/png'" src="{{ file.path }}"/>
                                 <i *ngSwitchCase="'application/zip'" class="fa fa-file-zip-o zip"></i>
                                 <i *ngSwitchDefault class="fa fa-file-o default"></i>
                             </div>
