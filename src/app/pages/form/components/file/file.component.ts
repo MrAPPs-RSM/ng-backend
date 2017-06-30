@@ -78,7 +78,6 @@ export class File implements OnInit {
     }
 
     onUploadOutput(output: UploadOutput): void {
-        console.log(output.type);
         switch (output.type) {
             case 'allAddedToQueue': {
                 this.startUpload();
