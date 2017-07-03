@@ -6,7 +6,7 @@ import { NgaModule } from '../../theme/nga.module';
 import { Dashboard } from './dashboard.component';
 import { routing }       from './dashboard.routing';
 
-import { PieChart } from './pieChart';
+import { SimpleStats } from './simpleStats';
 import { DoughnutChart } from './doughnutChart';
 import { FeedService } from './feed/feed.service';
 import { DashboardResolver } from './services';
@@ -19,7 +19,7 @@ import { DashboardResolver } from './services';
         routing
     ],
     declarations: [
-        PieChart,
+        SimpleStats,
         DoughnutChart,
         Dashboard
     ],

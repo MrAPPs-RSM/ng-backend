@@ -1,6 +1,6 @@
 export let dashboardConfig = {
     types: {
-        PIE_CHARTS: 'pieCharts',
+        SIMPLE_STATS: 'simpleStats',
         DOUGHNUT_CHART: 'doughnutChart'
     }
 };

@@ -1,0 +1,17 @@
+<div class="col-sm-12" *ngIf="items.length > 0">
+    <div class="row simple-stats">
+
+        <ba-card *ngFor="let chart of items"
+                 class="simple-stats-item-container col-sm-6 col-xs-12">
+
+            <div class="simple-stats-item">
+                <div class="description">
+                    <div class="description-title">{{ chart.title }}</div>
+                    <div class="description-stats">{{ chart.stats.data }}</div>
+                </div>
+                <i class="simple-stats-icon {{ chart.icon }}"></i>
+            </div>
+
+        </ba-card>
+    </div>
+</div>
