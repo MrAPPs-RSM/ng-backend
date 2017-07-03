@@ -140,7 +140,7 @@ a.al-sidebar-list-link {
   list-style: none;
   position: relative;
   display: none;
-  background-color: $sidebar-sub-list;
+  background-color: $sidebar-sub-list !important;
   &.expanded {
     display: block;
   }
