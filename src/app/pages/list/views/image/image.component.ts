@@ -15,6 +15,6 @@ export class ImageRender implements ViewCell {
 
     ngOnInit() {
         this.renderValue = this.value !== null ? config.api[config.env].baseFilesUrl + this.value :
-        '../../../assets/images/no-image.png'; // TODO service that load placeholder url ?
+        '../../../assets/images/no-image.png'; // INFO: service that load placeholder url ?
     }
 }

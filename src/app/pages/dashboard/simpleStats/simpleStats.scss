@@ -16,13 +16,13 @@
 
   @media screen and (min-width: 1325px) {
     .simple-stats-item-container {
-      width: 25%;
+      // width: 100%;
       flex: 0 0 25%
     }
   }
   @media screen and (min-width: 700px) and (max-width: 1325px)  {
     .simple-stats-item-container {
-      width: 50%;
+      // width: 100%;
       flex: 0 0 50%
     }
   }
@@ -41,14 +41,6 @@
       right: 0;
       margin: 10px 0 10px 0;
       color: $primary;
-    }
-  }
-  @media screen and
-  (min-width: 1325px) and (max-width: 1650px),
-  (min-width: 700px) and (max-width: 830px),
-  (max-width: 400px) {
-    .simple-stats-icon {
-      display: none;
     }
   }
 
