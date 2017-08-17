@@ -9,6 +9,7 @@
 
         <!-- Input -->
         <input
+                [attr.disabled]="field.disabled ? '' : null"
                 type="number"
                 formControlName="{{field.key}}"
                 class="form-control"

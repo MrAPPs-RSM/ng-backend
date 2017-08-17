@@ -18,6 +18,7 @@
                 *ngIf="!field.options || !field.options.tinyMce"
                 formControlName="{{field.key}}"
                 id="{{field.key}}"
+                [attr.disabled]="field.disabled ? '' : null"
                 rows="{{field.options?.rows}}"
                 cols="{{field.options?.cols}}"
                 class="form-control"
