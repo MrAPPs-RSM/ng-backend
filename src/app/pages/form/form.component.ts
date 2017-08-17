@@ -163,13 +163,28 @@ export class Form implements OnInit, OnDestroy {
     }
 
     onButtonClick(button: any): void {
-        let redirectTo = button.redirectTo;
-        if (redirectTo.indexOf(':id') !== -1) {
-            redirectTo = redirectTo.replace(':id', this.id.toString());
+        if (typeof button.redirectTo !== 'undefined') {
+            let redirectTo = button.redirectTo;
+            if (redirectTo.indexOf(':id') !== -1) {
+                redirectTo = redirectTo.replace(':id', this.id.toString());
+            }
+            if (redirectTo.indexOf(':title') !== -1 && button.titleField) {
+                redirectTo = redirectTo.replace(':title', this.form.controls[button.titleField].value);
+            }
+            this._router.navigate(['pages/' + redirectTo]);
+        } else {
+            if (typeof button.apiEndpoint !== 'undefined') {
+                let endpoint = button.apiEndpoint.replace(':id', this.id.toString());
+                this._apiService.get(endpoint)
+                    .subscribe(
+                        data => {
+                            this._toastManager.success();
+                        },
+                        error => {
+                            this._toastManager.error(error);
+                        }
+                    );
+            }
         }
-        if (redirectTo.indexOf(':title') !== -1 && button.titleField) {
-            redirectTo = redirectTo.replace(':title', this.form.controls[button.titleField].value);
-        }
-        this._router.navigate(['pages/' + redirectTo]);
     }
 }

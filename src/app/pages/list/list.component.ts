@@ -1,13 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import 'style-loader!./list.scss';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../api';
-import { ToastHandler, ModalHandler } from '../../theme/services';
-import { ServerDataSource } from './../components/ng2-smart-table';
-import { TitleChecker, PageRefresh } from '../services';
-import { ListPaging } from './services';
-import { BaThemeSpinner } from '../../theme/services';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ApiService} from '../../api';
+import {ToastHandler, ModalHandler} from '../../theme/services';
+import {ServerDataSource} from './../components/ng2-smart-table';
+import {TitleChecker, PageRefresh} from '../services';
+import {ListPaging} from './services';
+import {BaThemeSpinner} from '../../theme/services';
 
 @Component({
     selector: 'list',
@@ -153,13 +153,28 @@ export class List implements OnInit, OnDestroy {
     }
 
     onCustom(event: any): void {
-        let redirectTo = this.params.table.actions.custom.path;
-        if (redirectTo.indexOf(':id') !== -1) {
-            redirectTo = redirectTo.replace(':id', event.data.id);
+        if (typeof this.params.table.actions.custom.path !== 'undefined') {
+            let redirectTo = this.params.table.actions.custom.path;
+            if (redirectTo.indexOf(':id') !== -1) {
+                redirectTo = redirectTo.replace(':id', event.data.id);
+            }
+            if (redirectTo.indexOf(':title') !== -1 && this.params.table.actions.custom.titleField) {
+                redirectTo = redirectTo.replace(':title', event.data[this.params.table.actions.custom.titleField]);
+            }
+            this._router.navigate(['pages/' + redirectTo]);
+        } else {
+            if (typeof this.params.table.actions.custom.apiEndpoint !== 'undefined') {
+                let endpoint = this.params.table.actions.custom.apiEndpoint.replace(':id', event.data.id);
+                this._apiService.get(endpoint)
+                    .subscribe(
+                        data => {
+                            this._toastManager.success();
+                        },
+                        error => {
+                            this._toastManager.error(error);
+                        }
+                    );
+            }
         }
-        if (redirectTo.indexOf(':title') !== -1 && this.params.table.actions.custom.titleField) {
-            redirectTo = redirectTo.replace(':title', event.data[this.params.table.actions.custom.titleField]);
-        }
-        this._router.navigate(['pages/' + redirectTo]);
     }
 }
