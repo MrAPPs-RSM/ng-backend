@@ -36,6 +36,10 @@ export class Dashboard implements OnInit, OnDestroy {
         } else {
             this.showDashboard = false;
         }
+
+        if (typeof this.components === 'undefined' || this.components.length <= 0) {
+            this._router.navigate(['pages/' + this._router.config[1].children[3].path]);
+        }
     }
 
     ngOnDestroy() {
