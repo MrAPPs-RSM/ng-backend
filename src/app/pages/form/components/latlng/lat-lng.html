@@ -1,21 +1,3 @@
-<div class="google-map-wrapper">
-    <agm-map
-            [zoom]="mapZoom"
-            [latitude]="defaultLat"
-            [longitude]="defaultLng"
-            (mapClick)="onMarkerChanged($event)">
-
-        <agm-marker
-                [latitude]="marker.lat"
-                [longitude]="marker.lng"
-                [label]="marker.label"
-                [markerDraggable]="marker.draggable"
-                (dragEnd)="onMarkerChanged($event)">
-        </agm-marker>
-
-    </agm-map>
-</div>
-
 <div [formGroup]="form" [class]="field.lat.class ? field.lat.class : 'col-sm-6'">
     <div class="form-group form-element" [ngClass]="{'has-error': !isValidLat, 'has-success': isValidLat}">
 
@@ -64,4 +46,22 @@
         <!-- Others -->
         <span *ngIf="field.lng.description" class="help-block sub-little-text">{{field.lng.description}}</span>
     </div>
+</div>
+
+<div class="google-map-wrapper">
+    <agm-map
+            [zoom]="8"
+            [latitude]="defaultLat"
+            [longitude]="defaultLng"
+            (mapClick)="onMarkerChanged($event)">
+
+        <agm-marker
+                [latitude]="marker.lat"
+                [longitude]="marker.lng"
+                [label]="marker.label"
+                [markerDraggable]="marker.draggable"
+                (dragEnd)="onMarkerChanged($event)">
+        </agm-marker>
+
+    </agm-map>
 </div>

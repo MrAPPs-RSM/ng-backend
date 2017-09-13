@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
+import {ln} from "shelljs";
 
 @Component({
     selector: 'lat-lng',
@@ -14,7 +15,6 @@ export class LatLng implements OnInit{
     // Setup options
     options: any = this.options = this.field.hasOwnProperty('options') ? this.field.options : {};
 
-    mapZoom: number = this.options.hasOwnProperty('mapZoom') ? this.field.mapZoom : 3;
     defaultLat: number = this.options.hasOwnProperty('defaultLat') ? this.options.defaultLat : null;
     defaultLng: number =  this.options.hasOwnProperty('defaultLng') ? this.options.defaultLng : null;
 
@@ -36,24 +36,23 @@ export class LatLng implements OnInit{
         this.marker = this.field.hasOwnProperty('marker') ? this.field.marker : {lat: null, lng: null, draggable: true};
         this.refreshMapPosition();
         this.refreshFormValues();
+        this.onFormChange();
     }
 
-    /**
-     * Input value changes and map marker changes its position
-     * @disabled for not user friendly behavior
-     */
-    /* onFormChange(): void {
+    onFormChange(): void {
         this.form.controls[this.field.lat.key]
             .valueChanges
             .subscribe(lat => {
+                this.defaultLat = lat;
                 this.marker.lat = lat;
             });
         this.form.controls[this.field.lng.key]
             .valueChanges
             .subscribe(lng => {
+                this.defaultLng = lng;
                 this.marker.lng = lng;
             });
-    } */
+    }
 
     onMarkerChanged(event: any): void {
         this.marker.lat = event.coords.lat;
