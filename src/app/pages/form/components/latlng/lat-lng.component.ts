@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'lat-lng',
     styleUrls: ['./lat-lng.scss'],
-    templateUrl: './lat-lng.html'
+    templateUrl: './lat-lng.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class LatLng implements OnInit{
     @Input() form: FormGroup;
