@@ -14,7 +14,8 @@ export let formConfig = {
         LAT_LNG: 'lat_lng',
         FILE: 'file',
         LIST_DETAILS: 'list_details',
-        CALENDAR: 'calendar'
+        CALENDAR: 'calendar',
+        DIVIDER: 'divider'
     },
     validators: {
         REQUIRED: 'required',

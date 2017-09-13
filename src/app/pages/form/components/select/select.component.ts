@@ -83,7 +83,8 @@ export class Select implements OnInit {
                 );
         } else {
             this.loadSelectValues()
-                .then(() => {})
+                .then(() => {
+                })
                 .catch((error) => {
                     this._toastHandler.error(error);
                 });

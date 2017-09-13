@@ -2,6 +2,11 @@
 
     <div [ngSwitch]="field.type">
 
+        <divider
+                *ngSwitchCase="formConfig.types.DIVIDER"
+                [field]="field">
+        </divider>
+
         <input-text
                 *ngSwitchCase="formConfig.types.TEXT"
                 [form]="form"

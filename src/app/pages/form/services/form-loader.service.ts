@@ -119,10 +119,12 @@ export class FormLoaderService {
                     }
                         break;
                     default: {
-                        group[field.key] = new FormControl(
-                            field.value || null,
-                            validators.length > 0 ? Validators.compose(validators) : null
-                        );
+                        if (field.type !== formConfig.types.DIVIDER) {
+                            group[field.key] = new FormControl(
+                                field.value || null,
+                                validators.length > 0 ? Validators.compose(validators) : null
+                            );
+                        }
                     }
                         break;
                 }

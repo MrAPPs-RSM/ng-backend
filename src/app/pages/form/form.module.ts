@@ -17,7 +17,7 @@ import { Form } from './form.component';
 import { FormSwitcher } from './switcher';
 
 import { Text, TextArea, Email, Url, Number, Password, CheckBox, Select, DatePicker,
-DateRangePicker, LatLng, File, ListDetails, Calendar, ColorPicker } from './components';
+DateRangePicker, LatLng, File, ListDetails, Calendar, ColorPicker, Divider } from './components';
 
 const FORM_COMPONENTS = [
     Text,
@@ -34,7 +34,8 @@ const FORM_COMPONENTS = [
     LatLng,
     File,
     ListDetails,
-    Calendar
+    Calendar,
+    Divider
 ];
 
 import {

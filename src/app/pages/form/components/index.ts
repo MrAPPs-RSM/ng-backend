@@ -13,4 +13,6 @@ export * from './latlng';
 export * from './file';
 export * from './list-details';
 export * from './calendar';
+export * from './divider';
+
 
