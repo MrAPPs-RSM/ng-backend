@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
-import {ln} from "shelljs";
 
 @Component({
     selector: 'lat-lng',
