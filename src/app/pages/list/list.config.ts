@@ -8,6 +8,7 @@ export let listConfig = {
         DATE: 'date',
         COLOR: 'color',
         IMAGE: 'image',
+        LINK: 'link',
         CUSTOM: 'custom'
     }
 };

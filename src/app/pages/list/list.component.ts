@@ -168,7 +168,7 @@ export class List implements OnInit, OnDestroy {
                 this._apiService.get(endpoint)
                     .subscribe(
                         data => {
-                            this._toastManager.success();
+                            this._toastManager.success(data.message ? data.message : null);
                         },
                         error => {
                             this._toastManager.error(error);

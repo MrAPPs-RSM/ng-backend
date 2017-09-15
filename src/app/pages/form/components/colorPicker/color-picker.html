@@ -16,6 +16,7 @@
                 id="{{field.key}}"
                 formControlName="{{field.key}}"
                 class="form-control"
+                [cpAlphaChannel]="'disabled'"
                 (colorPickerChange)="onColorChange($event)"
                 [(colorPicker)]="color"
                 [style.background]="color"

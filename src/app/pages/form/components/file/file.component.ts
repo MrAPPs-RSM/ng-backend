@@ -24,9 +24,10 @@ export class File implements OnInit {
     uploadedFiles: UploadedFile[] = [];
     showProgress: boolean = false;
 
-    // TODO: this must be a backend logic (it's ok only is backend is loopback)
+    // TODO: this must be a backend logic (it's ok only if backend is loopback)
     static composeFilePath(file: any) {
-        return config.api[config.env].baseFilesUrl + file.container + '/' + file.name;
+        let name = file.name ? file.name : file.hash + '.' + file.extension;
+        return config.api[config.env].baseFilesUrl + name;
     }
 
     constructor(protected _renderer: Renderer,
@@ -49,7 +50,7 @@ export class File implements OnInit {
                                     path: File.composeFilePath(item),
                                     remoteName: item.name,
                                     name: item.originalName,
-                                    type: item.type
+                                    type: item.type ? item.type : item.extension
                                 });
                             });
                         } else {
@@ -59,7 +60,7 @@ export class File implements OnInit {
                                 path: File.composeFilePath(data),
                                 remoteName: data.name,
                                 name: data.originalName,
-                                type: data.type
+                                type: data.type ? data.type : data.extension
                             });
                         }
                         this.updateFormValue();
@@ -156,6 +157,7 @@ export class File implements OnInit {
         if (file.response.error) {
             this._toastManager.error(file.response.error.message);
         } else {
+            console.log(file.response);
             this.addToUpdatedFiles({
                 id: file.response.id,
                 container: file.response.container,

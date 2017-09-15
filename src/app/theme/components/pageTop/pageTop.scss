@@ -1,6 +1,7 @@
 @import '../../sass/conf/conf';
 
 .page-top {
+  border-bottom: 1px solid $sidebar-sub-list;
   background-color: $sidebar;
   position: fixed;
   z-index: 904;

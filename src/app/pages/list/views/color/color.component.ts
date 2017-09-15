@@ -3,7 +3,8 @@ import { ViewCell } from '../../../components/ng2-smart-table';
 
 
 @Component({
-    templateUrl: './color.html'
+    templateUrl: './color.html',
+    styleUrls: ['./color.scss'],
 })
 export class ColorRender implements ViewCell {
 

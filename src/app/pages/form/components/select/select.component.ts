@@ -70,7 +70,7 @@ export class Select implements OnInit {
                         this.loadSelectValues()
                             .then(() => {
                                 this.selectValues.forEach((item, index) => {
-                                    if (item.id === value) {
+                                    if (item.id == value) {
                                         this.ngSelect.active = [this.selectValues[index]];
                                         this.refreshValue(this.selectValues[index]);
                                     }
