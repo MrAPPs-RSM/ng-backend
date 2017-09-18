@@ -13,6 +13,8 @@ export class LinkRender implements ViewCell {
     ngOnInit() {
         if (this.value.indexOf('https') === -1) {
             this.href = '//' + this.value;
+        } else {
+            this.href = this.value;
         }
     }
 }
