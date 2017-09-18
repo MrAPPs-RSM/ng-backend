@@ -1,14 +1,19 @@
 @import "../../../../theme/sass/conf/conf";
 
 lat-lng {
-  .google-map-wrapper {
+  > .form-wrapper {
+    > div {
+      margin-bottom: 8px;
+    }
+  }
+  > .google-map-wrapper {
     display: grid;
     margin: 20px 15px 5px 15px;
     border: 2px solid $border-light;
     border-radius: 5px;
-  }
 
-  .sebm-google-map-container {
-    height: 300px;
+    .sebm-google-map-container {
+      height: 300px;
+    }
   }
 }

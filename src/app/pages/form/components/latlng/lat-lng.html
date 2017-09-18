@@ -1,50 +1,52 @@
-<div [formGroup]="form" [class]="field.lat.class ? field.lat.class : 'col-sm-6'">
-    <div class="form-group form-element" [ngClass]="{'has-error': !isValidLat, 'has-success': isValidLat}">
+<div class="form-wrapper">
+    <div [formGroup]="form" [class]="field.lat.class ? field.lat.class : 'col-sm-6'">
+        <div class="form-group form-element" [ngClass]="{'has-error': !isValidLat, 'has-success': isValidLat}">
 
-        <!-- Label -->
-        <label for="{{field.lat.key}}">
-            {{field.lat.label}}
-            <span *ngIf="field.validators && field.validators.required">*</span>
-        </label>
+            <!-- Label -->
+            <label for="{{field.lat.key}}">
+                {{field.lat.label}}
+                <span *ngIf="field.validators && field.validators.required">*</span>
+            </label>
 
-        <!-- Input -->
-        <input
-                type="number"
-                [attr.disabled]="field.disabled ? '' : null"
-                formControlName="{{field.lat.key}}"
-                class="form-control"
-                id="{{field.lat.key}}"
-                placeholder="{{field.lat.placeholder}}"
-                value="{{marker.lat}}"
-        >
+            <!-- Input -->
+            <input
+                    type="number"
+                    [attr.disabled]="field.disabled ? '' : null"
+                    formControlName="{{field.lat.key}}"
+                    class="form-control"
+                    id="{{field.lat.key}}"
+                    placeholder="{{field.lat.placeholder}}"
+                    value="{{marker.lat}}"
+            >
 
-        <!-- Others -->
-        <span *ngIf="field.lat.description" class="help-block sub-little-text">{{field.lat.description}}</span>
+            <!-- Others -->
+            <span *ngIf="field.lat.description" class="help-block sub-little-text">{{field.lat.description}}</span>
+        </div>
     </div>
-</div>
 
-<div [formGroup]="form" [class]="field.lng.class ? field.lng.class : 'col-sm-6'">
-    <div class="form-group form-element" [ngClass]="{'has-error': !isValidLng, 'has-success': isValidLng}">
+    <div [formGroup]="form" [class]="field.lng.class ? field.lng.class : 'col-sm-6'">
+        <div class="form-group form-element" [ngClass]="{'has-error': !isValidLng, 'has-success': isValidLng}">
 
-        <!-- Label -->
-        <label for="{{field.lng.key}}">
-            {{field.lng.label}}
-            <span *ngIf="field.validators && field.validators.required">*</span>
-        </label>
+            <!-- Label -->
+            <label for="{{field.lng.key}}">
+                {{field.lng.label}}
+                <span *ngIf="field.validators && field.validators.required">*</span>
+            </label>
 
-        <!-- Input -->
-        <input
-                type="number"
-                [attr.disabled]="field.disabled ? '' : null"
-                formControlName="{{field.lng.key}}"
-                class="form-control"
-                id="{{field.lng.key}}"
-                placeholder="{{field.lng.placeholder}}"
-                value="{{marker.lng}}"
-        >
+            <!-- Input -->
+            <input
+                    type="number"
+                    [attr.disabled]="field.disabled ? '' : null"
+                    formControlName="{{field.lng.key}}"
+                    class="form-control"
+                    id="{{field.lng.key}}"
+                    placeholder="{{field.lng.placeholder}}"
+                    value="{{marker.lng}}"
+            >
 
-        <!-- Others -->
-        <span *ngIf="field.lng.description" class="help-block sub-little-text">{{field.lng.description}}</span>
+            <!-- Others -->
+            <span *ngIf="field.lng.description" class="help-block sub-little-text">{{field.lng.description}}</span>
+        </div>
     </div>
 </div>
 
@@ -53,6 +55,7 @@
             [zoom]="8"
             [latitude]="defaultLat"
             [longitude]="defaultLng"
+            [scrollwheel]="false"
             (mapClick)="onMarkerChanged($event)">
 
         <agm-marker
