@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import 'style-loader!./simpleStats.scss';
-import { ToastHandler } from '../../../theme/services';
-import { ApiService } from '../../../api';
+import {ToastHandler} from '../../../theme/services';
+import {ApiService} from '../../../api';
+import {isNullOrUndefined} from "util";
 
 @Component({
     selector: 'simple-stats',
@@ -41,6 +42,10 @@ export class SimpleStats implements OnInit {
                         this._apiService.get(item.stats)
                             .subscribe(
                                 data => {
+                                    if (Object.keys(data).length === 0 && data.constructor === Object
+                                    || isNullOrUndefined(data)) {
+                                        data = 0;
+                                    }
                                     item.stats = {data: data};
                                     result.push(item);
                                     pResolve();
