@@ -175,12 +175,15 @@ export class Form implements OnInit, OnDestroy {
         } else {
             if (typeof button.apiEndpoint !== 'undefined') {
                 let endpoint = button.apiEndpoint.replace(':id', this.id.toString());
+                this.dataLoaded = false;
                 this._apiService.get(endpoint)
                     .subscribe(
                         data => {
-                            this._toastManager.success();
+                            this.dataLoaded = true;
+                            this._toastManager.success(data.message ? data.message : null);
                         },
                         error => {
+                            this.dataLoaded = true;
                             this._toastManager.error(error);
                         }
                     );
