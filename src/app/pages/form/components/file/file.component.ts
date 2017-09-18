@@ -1,4 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Renderer, ViewChild } from '@angular/core';
+import {
+    Component, ElementRef, EventEmitter, Input, OnInit, Renderer, ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { UploadOutput, UploadInput, UploadFile } from 'ngx-uploader';
 import { ToastHandler, ModalHandler } from '../../../../theme/services';
 
@@ -10,7 +13,8 @@ import { config } from '../../../../app.config';
 @Component({
     selector: 'file-uploader',
     templateUrl: './file.html',
-    styleUrls: ['./file.scss']
+    styleUrls: ['./file.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class File implements OnInit {
 

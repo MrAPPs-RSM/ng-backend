@@ -1,133 +1,143 @@
 @import '../../../../theme/sass/conf/conf';
 
-.drag-drop-container {
-  display: flex;
-  height: 50px;
-  border: 2px dashed $default-text;
-  border-radius: 5px;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
+$buttonsHeight: 35px;
 
-.is-drag-over {
-  background-color: $info-light;
-}
-
-.vertical-align {
-  display: flex;
-  align-items: center;
-}
-
-.uploaded-files {
-  margin-left: 0;
-  padding-left: 0;
-  margin-top: 10px;
-}
-
-.uploaded-files-list {
-  margin-bottom: 0;
-  list-style: none;
-  padding: 0;
-  li {
-    text-align: center;
-    margin: 0 15px 0 15px;
-    display: inline-block !important;
+file-uploader {
+  .is-drag-over {
+    background-color: $info-light;
   }
-}
 
-.uploaded-files-list-item  {
-  .list-item-wrapper {
-    position: relative;
-    img {
-      max-width: 75px;
-      max-height: 75px;
-    }
-    i {
-      font-size: 50px;
-      &.txt {
-        color: $info;
+  .vertical-align {
+    display: flex;
+    align-items: center;
+    > div {
+      > .drag-drop-container {
+        display: flex;
+        height: $buttonsHeight;
+        border: 2px dashed $default-text;
+        border-radius: 5px;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
       }
-      &.pdf {
-        color: $danger;
-      }
-      &.img {
-        color: $warning;
-      }
-      &.zip  {
-        color: purple;
-      }
-      &.code {
-        color: greenyellow;
-      }
-      &.default {
-        color: $bootstrap-panel-text;
-      }
-    }
-    .delete-file {
-      cursor: pointer;
-      position: absolute;
-      top: 0;
-      left: 0;
-      i {
-        color: black;
-        font-size: 15px;
+      > button {
+        height: $buttonsHeight;
+        width: 100%;
       }
     }
   }
-  p {
-    font-size: 12px;
-    margin-bottom: 0;
+
+  .uploaded-files {
+    margin-left: 0;
+    padding-left: 0;
+    margin-top: 10px;
+
+    > div {
+      > ul {
+        margin-bottom: 0;
+        list-style: none;
+        padding: 0;
+        > li {
+          text-align: center;
+          margin: 0 15px 0 15px;
+          display: inline-block !important;
+
+          > div {
+            position: relative;
+            img {
+              max-width: 75px;
+              max-height: 75px;
+            }
+            i {
+              font-size: 50px;
+              &.txt {
+                color: $info;
+              }
+              &.pdf {
+                color: $danger;
+              }
+              &.img {
+                color: $warning;
+              }
+              &.zip  {
+                color: purple;
+              }
+              &.code {
+                color: greenyellow;
+              }
+              &.default {
+                color: $bootstrap-panel-text;
+              }
+            }
+            .delete-file {
+              cursor: pointer;
+              position: absolute;
+              top: 0;
+              left: 0;
+              i {
+                color: black;
+                font-size: 15px;
+              }
+            }
+          }
+          p {
+            font-size: 12px;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
   }
-}
 
-.progress-line {
-  height: 10px;
-  border-radius: 10px;
-  width: 100%;
-  margin: 0;
-  background-color: $sidebar;
-  display: -webkit-flex;
-  display: flex;
-
-  &:before {
+  .progress-line {
     height: 10px;
     border-radius: 10px;
     width: 100%;
     margin: 0;
-    background-color: $primary;
-    content: '';
-    -webkit-animation: running-progress 1s cubic-bezier(0.50, 0.50, 0.50, 0.50) infinite;
-    animation: running-progress 1s cubic-bezier(0.50, 0.50, 0.50, 0.50) infinite;
-  }
-}
+    background-color: $sidebar;
+    display: -webkit-flex;
+    display: flex;
 
-@-webkit-keyframes running-progress {
-  0% {
-    margin-left: 0;
-    margin-right: 100%;
+    &:before {
+      height: 10px;
+      border-radius: 10px;
+      width: 100%;
+      margin: 0;
+      background-color: $primary;
+      content: '';
+      -webkit-animation: running-progress 1s cubic-bezier(0.50, 0.50, 0.50, 0.50) infinite;
+      animation: running-progress 1s cubic-bezier(0.50, 0.50, 0.50, 0.50) infinite;
+    }
   }
-  50% {
-    margin-left: 25%;
-    margin-right: 0;
-  }
-  100% {
-    margin-left: 100%;
-    margin-right: 0;
-  }
-}
 
-@keyframes running-progress {
-  0% {
-    margin-left: 0;
-    margin-right: 100%;
+  @-webkit-keyframes running-progress {
+    0% {
+      margin-left: 0;
+      margin-right: 100%;
+    }
+    50% {
+      margin-left: 25%;
+      margin-right: 0;
+    }
+    100% {
+      margin-left: 100%;
+      margin-right: 0;
+    }
   }
-  50% {
-    margin-left: 25%;
-    margin-right: 0;
+
+  @keyframes running-progress {
+    0% {
+      margin-left: 0;
+      margin-right: 100%;
+    }
+    50% {
+      margin-left: 25%;
+      margin-right: 0;
+    }
+    100% {
+      margin-left: 100%;
+      margin-right: 0;
+    }
   }
-  100% {
-    margin-left: 100%;
-    margin-right: 0;
-  }
+
 }

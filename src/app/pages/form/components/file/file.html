@@ -28,7 +28,7 @@
                        hidden>
 
                 <button
-                        class="btn btn-primary btn-block"
+                        class="btn btn-primary btn-file"
                         type="button"
                         (click)="bringFileSelector()">
                     {{ field.options?.labels?.select ? field.options.labels.select : 'or select file(s)'}}
@@ -46,31 +46,30 @@
     <div *ngIf="uploadedFiles.length > 0"
          class="row vertical-align uploaded-files">
         <div class="col-sm-12 no-padding">
-            <label>{{ field.options?.labels?.uploadedFiles ? field.options.labels.uploadedFiles : 'Uploaded files'}}:</label>
+            <label>{{ field.options?.labels?.uploadedFiles ? field.options.labels.uploadedFiles : 'Uploaded
+                files'}}:</label>
             <ul class="uploaded-files-list">
                 <li *ngFor="let file of uploadedFiles">
-                    <div class="uploaded-files-list-item">
-                        <div class="list-item-wrapper">
+                    <div class="list-item-wrapper">
                             <span (click)="cancelUpload(file)" class="delete-file">
                                 <i class="fa fa-times-circle"></i>
                             </span>
-                            <div [ngSwitch]="file.type">
-                                <i *ngSwitchCase="'text/plain'" class="fa fa-file-text-o txt"></i>
-                                <i *ngSwitchCase="'application/msword'" class="fa fa-file-text-o txt"></i>
-                                <i *ngSwitchCase="'text/csv'" class="fa fa-file-code-o code"></i>
-                                <i *ngSwitchCase="'application/pdf'" class="fa fa-file-pdf-o pdf"></i>
-                                <img *ngSwitchCase="'image/jpeg'" src="{{ file.path }}"/>
-                                <img *ngSwitchCase="'image/jpg'" src="{{ file.path }}"/>
-                                <img *ngSwitchCase="'jpeg'" src="{{ file.path }}"/>
-                                <img *ngSwitchCase="'jpg'" src="{{ file.path }}"/>
-                                <img *ngSwitchCase="'image/png'" src="{{ file.path }}"/>
-                                <img *ngSwitchCase="'png'" src="{{ file.path }}"/>
-                                <i *ngSwitchCase="'application/zip'" class="fa fa-file-zip-o zip"></i>
-                                <i *ngSwitchDefault class="fa fa-file-o default"></i>
-                            </div>
+                        <div [ngSwitch]="file.type">
+                            <i *ngSwitchCase="'text/plain'" class="fa fa-file-text-o txt"></i>
+                            <i *ngSwitchCase="'application/msword'" class="fa fa-file-text-o txt"></i>
+                            <i *ngSwitchCase="'text/csv'" class="fa fa-file-code-o code"></i>
+                            <i *ngSwitchCase="'application/pdf'" class="fa fa-file-pdf-o pdf"></i>
+                            <img *ngSwitchCase="'image/jpeg'" src="{{ file.path }}"/>
+                            <img *ngSwitchCase="'image/jpg'" src="{{ file.path }}"/>
+                            <img *ngSwitchCase="'jpeg'" src="{{ file.path }}"/>
+                            <img *ngSwitchCase="'jpg'" src="{{ file.path }}"/>
+                            <img *ngSwitchCase="'image/png'" src="{{ file.path }}"/>
+                            <img *ngSwitchCase="'png'" src="{{ file.path }}"/>
+                            <i *ngSwitchCase="'application/zip'" class="fa fa-file-zip-o zip"></i>
+                            <i *ngSwitchDefault class="fa fa-file-o default"></i>
                         </div>
-                        <p>{{ file.name }}</p>
                     </div>
+                    <p>{{ file.name }}</p>
                 </li>
             </ul>
         </div>
