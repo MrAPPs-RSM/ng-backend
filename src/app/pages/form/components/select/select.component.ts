@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SelectComponent } from 'ng2-select';
 import { ApiService } from '../../../../api';
@@ -7,7 +7,8 @@ import { ToastHandler } from '../../../../theme/services';
 @Component({
     selector: 'ui-select',
     styleUrls: ['./select.scss'],
-    templateUrl: './select.html'
+    templateUrl: './select.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class Select implements OnInit {
     @Input() form: FormGroup;

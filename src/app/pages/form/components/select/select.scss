@@ -1,22 +1,31 @@
-.btn:hover {
-  transform: none !important;
-}
+ui-select {
+  label.select-label {
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #666666;
+    font-size: 13px;
+  }
 
-.select-label{
-  margin-top: 8px !important;
-  margin-bottom: 0 !important;
-}
+  .ui-select-wrapper {
+    position: relative;
 
-.ui-select-wrapper{
-  position: relative;
+    > span.ui-select-button {
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 35px;
+      z-index: 1;
+      font-size: 15px;
+      color: black;
+    }
 
-  .ui-select-button{
-    cursor: pointer;
-    position: absolute;
-    top: 7px;
-    right: 35px;
-    z-index: 1;
-    font-size: 15px;
-    color: black;
+    .btn:hover {
+      transform: none;
+    }
+
+    span.ui-select-toggle{
+      height: 35px;
+      padding-top: 9px;
+    }
   }
 }
