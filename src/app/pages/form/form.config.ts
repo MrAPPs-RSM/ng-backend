@@ -24,6 +24,9 @@ export let formConfig = {
         PATTERN: 'pattern',
         MIN: 'min',
         MAX: 'max'
+    },
+    responseTypes: {
+        TERMINAL: 'terminal'
     }
 };
 

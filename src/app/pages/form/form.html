@@ -26,9 +26,18 @@
                 </div>
             </div>
         </form>
+
         <div *ngIf="id" id="form-spinner" [hidden]="dataLoaded">
             <div></div>
         </div>
     </ba-card>
+
+    <div *ngIf="responseData" class="row">
+        <div class="col-sm-12 custom-response-wrapper">
+            <div [ngSwitch]="responseType">
+                <pre class="terminal" *ngSwitchCase="formConfig.responseTypes.TERMINAL">{{responseData| json}}</pre>
+            </div>
+        </div>
+    </div>
 
 </div>

@@ -1,60 +1,72 @@
 @import "../../theme/sass/conf/conf";
 
-.button-row{
-  margin-top: 15px;
-  div {
+form-component {
+  .button-row{
+    margin-top: 15px;
     div {
-      display: inline-block;
+      div {
+        display: inline-block;
+      }
     }
   }
-}
 
-#form-spinner {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 5px;
+  #form-spinner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
 
-  & > div {
-    display: block;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    width: 100px;
-    height: 100px;
-    margin: -50px 0 0 -50px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: $danger;
-    transform: translate3d(0, 0, 0);
-    animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
-    &:before {
-      content: "";
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      right: 5px;
-      bottom: 5px;
+    & > div {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      width: 100px;
+      height: 100px;
+      margin: -50px 0 0 -50px;
       border-radius: 50%;
       border: 3px solid transparent;
-      border-top-color: $primary;
-      -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
-      animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      border-top-color: $danger;
+      transform: translate3d(0, 0, 0);
+      animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      &:before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: $primary;
+        -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+        animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: $success;
+        animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+      }
     }
-    &:after {
-      content: "";
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: $success;
-      animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+  }
+
+  .custom-response-wrapper {
+    .terminal {
+      font-family: monospace, monospace;
+      color: #ffffff;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
+      padding: 15px;
     }
   }
 }

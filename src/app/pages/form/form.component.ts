@@ -1,19 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { URLSearchParams } from '@angular/http';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {URLSearchParams} from '@angular/http';
 
-import { formConfig } from './form.config';
-import { FormLoaderService, FormHelperService } from './services';
-import { ApiService } from '../../api';
-import { ToastHandler, ModalHandler } from '../../theme/services';
-import { TitleChecker, PageRefresh } from '../services';
-import { BaThemeSpinner } from '../../theme/services';
+import {formConfig} from './form.config';
+import {FormLoaderService, FormHelperService} from './services';
+import {ApiService} from '../../api';
+import {ToastHandler, ModalHandler} from '../../theme/services';
+import {TitleChecker, PageRefresh} from '../services';
+import {BaThemeSpinner} from '../../theme/services';
 
 @Component({
-    selector: '',
+    selector: 'form-component',
     styleUrls: ['./form.scss'],
-    templateUrl: './form.html'
+    templateUrl: './form.html',
+    encapsulation: ViewEncapsulation.None
 })
 
 export class Form implements OnInit, OnDestroy {
@@ -23,6 +24,9 @@ export class Form implements OnInit, OnDestroy {
     public form: FormGroup;
     public payLoad: string = '';
     public dataLoaded: boolean = false;
+
+    public responseType: string;
+    public responseData: any;
 
     private params: any = {}; // Setup params
     private id: number = null;
@@ -106,7 +110,7 @@ export class Form implements OnInit, OnDestroy {
                 this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalBody : null,
                 this.params.form.messages && this.params.form.messages.modalConfirm ? this.params.form.messages.modalConfirm : null,
                 this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalDismiss : null
-        )
+            )
                 .then(() => {
                     this._apiService.patch(
                         this.params.api.endpoint + '/' + this.id,
@@ -114,6 +118,19 @@ export class Form implements OnInit, OnDestroy {
                     )
                         .subscribe(
                             data => {
+                                if (this.params.form.options.submit.response) {
+                                    switch (this.params.form.options.submit.response) {
+                                        case formConfig.responseTypes.TERMINAL: {
+                                            this.responseType = formConfig.responseTypes.TERMINAL;
+                                            this.responseData = data;
+                                        }
+                                            break;
+                                        default: {
+
+                                        }
+                                            break;
+                                    }
+                                }
                                 this._toastManager.success(
                                     this.params.form.messages && this.params.form.messages.success ?
                                         this.params.form.messages.success : null);
@@ -146,6 +163,19 @@ export class Form implements OnInit, OnDestroy {
                     )
                         .subscribe(
                             data => {
+                                if (this.params.form.options.submit.response) {
+                                    switch (this.params.form.options.submit.response) {
+                                        case formConfig.responseTypes.TERMINAL: {
+                                            this.responseType = formConfig.responseTypes.TERMINAL;
+                                            this.responseData = data;
+                                        }
+                                            break;
+                                        default: {
+
+                                        }
+                                            break;
+                                    }
+                                }
                                 this._toastManager.success(this.params.form.messages && this.params.form.messages.success ? this.params.form.messages.success : null);
                                 if (this.params.form.options.submit.redirectAfter) {
                                     this._router.navigate(
