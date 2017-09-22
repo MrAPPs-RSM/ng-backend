@@ -13,7 +13,12 @@ ui-select {
       position: absolute;
       z-index: 1;
       top: 8px;
-      right: 5px;
+      &:not(.single) {
+        right: 5px;
+      }
+      &.single {
+        right: 25px;
+      }
 
       > span {
         cursor: pointer;
@@ -41,7 +46,7 @@ ui-select {
       transform: none;
     }
 
-    span.ui-select-toggle{
+    span.ui-select-toggle {
       height: 35px;
       padding-top: 9px;
     }

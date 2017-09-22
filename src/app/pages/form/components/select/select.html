@@ -5,7 +5,7 @@
     <div class="form-group form-element ui-select-wrapper"
          [ngClass]="{'has-error': !isValid, 'has-success': isValid}">
 
-        <div class="ui-select-buttons">
+        <div class="ui-select-buttons" [ngClass]="{single: !field.multiple}">
             <span *ngIf="showSelectAllButton()"
                   class="select-all"
                   (click)="selectAllValues()">

@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
 
 import {formConfig} from './form.config';
@@ -39,7 +40,8 @@ export class Form implements OnInit, OnDestroy {
                 protected _loaderService: FormLoaderService,
                 protected _apiService: ApiService,
                 protected _modalHandler: ModalHandler,
-                protected _toastManager: ToastHandler) {
+                protected _toastManager: ToastHandler,
+                protected _location: Location) {
     }
 
     ngOnInit() {
@@ -259,5 +261,14 @@ export class Form implements OnInit, OnDestroy {
     clearResponse(): void {
         this.responseData = null;
         this.responseType = '';
+    }
+
+    onDismiss(): void {
+        if (this.params.form.options.dismiss.redirectAfter) {
+            this._router.navigate(
+                ['pages/' + this.params.form.options.dismiss.redirectAfter]);
+        } else {
+            this._location.back();
+        }
     }
 }

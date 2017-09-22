@@ -19,10 +19,17 @@
                             <i *ngIf="button.icon" class="fa {{button.icon}}"></i>
                         </button>
                     </div>
-                    <button type="button" (click)="onSubmit()" class="btn btn-primary pull-right"
-                            [disabled]="!isFormValid"> {{ params.form.options?.submit?.label ?
-                        params.form.options.submit.label : 'Save'}}
-                    </button>
+
+                    <div class="pull-right">
+                        <button type="button" (click)="onDismiss()" *ngIf="params.form.options?.dismiss" class="btn btn-warning">
+                            {{ params.form.options.dismiss.label ?
+                            params.form.options.dismiss.label : 'Dismiss'}}
+                        </button>
+                        <button type="button" (click)="onSubmit()" class="btn btn-primary"
+                                [disabled]="!isFormValid"> {{ params.form.options?.submit?.label ?
+                            params.form.options.submit.label : 'Save'}}
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
