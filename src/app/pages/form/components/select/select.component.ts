@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { SelectComponent } from 'ng2-select';
-import { ApiService } from '../../../../api';
-import { ToastHandler } from '../../../../theme/services';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {SelectComponent} from 'ng2-select';
+import {ApiService} from '../../../../api';
+import {ToastHandler} from '../../../../theme/services';
+import {Utils} from "../../../../utils/utils";
 
 @Component({
     selector: 'ui-select',
@@ -32,6 +33,7 @@ export class Select implements OnInit {
     }
 
     ngOnInit() {
+        if (this.isEdit) this.field.multiple = false;
         this.loadData();
     }
 
@@ -96,13 +98,42 @@ export class Select implements OnInit {
         return this.value !== null;
     }
 
+    showSelectAllButton(): boolean {
+        if (this.field.multiple) {
+            if (this.value != null) {
+                return this.value.length < this.selectValues.length;
+            }
+            return true;
+        }
+        return false;
+    }
+
     clearValue(): void {
         this.ngSelect.active = [];
         this.refreshValue(null);
     }
 
+    selectAllValues(): void {
+        this.selectValues.forEach((item, index) => {
+            this.ngSelect.active.push(this.selectValues[index]);
+        });
+        this.refreshValue(this.selectValues);
+    }
+
     refreshValue(value: any): void {
-        this.value = value ? value.id : null;
+        if (this.field.multiple) {
+            let values = null;
+            if (value != null) {
+                values = [];
+                value.forEach((item) => {
+                    values.push(item.id);
+                });
+            }
+            this.value = values;
+        } else {
+            this.value = value ? value.id : null;
+        }
+
         this.refreshFormValue();
     }
 

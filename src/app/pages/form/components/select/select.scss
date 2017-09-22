@@ -9,14 +9,32 @@ ui-select {
   .ui-select-wrapper {
     position: relative;
 
-    > span.ui-select-button {
-      cursor: pointer;
+    > div.ui-select-buttons {
       position: absolute;
-      top: 10px;
-      right: 35px;
       z-index: 1;
-      font-size: 15px;
-      color: black;
+      top: 8px;
+      right: 5px;
+
+      > span {
+        cursor: pointer;
+        margin: 0 3px;
+        &.clear-all {
+          float: left;
+          > i {
+            font-size: 20px;
+            color: #000000;
+          }
+          > span {
+            font-size: 12px;
+          }
+        }
+        &.select-all {
+          float: right;
+          > span {
+            font-size: 12px;
+          }
+        }
+      }
     }
 
     .btn:hover {
@@ -26,6 +44,11 @@ ui-select {
     span.ui-select-toggle{
       height: 35px;
       padding-top: 9px;
+    }
+
+    div.ui-select-multiple {
+      min-height: 35px;
+      padding: 5px 12px;
     }
   }
 }

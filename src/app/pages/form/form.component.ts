@@ -23,7 +23,7 @@ export class Form implements OnInit, OnDestroy {
     public fields: any = {};
     public form: FormGroup;
     public payLoad: string = '';
-    public dataLoaded: boolean = false;
+    public showSpinner: boolean = false;
 
     public responseType: string;
     public responseData: any;
@@ -82,17 +82,19 @@ export class Form implements OnInit, OnDestroy {
                 };
                 requestOptions.search.set('filter', this.params.api.filter);
             }
+            this.showSpinner = true;
             this._apiService.get(this.params.api.endpoint + '/' + this.id, requestOptions)
                 .subscribe(
                     data => {
+                        this.showSpinner = false;
                         Object.keys(data).forEach((key) => {
                             if (this.form.controls[key]) {
                                 this.form.controls[key].setValue(data[key]);
                             }
                         });
-                        this.dataLoaded = true;
                     },
                     error => {
+                        this.showSpinner = false;
                         this._toastManager.error(error);
                         if (this.params.form.options.submit.redirectAfter) {
                             this._router.navigate(
@@ -106,18 +108,24 @@ export class Form implements OnInit, OnDestroy {
     onSubmit() {
         if (this.id) {
             this._modalHandler.confirm(
-                this.params.form.messages && this.params.form.messages.modalTitle ? this.params.form.messages.modalTitle : 'Confirm edit',
-                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalBody : null,
-                this.params.form.messages && this.params.form.messages.modalConfirm ? this.params.form.messages.modalConfirm : null,
-                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalDismiss : null
+                this.params.form.messages && this.params.form.messages.modalTitle ?
+                    this.params.form.messages.modalTitle : 'Confirm edit',
+                this.params.form.messages && this.params.form.messages.modalBody ?
+                    this.params.form.messages.modalBody : null,
+                this.params.form.messages && this.params.form.messages.modalConfirm ?
+                    this.params.form.messages.modalConfirm : null,
+                this.params.form.messages && this.params.form.messages.modalBody ?
+                    this.params.form.messages.modalDismiss : null
             )
                 .then(() => {
+                    this.showSpinner = true;
                     this._apiService.patch(
                         this.params.api.endpoint + '/' + this.id,
                         this.payLoad
                     )
                         .subscribe(
                             data => {
+                                this.showSpinner = false;
                                 if (this.params.form.options.submit.response) {
                                     switch (this.params.form.options.submit.response) {
                                         case formConfig.responseTypes.TERMINAL: {
@@ -140,6 +148,7 @@ export class Form implements OnInit, OnDestroy {
                                 }
                             },
                             error => {
+                                this.showSpinner = false;
                                 this._toastManager.error(
                                     this.params.form.messages && this.params.form.messages.fail ?
                                         this.params.form.messages.fail : error
@@ -151,18 +160,24 @@ export class Form implements OnInit, OnDestroy {
                 });
         } else {
             this._modalHandler.confirm(
-                this.params.form.messages && this.params.form.messages.modalTitle ? this.params.form.messages.modalTitle : 'Confirm save',
-                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalBody : null,
-                this.params.form.messages && this.params.form.messages.modalConfirm ? this.params.form.messages.modalConfirm : null,
-                this.params.form.messages && this.params.form.messages.modalBody ? this.params.form.messages.modalDismiss : null
+                this.params.form.messages && this.params.form.messages.modalTitle ?
+                    this.params.form.messages.modalTitle : 'Confirm save',
+                this.params.form.messages && this.params.form.messages.modalBody ?
+                    this.params.form.messages.modalBody : null,
+                this.params.form.messages && this.params.form.messages.modalConfirm ?
+                    this.params.form.messages.modalConfirm : null,
+                this.params.form.messages && this.params.form.messages.modalBody ?
+                    this.params.form.messages.modalDismiss : null
             )
                 .then(() => {
+                    this.showSpinner = true;
                     this._apiService.put(
                         this.params.api.endpoint,
                         this.payLoad
                     )
                         .subscribe(
                             data => {
+                                this.showSpinner = false;
                                 if (this.params.form.options.submit.response) {
                                     switch (this.params.form.options.submit.response) {
                                         case formConfig.responseTypes.TERMINAL: {
@@ -176,14 +191,18 @@ export class Form implements OnInit, OnDestroy {
                                             break;
                                     }
                                 }
-                                this._toastManager.success(this.params.form.messages && this.params.form.messages.success ? this.params.form.messages.success : null);
+                                this._toastManager.success(
+                                    this.params.form.messages && this.params.form.messages.success ?
+                                    this.params.form.messages.success : null);
                                 if (this.params.form.options.submit.redirectAfter) {
                                     this._router.navigate(
                                         ['pages/' + this.params.form.options.submit.redirectAfter]);
                                 }
                             },
                             error => {
-                                this._toastManager.error(this.params.form.messages && this.params.form.messages.fail ? this.params.form.messages.fail : error);
+                                this.showSpinner = false;
+                                this._toastManager.error(this.params.form.messages && this.params.form.messages.fail ?
+                                    this.params.form.messages.fail : error);
                             }
                         );
                 })
@@ -204,16 +223,32 @@ export class Form implements OnInit, OnDestroy {
             this._router.navigate(['pages/' + redirectTo]);
         } else {
             if (typeof button.apiEndpoint !== 'undefined') {
-                let endpoint = button.apiEndpoint.replace(':id', this.id.toString());
-                this.dataLoaded = false;
+                let endpoint = button.apiEndpoint;
+                if (this.id) {
+                    endpoint = button.apiEndpoint.replace(':id', this.id.toString());
+                }
+                this.showSpinner = true;
                 this._apiService.get(endpoint)
                     .subscribe(
                         data => {
-                            this.dataLoaded = true;
+                            this.showSpinner = false;
+                            if (button.response) {
+                                switch (button.response) {
+                                    case formConfig.responseTypes.TERMINAL: {
+                                        this.responseType = formConfig.responseTypes.TERMINAL;
+                                        this.responseData = data;
+                                    }
+                                        break;
+                                    default: {
+
+                                    }
+                                        break;
+                                }
+                            }
                             this._toastManager.success(data.message ? data.message : null);
                         },
                         error => {
-                            this.dataLoaded = true;
+                            this.showSpinner = false;
                             this._toastManager.error(error);
                         }
                     );

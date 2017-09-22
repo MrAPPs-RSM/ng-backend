@@ -27,7 +27,7 @@
             </div>
         </form>
 
-        <div *ngIf="id" id="form-spinner" [hidden]="dataLoaded">
+        <div id="form-spinner" [hidden]="!showSpinner">
             <div></div>
         </div>
     </ba-card>

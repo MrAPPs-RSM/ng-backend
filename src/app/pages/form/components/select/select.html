@@ -5,11 +5,20 @@
     <div class="form-group form-element ui-select-wrapper"
          [ngClass]="{'has-error': !isValid, 'has-success': isValid}">
 
-        <span *ngIf="showClearButton()"
-                class="ui-select-button"
-                (click)="clearValue()">
-            <i class="fa fa-close"></i>
-        </span>
+        <div class="ui-select-buttons">
+            <span *ngIf="showSelectAllButton()"
+                  class="select-all"
+                  (click)="selectAllValues()">
+                <span class="btn btn-xs btn-success">Select all</span>
+            </span>
+            <span *ngIf="showClearButton()"
+                  class="clear-all"
+                  (click)="clearValue()">
+                 <i *ngIf="!field.multiple" class="fa fa-close"></i>
+                <span *ngIf="field.multiple" class="btn btn-xs btn-danger">Clear all</span>
+            </span>
+        </div>
+
 
         <ng-select
                 #ngSelect
