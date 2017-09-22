@@ -38,6 +38,9 @@
                 <pre class="terminal" *ngSwitchCase="formConfig.responseTypes.TERMINAL">{{responseData| json}}</pre>
             </div>
         </div>
+        <div class="col-sm-12">
+            <button (click)="clearResponse()" class="btn btn-info pull-right">Clear response</button>
+        </div>
     </div>
 
 </div>

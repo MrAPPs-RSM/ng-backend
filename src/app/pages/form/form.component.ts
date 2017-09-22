@@ -255,4 +255,9 @@ export class Form implements OnInit, OnDestroy {
             }
         }
     }
+
+    clearResponse(): void {
+        this.responseData = null;
+        this.responseType = '';
+    }
 }
