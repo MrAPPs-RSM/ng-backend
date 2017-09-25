@@ -3,12 +3,15 @@
 divider {
   > div {
     margin-top: 30px;
+    color: $default-text;
     > h3 {
       > i {
         margin-right: 5px;
       }
-      color: $default-text;
       text-transform: uppercase;
+    }
+    > p {
+      font-size: 15px;
     }
   }
 }

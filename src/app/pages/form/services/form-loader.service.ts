@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formConfig } from './../form.config';
 import { isNullOrUndefined } from 'util';
 import { CustomValidators } from './../validators';
+import {Utils} from "../../../utils/utils";
 
 @Injectable()
 export class FormLoaderService {
@@ -119,7 +120,7 @@ export class FormLoaderService {
                     }
                         break;
                     default: {
-                        if (field.type !== formConfig.types.DIVIDER) {
+                        if (!Utils.containsValue(formConfig.noInputTypes, field.type)){
                             group[field.key] = new FormControl(
                                 field.value || null,
                                 validators.length > 0 ? Validators.compose(validators) : null

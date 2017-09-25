@@ -28,4 +28,13 @@ export class Utils {
         }
         return list;
     }
+
+    static containsValue(obj: any, value: any): boolean {
+        Object.keys(obj).forEach((key) => {
+            if (obj[key] === value) {
+                return true;
+            }
+        });
+        return false;
+    }
 }
