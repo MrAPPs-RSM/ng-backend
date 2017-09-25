@@ -33,7 +33,9 @@ export class Select implements OnInit {
     }
 
     ngOnInit() {
-        if (this.isEdit) this.field.multiple = false;
+        if (!this.field.multiple || this.isEdit) {
+            this.field.multiple = false;
+        }
         this.loadData();
     }
 
