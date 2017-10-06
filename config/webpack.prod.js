@@ -26,7 +26,7 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
   port: PORT,
   ENV: ENV,
   HMR: false,
-  baseUrl: '/admin/'
+  baseUrl: '/'
 });
 
 module.exports = function (env) {
