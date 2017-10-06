@@ -14,7 +14,15 @@ export class ImageRender implements ViewCell {
     @Input() value: any;
 
     ngOnInit() {
-        this.renderValue = this.value !== null ? config.api[config.env].baseFilesUrl + this.value :
-        '../../../assets/images/no-image.png'; // INFO: service that load placeholder url ?
+
+        if (this.value !== null) {
+            if ('production' === ENV || 'renderer' === ENV) {
+                this.renderValue = config.api.prod.baseFilesUrl + this.value;
+            } else {
+                this.renderValue = config.api.dev.baseFilesUrl + this.value;
+            }
+        } else {
+            this.renderValue = '../../../assets/images/no-image.png';
+        }
     }
 }

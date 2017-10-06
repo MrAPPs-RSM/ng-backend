@@ -12,7 +12,7 @@ import { TokenManager, Logout } from '../auth';
 @Injectable()
 export class ApiService {
 
-    config: any = config.env === 'dev' ? config.api.dev : config.api.prod;
+    config: any = ENV === 'production' || ENV === 'renderer' ? config.api.prod : config.api.dev;
     headers: Headers;
 
     constructor(protected _http: Http,
