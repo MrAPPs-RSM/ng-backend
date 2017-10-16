@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { ViewCell } from '../../../components/ng2-smart-table';
-import { config } from '../../../../app.config';
+import {Component, Input} from '@angular/core';
+import {ViewCell} from '../../../components/ng2-smart-table';
+import {config} from '../../../../app.config';
 
 
 @Component({
@@ -14,13 +14,8 @@ export class ImageRender implements ViewCell {
     @Input() value: any;
 
     ngOnInit() {
-
         if (this.value !== null) {
-            if ('production' === ENV || 'renderer' === ENV) {
-                this.renderValue = config.api.prod.baseFilesUrl + this.value;
-            } else {
-                this.renderValue = config.api.dev.baseFilesUrl + this.value;
-            }
+            this.renderValue = config.api[config.env].baseFilesUrl + this.value;
         } else {
             this.renderValue = '../../../assets/images/no-image.png';
         }

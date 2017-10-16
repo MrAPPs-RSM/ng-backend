@@ -31,11 +31,7 @@ export class File implements OnInit {
     // TODO: this must be a backend logic (it's ok only if backend is loopback)
     static composeFilePath(file: any) {
         let name = file.name ? file.name : file.hash + '.' + file.extension;
-        if ('production' === ENV || 'renderer' === ENV) {
-            return config.api.prod.baseFilesUrl + name;
-        } else {
-            return config.api.dev.baseFilesUrl + name;
-        }
+        return config.api[config.env].baseFilesUrl + name;
     }
 
     constructor(protected _renderer: Renderer,
