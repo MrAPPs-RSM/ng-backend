@@ -3,7 +3,6 @@ import {FormGroup} from '@angular/forms';
 import {SelectComponent} from 'ng2-select';
 import {ApiService} from '../../../../api';
 import {ToastHandler} from '../../../../theme/services';
-import {Utils} from "../../../../utils/utils";
 
 @Component({
     selector: 'ui-select',
@@ -26,16 +25,21 @@ export class Select implements OnInit {
 
     get isValid() {
         if (this.field.validators && this.field.validators.required) {
-            return this.value !== null;
+            if (this.field.multiple) {
+                if (this.value instanceof Array) {
+                    return this.value.length > 0;
+                } else {
+                    return this.value !== null;
+                }
+            } else {
+                return this.value !== null;
+            }
         } else {
             return true;
         }
     }
 
     ngOnInit() {
-        if (!this.field.multiple || this.isEdit) {
-            this.field.multiple = false;
-        }
         this.loadData();
     }
 
@@ -72,27 +76,33 @@ export class Select implements OnInit {
                 .first()
                 .subscribe(
                     value => {
-                        this.loadSelectValues()
-                            .then(() => {
-                                this.selectValues.forEach((item, index) => {
+                        this.loadSelectValues().then(() => {
+                            this.selectValues.forEach((item, index) => {
+                                if (!this.field.multiple) {
                                     if (item.id == value) {
                                         this.ngSelect.active = [this.selectValues[index]];
                                         this.refreshValue(this.selectValues[index]);
                                     }
-                                });
-                            })
-                            .catch((error) => {
-                                this._toastHandler.error(error);
+                                } else {
+                                    if (value instanceof Array) {
+                                        value.forEach((valueItem) => {
+                                            if (valueItem.id == item.id) {
+                                                this.ngSelect.active.push(this.selectValues[index]);
+                                                this.refreshValue(value);
+                                            }
+                                        });
+                                    }
+                                }
                             });
+                        }).catch((error) => {
+                            this._toastHandler.error(error);
+                        });
                     }
                 );
         } else {
-            this.loadSelectValues()
-                .then(() => {
-                })
-                .catch((error) => {
-                    this._toastHandler.error(error);
-                });
+            this.loadSelectValues().catch((error) => {
+                this._toastHandler.error(error);
+            });
         }
     }
 
@@ -103,7 +113,7 @@ export class Select implements OnInit {
     showSelectAllButton(): boolean {
         if (this.field.multiple) {
             if (this.value != null) {
-                return this.value.length < this.selectValues.length;
+                return this.value.length === 0;
             }
             return true;
         }

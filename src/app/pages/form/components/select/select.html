@@ -22,7 +22,7 @@
 
         <ng-select
                 #ngSelect
-                [multiple]="field.multiple"
+                [multiple]="field.multiple ? field.multiple : false"
                 [items]="selectValues"
                 (data)="refreshValue($event)"
                 placeholder="{{field.placeholder}}">
