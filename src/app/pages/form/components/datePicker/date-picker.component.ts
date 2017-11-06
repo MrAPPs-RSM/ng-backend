@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { NguiDatetime } from '@ngui/datetime-picker';
 import 'rxjs/add/operator/first';
 
 @Component({
@@ -26,9 +25,14 @@ export class DatePicker implements OnInit {
         this.form.controls[this.field.key].valueChanges
             .subscribe(value => {
                 if (value && !isNaN(value)) {
-                    this.form.controls[this.field.key].setValue(
-                        NguiDatetime.formatDate(new Date(value))
-                    );
+                    let date = new Date(value);
+
+                    let formatDate = date.getUTCFullYear() + '-' +
+                        date.getUTCMonth() + '-' +
+                        date.getUTCDate() + ' ' +
+                        date.getUTCHours() + ':' + date.getUTCMinutes();
+
+                    this.form.controls[this.field.key].setValue(formatDate);
                 }
             });
     }

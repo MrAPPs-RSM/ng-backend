@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { NguiDatetime } from '@ngui/datetime-picker';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 import 'rxjs/add/operator/first';
 
 @Component({
@@ -21,18 +20,28 @@ export class DateRangePicker implements OnInit {
         this.form.controls[this.field.startDate.key].valueChanges
             .subscribe(value => {
                 if (value && !isNaN(value)) {
-                    this.form.controls[this.field.key].setValue(
-                        NguiDatetime.formatDate(new Date(value))
-                    );
+                    let date = new Date(value);
+
+                    let formatDate = date.getUTCFullYear() + '-' +
+                        date.getUTCMonth() + '-' +
+                        date.getUTCDate() + ' ' +
+                        date.getUTCHours() + ':' + date.getUTCMinutes();
+
+                    this.form.controls[this.field.key].setValue(formatDate);
                 }
             });
         this.form.controls[this.field.endDate.key].valueChanges
             .first()
             .subscribe(value => {
                 if (value && !isNaN(value)) {
-                    this.form.controls[this.field.key].setValue(
-                        NguiDatetime.formatDate(new Date(value))
-                    );
+                    let date = new Date(value);
+
+                    let formatDate = date.getUTCFullYear() + '-' +
+                        date.getUTCMonth() + '-' +
+                        date.getUTCDate() + ' ' +
+                        date.getUTCHours() + ':' + date.getUTCMinutes();
+
+                    this.form.controls[this.field.key].setValue(formatDate);
                 }
             });
     }

@@ -17,7 +17,7 @@
                         class="form-control date-picker"
                         id="{{field.startDate.key}}"
                         formControlName="{{field.startDate.key}}"
-                        [date-only]="true"
+                        [date-only]="field.dateTime ? !field.dateTime : true"
                 />
 
             </div>
@@ -39,7 +39,7 @@
                         class="form-control date-picker"
                         id="{{field.endDate.key}}"
                         formControlName="{{field.endDate.key}}"
-                        [date-only]="true"
+                        [date-only]="field.dateTime ? !field.dateTime : true"
                 />
             </div>
         </div>
