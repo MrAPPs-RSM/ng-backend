@@ -29,8 +29,8 @@ export class FormHelperService {
                 let startValue = form.controls[field.startDate.key].value;
                 let endValue = form.controls[field.endDate.key].value;
                 if (startValue && endValue) {
-                    let startDate = new Date(startValue.year, (startValue.month - 1), startValue.day);
-                    let endDate = new Date(endValue.year, (endValue.month - 1), endValue.day);
+                    let startDate = new Date(startValue);
+                    let endDate = new Date(endValue);
                     result = startDate <= endDate;
                 }
             }
