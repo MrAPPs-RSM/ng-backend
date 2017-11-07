@@ -64,7 +64,6 @@ export class Form implements OnInit, OnDestroy {
         this.form.valueChanges
             .subscribe(data => {
                     this.payLoad = JSON.stringify(this.form.value);
-                    console.log(this.payLoad);
                 }
             );
     }
