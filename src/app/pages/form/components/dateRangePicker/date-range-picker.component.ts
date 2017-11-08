@@ -21,7 +21,7 @@ export class DateRangePicker implements OnInit {
         this.form.controls[this.field.startDate.key].valueChanges
             .subscribe(value => {
                 if (value && !isNaN(value)) {
-                    this.form.controls[this.field.key].setValue(
+                    this.form.controls[this.field.startDate.key].setValue(
                         NguiDatetime.formatDate(new Date(value))
                     );
                 }
@@ -30,7 +30,7 @@ export class DateRangePicker implements OnInit {
             .first()
             .subscribe(value => {
                 if (value && !isNaN(value)) {
-                    this.form.controls[this.field.key].setValue(
+                    this.form.controls[this.field.endDate.key].setValue(
                         NguiDatetime.formatDate(new Date(value))
                     );
                 }

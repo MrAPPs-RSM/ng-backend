@@ -2,13 +2,13 @@ import {
     Component, ElementRef, EventEmitter, Input, OnInit, Renderer, ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { UploadOutput, UploadInput, UploadFile } from 'ngx-uploader';
-import { ToastHandler, ModalHandler } from '../../../../theme/services';
+import {UploadOutput, UploadInput, UploadFile} from 'ngx-uploader';
+import {ToastHandler, ModalHandler} from '../../../../theme/services';
 
-import { FormGroup } from '@angular/forms';
-import { Utils } from '../../../../utils/utils';
-import { ApiService } from '../../../../api/api.service';
-import { config } from '../../../../app.config';
+import {FormGroup} from '@angular/forms';
+import {Utils} from '../../../../utils/utils';
+import {ApiService} from '../../../../api/api.service';
+import {config} from '../../../../app.config';
 
 @Component({
     selector: 'file-uploader',
@@ -28,10 +28,13 @@ export class File implements OnInit {
     uploadedFiles: UploadedFile[] = [];
     showProgress: boolean = false;
 
-    // TODO: this must be a backend logic (it's ok only if backend is loopback)
     static composeFilePath(file: any) {
-        let name = file.name ? file.name : file.hash + '.' + file.extension;
-        return config.api[config.env].baseFilesUrl + name;
+        if (!file.url) {
+            let name = file.name ? file.name : file.hash + '.' + file.extension;
+            return config.api[config.env].baseFilesUrl + name;
+        } else {
+            return file.url;
+        }
     }
 
     constructor(protected _renderer: Renderer,
@@ -64,7 +67,7 @@ export class File implements OnInit {
                                 path: File.composeFilePath(data),
                                 remoteName: data.name,
                                 name: data.originalName,
-                                type: data.type ? data.type : data.extension
+                                type: data.type ? data.type : data.extension ? data.extension : data.mimeType
                             });
                         }
                         this.updateFormValue();
@@ -161,15 +164,27 @@ export class File implements OnInit {
         if (file.response.error) {
             this._toastManager.error(file.response.error.message);
         } else {
-            console.log(file.response);
-            this.addToUpdatedFiles({
-                id: file.response.id,
-                container: file.response.container,
-                path: File.composeFilePath(file.response),
-                remoteName: file.response.name,
-                name: file.response.originalName,
-                type: file.response.type
-            });
+            if (file.response.id) {
+                // Local storage File handler
+                this.addToUpdatedFiles({
+                    id: file.response.id,
+                    container: file.response.container,
+                    path: File.composeFilePath(file.response),
+                    remoteName: file.response.name,
+                    name: file.response.originalName,
+                    type: file.response.type
+                });
+            } else {
+                // Google cloud storage file handler
+                this.addToUpdatedFiles({
+                    id: file.response.media.id,
+                    container: file.response.file.container,
+                    path: File.composeFilePath(file.response.file),
+                    remoteName: file.response.media.name,
+                    name: file.response.media.originalName,
+                    type: file.response.media.mimeType
+                });
+            }
             this._toastManager.success(file.name + ' uploaded');
         }
     }
@@ -186,6 +201,12 @@ export class File implements OnInit {
 
     updateFormValue(): void {
         this.form.controls[this.field.key].setValue(this.uploadedFiles.length > 0 ? this.uploadedFiles : null);
+    }
+
+    retryUrl($event: any, url: string): void {
+        setTimeout(() => {
+            $event.target.src = url;
+        }, 2000);
     }
 }
 
