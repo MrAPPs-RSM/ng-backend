@@ -55,6 +55,7 @@ export class List implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._spinner.hide();
+        this.params.api = null;
         this.params = this._route.snapshot.data;
         this._titleChecker.setCorrectTitle(this._route, this.params);
         this.loadSettings();
@@ -90,6 +91,21 @@ export class List implements OnInit, OnDestroy {
     }
 
     loadData(): void {
+
+        if (this.params.api.passCurrentId && this._route.params && this._route.params.value) {
+            if (isNaN(this.params.api.endpoint.slice(-1))) {
+                this.params.api.endpoint = this.params.api.endpoint + '/' + this._route.params.value.id;
+            }
+
+            if (isNaN(this.params.api.endpointCount.slice(-1))) {
+                this.params.api.endpointCount = this.params.api.endpointCount + '/' + this._route.params.value.id;
+            }
+        }
+
+        if (!this.params.api.endpointCount) {
+            this.params.api.endpointCount = this.params.api.endpoint + '/count';
+        }
+
         this.source = new ServerDataSource(
             this._toastManager,
             this._route,

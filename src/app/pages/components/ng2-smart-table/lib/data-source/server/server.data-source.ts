@@ -25,6 +25,8 @@ export class ServerDataSource extends LocalDataSource {
 
     protected conf: any = {
         api: {
+            passCurrentId: false,
+            endpointCount: '',
             endpoint: '',
             fixedQueryParam: null,
         },
@@ -60,7 +62,7 @@ export class ServerDataSource extends LocalDataSource {
     getElements(): Promise<any> {
         return new Promise((resolve, reject) => {
             this._apiService.get(
-                this.conf.api.endpoint + '/count',
+                this.conf.api.endpointCount,
                 this.createCountRequestOptions(),
             ).subscribe(
                 res => {

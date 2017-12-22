@@ -195,7 +195,7 @@ export class Form implements OnInit, OnDestroy {
                                 }
                                 this._toastManager.success(
                                     this.params.form.messages && this.params.form.messages.success ?
-                                    this.params.form.messages.success : null);
+                                        this.params.form.messages.success : null);
                                 if (this.params.form.options.submit.redirectAfter) {
                                     this._router.navigate(
                                         ['pages/' + this.params.form.options.submit.redirectAfter]);
@@ -226,7 +226,7 @@ export class Form implements OnInit, OnDestroy {
         } else {
             if (typeof button.apiEndpoint !== 'undefined') {
                 let endpoint = button.apiEndpoint;
-                if (this.id) {
+                if (this.id) {
                     endpoint = button.apiEndpoint.replace(':id', this.id.toString());
                 }
                 this.showSpinner = true;
