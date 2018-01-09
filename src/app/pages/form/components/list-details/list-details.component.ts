@@ -61,6 +61,7 @@ export class ListDetails implements OnInit {
             this.field.options.noDataMessage : 'No data selected';
         this.tableSettings.actions.columnTitle = this.field.options.actionsTitle ?
             this.field.options.actionsTitle : 'Actions';
+
         this.tableSettings.columns = this.field.options.columns;
         Object.keys(this.field.options.columns).forEach((key) => {
             this.tableKeys.push(key);
@@ -108,7 +109,7 @@ export class ListDetails implements OnInit {
                                 data.forEach((item) => {
                                     this.setSelectedItem({
                                         id: item.id,
-                                        text: item.nome
+                                        text: item[this.field.options.textField]
                                     });
                                     this.addItem();
                                 });

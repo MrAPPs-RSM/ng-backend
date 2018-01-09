@@ -92,40 +92,50 @@ export class List implements OnInit, OnDestroy {
 
     loadData(): void {
 
-        if (this.params.api.passCurrentId && this._route.params && this._route.params.value) {
+        let api = {
+            passCurrentId: this.params.api.passCurrentId,
+            countEndpoint: this.params.api.endpoint + '/count',
+            endpoint: this.params.api.endpoint,
+            fixedQueryParam: this.params.api.fixedQueryParam
+        };
+
+        if (this.params.api.passCurrentId && this._route.params && this._route.params['value']) {
             if (isNaN(this.params.api.endpoint.slice(-1))) {
-                this.params.api.endpoint = this.params.api.endpoint + '/' + this._route.params.value.id;
+                api.endpoint = this.params.api.endpoint + '/' + this._route.params['value'].id;
             }
 
-            if (isNaN(this.params.api.endpointCount.slice(-1))) {
-                this.params.api.endpointCount = this.params.api.endpointCount + '/' + this._route.params.value.id;
+            if (isNaN(this.params.api.countEndpoint.slice(-1))) {
+                api.countEndpoint = this.params.api.countEndpoint + '/' + this._route.params['value'].id;
             }
-        }
-
-        if (!this.params.api.endpointCount) {
-            this.params.api.endpointCount = this.params.api.endpoint + '/count';
         }
 
         this.source = new ServerDataSource(
             this._toastManager,
             this._route,
             this._apiService,
-            this.params.api,
+            api,
             this.params.table.enableDrag
         );
     }
 
     onRowDrop(event: any): void {
+        let sortEndpoint = this.params.api.sortEndpoint;
+        if (this.params.api.passCurrentId && this._route.params && this._route.params['value']) {
+            if (this._route.params['value'].id) {
+                sortEndpoint += '/' + this._route.params['value'].id;
+            }
+        }
+
         this._apiService.patch(
-            this.params.api.sortEndpoint,
+            sortEndpoint,
             JSON.stringify({oldIndex: event.oldRowIndex, newIndex: event.newRowIndex})
         ).subscribe(
             res => {
                 this.source.refresh();
             },
             error => {
-                this._toastManager
-                    .error(this.params.table.messages.dragError ? this.params.table.messages.dragError : 'Error while sorting');
+                this._toastManager.error(this.params.table.messages.dragError ?
+                    this.params.table.messages.dragError : 'Error while sorting');
             }
         );
     }
@@ -136,13 +146,23 @@ export class List implements OnInit, OnDestroy {
 
     onEdit(event: any): void {
         let redirectTo = this.params.table.actions.edit.path;
-        if (redirectTo.indexOf(':id') !== -1) {
-            redirectTo = redirectTo.replace(':id', event.data.id);
+
+        if (typeof redirectTo === 'string') {
+            if (redirectTo.indexOf(':id') !== -1) {
+                redirectTo = redirectTo.replace(':id', event.data.id);
+            }
+            if (redirectTo.indexOf(':title') !== -1 && this.params.table.actions.edit.titleField) {
+                redirectTo = redirectTo.replace(':title', event.data[this.params.table.actions.edit.titleField]);
+            }
+            this._router.navigate(['pages/' + redirectTo]);
+        } else {
+            /** In this case, the edit path must be composed by the obj passed, which
+             * defines the name of the entity to edit and the ID of it. These 2 fields
+             * must be present in the list
+             */
+            let path = event.data[redirectTo.entityName].toString().toLowerCase() + '/edit/' + event.data[redirectTo.entityId];
+            this._router.navigate(['pages/' + path]);
         }
-        if (redirectTo.indexOf(':title') !== -1 && this.params.table.actions.edit.titleField) {
-            redirectTo = redirectTo.replace(':title', event.data[this.params.table.actions.edit.titleField]);
-        }
-        this._router.navigate(['pages/' + redirectTo]);
     }
 
     onDelete(event: any): void {

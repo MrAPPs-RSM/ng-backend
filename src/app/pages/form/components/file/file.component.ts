@@ -30,8 +30,12 @@ export class File implements OnInit {
 
     static composeFilePath(file: any) {
         if (!file.url) {
-            let name = file.name ? file.name : file.hash + '.' + file.extension;
-            return config.api[config.env].baseFilesUrl + name;
+            if (file.thumbnails) {
+                return file.thumbnails.small;
+            } else {
+                let name = file.name ? file.name : file.hash + '.' + file.extension;
+                return config.api[config.env].baseFilesUrl + name;
+            }
         } else {
             return file.url;
         }
