@@ -3,6 +3,7 @@ import {FormGroup} from '@angular/forms';
 import {SelectComponent} from 'ng2-select';
 import {ApiService} from '../../../../api';
 import {ToastHandler} from '../../../../theme/services';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'ui-select',
@@ -19,7 +20,8 @@ export class Select implements OnInit {
     selectValues: any[] = [];
     value: any = null;
 
-    constructor(protected _apiService: ApiService,
+    constructor(protected _route: ActivatedRoute,
+                protected _apiService: ApiService,
                 protected _toastHandler: ToastHandler) {
     }
 
@@ -53,7 +55,13 @@ export class Select implements OnInit {
                 this.selectValues = this.field.values;
                 resolve();
             } else {
-                this._apiService.get(this.field.values)
+
+                let endpoint = this.field.values;
+                if (endpoint.indexOf(':id') !== -1) {
+                    endpoint = endpoint.replace(':id', this._route.params['value'].id);
+                }
+
+                this._apiService.get(endpoint)
                     .subscribe(
                         data => {
                             this.selectValues = data;

@@ -96,6 +96,7 @@ export class List implements OnInit, OnDestroy {
             passCurrentId: this.params.api.passCurrentId,
             countEndpoint: this.params.api.endpoint + '/count',
             endpoint: this.params.api.endpoint,
+            filter: this.params.api.filter,
             fixedQueryParam: this.params.api.fixedQueryParam
         };
 
@@ -141,7 +142,12 @@ export class List implements OnInit, OnDestroy {
     }
 
     onCreate(): void {
-        this._router.navigate(['pages/' + this.params.table.actions.add.path]);
+        let redirectTo = this.params.table.actions.add.path;
+
+        if (redirectTo.indexOf(':id') !== -1) {
+            redirectTo = redirectTo.replace(':id', this._route.params['value'].id);
+        }
+        this._router.navigate(['pages/' + redirectTo]);
     }
 
     onEdit(event: any): void {
@@ -173,7 +179,18 @@ export class List implements OnInit, OnDestroy {
             this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.modalDismiss ? this.params.table.messages.delete.modalDismiss : null
         )
             .then(() => {
-                this._apiService.delete(this.params.api.endpoint + '/' + event.data.id)
+                let path = this.params.api.endpoint + '/' + event.data.id;
+
+                if (this.params.table.actions.delete && this.params.table.actions.delete.path) {
+                    let deletePath = this.params.table.actions.delete.path;
+                    /** In this case, the delete path must be composed by the obj passed, which
+                     * defines the name of the entity to edit and the ID of it. These 2 fields
+                     * must be present in the list
+                     */
+                    path = event.data[deletePath.entityName].toString().toLowerCase() + '/' + event.data[deletePath.entityId];
+                }
+
+                this._apiService.delete(path)
                     .subscribe(
                         res => {
                             this._toastManager.success(this.params.table.messages && this.params.table.messages.delete && this.params.table.messages.delete.success ? this.params.table.messages.delete.success : null);

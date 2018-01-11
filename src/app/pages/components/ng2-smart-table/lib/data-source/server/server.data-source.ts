@@ -183,7 +183,15 @@ export class ServerDataSource extends LocalDataSource {
             filterOptions[this.conf.limitKey] = this.pagingConf.perPage;
         }
 
-        requestOptions.search.set('filter', JSON.stringify(filterOptions));
+        /** INCLUDE FILTER */
+        if (this.conf.api.filter) {
+            let requestFilter = JSON.parse(this.conf.api.filter);
+            let requestFilterKey = Object.keys(requestFilter)[0];
+            filterOptions[requestFilterKey] = requestFilter[requestFilterKey];
+        }
+
+        requestOptions.search.set('filter', (this.conf.api.filter));
+
         return requestOptions;
     }
 

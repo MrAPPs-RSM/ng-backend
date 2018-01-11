@@ -9,6 +9,7 @@ export let listConfig = {
         COLOR: 'color',
         IMAGE: 'image',
         LINK: 'link',
+        ICON: 'icon',
         CUSTOM: 'custom'
     }
 };

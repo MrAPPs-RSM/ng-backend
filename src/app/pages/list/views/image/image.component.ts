@@ -14,8 +14,13 @@ export class ImageRender implements ViewCell {
     @Input() value: any;
 
     ngOnInit() {
-        if (this.value !== null) {
-            this.renderValue = config.api[config.env].baseFilesUrl + this.value;
+        if (this.value) {
+            if (typeof this.value === 'string') {
+                this.renderValue = config.api[config.env].baseFilesUrl + this.value;
+            } else {
+                // Google Cloud object
+                this.renderValue = this.value.thumbnails.small;
+            }
         } else {
             this.renderValue = '../../../assets/images/no-image.png';
         }

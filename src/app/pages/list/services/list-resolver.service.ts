@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ApiService } from '../../../api';
-import { List }  from '../list.component';
-import { listConfig } from '../list.config';
-import { BooleanRender, DateRender, ImageRender, ColorRender, LinkRender} from '../views';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {ApiService} from '../../../api';
+import {List}  from '../list.component';
+import {listConfig} from '../list.config';
+import {BooleanRender, DateRender, ImageRender, ColorRender, LinkRender, IconRender} from '../views';
 
 @Injectable()
 export class ListResolver implements Resolve<List> {
@@ -57,6 +57,11 @@ export class ListResolver implements Resolve<List> {
                         case listConfig.types.LINK: {
                             params.columns[key].type = listConfig.types.CUSTOM;
                             params.columns[key].renderComponent = LinkRender;
+                        }
+                            break;
+                        case listConfig.types.ICON: {
+                            params.columns[key].type = listConfig.types.CUSTOM;
+                            params.columns[key].renderComponent = IconRender;
                         }
                             break;
                         default: {

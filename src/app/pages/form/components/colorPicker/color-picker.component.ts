@@ -31,11 +31,14 @@ export class ColorPicker implements OnInit {
                     }
                 );
         } else {
-            this.onColorChange('#ffffff');
+            this.onColorChange(null);
         }
     }
 
     onColorChange(color: any): void {
+        if (color === null) {
+            color = '#ffffff';
+        }
         this.color = color;
         this.form.controls[this.field.key].setValue(color);
     }

@@ -4,7 +4,7 @@
 
             <div class="row">
                 <form-switcher
-                        [isEdit]="!!id"
+                        [isEdit]="!!id && !params.form.options.isCreate"
                         [fields]="fields"
                         [form]="form"
                         [formConfig]="formConfig">
