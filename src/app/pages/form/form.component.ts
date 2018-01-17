@@ -73,39 +73,39 @@ export class Form implements OnInit, OnDestroy {
     }
 
     checkEditOrCreate(): void {
-        if (!this.params.form.options.isCreate) {
-            let urlParams = this._route.snapshot.params;
-            if (urlParams && urlParams['id']) {
-                this.id = urlParams['id'];
+        let urlParams = this._route.snapshot.params;
+        if (urlParams && urlParams['id']) {
+            this.id = urlParams['id'];
+        }
 
-                let requestOptions = null;
-                if (this.params.api.filter) {
-                    requestOptions = {
-                        search: new URLSearchParams()
-                    };
-                    requestOptions.search.set('filter', this.params.api.filter);
-                }
-                this.showSpinner = true;
-                this._apiService.get(this.params.api.endpoint + '/' + this.id, requestOptions)
-                    .subscribe(
-                        data => {
-                            this.showSpinner = false;
-                            Object.keys(data).forEach((key) => {
-                                if (this.form.controls[key]) {
-                                    this.form.controls[key].setValue(data[key]);
-                                }
-                            });
-                        },
-                        error => {
-                            this.showSpinner = false;
-                            this._toastManager.error(error);
-                            if (this.params.form.options.submit.redirectAfter) {
-                                this._router.navigate(
-                                    ['pages/' + this.params.form.options.submit.redirectAfter]);
-                            }
-                        }
-                    );
+        if (!this.params.form.options.isCreate && this.id) {
+            let requestOptions = null;
+            if (this.params.api.filter) {
+                requestOptions = {
+                    search: new URLSearchParams()
+                };
+                requestOptions.search.set('filter', this.params.api.filter);
             }
+            this.showSpinner = true;
+            this._apiService.get(this.params.api.endpoint + '/' + this.id, requestOptions)
+                .subscribe(
+                    data => {
+                        this.showSpinner = false;
+                        Object.keys(data).forEach((key) => {
+                            if (this.form.controls[key]) {
+                                this.form.controls[key].setValue(data[key]);
+                            }
+                        });
+                    },
+                    error => {
+                        this.showSpinner = false;
+                        this._toastManager.error(error);
+                        if (this.params.form.options.submit.redirectAfter) {
+                            this._router.navigate(
+                                ['pages/' + this.params.form.options.submit.redirectAfter]);
+                        }
+                    }
+                );
         }
     }
 
