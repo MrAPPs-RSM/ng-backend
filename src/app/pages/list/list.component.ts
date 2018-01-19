@@ -183,11 +183,16 @@ export class List implements OnInit, OnDestroy {
 
                 if (this.params.table.actions.delete && this.params.table.actions.delete.path) {
                     let deletePath = this.params.table.actions.delete.path;
-                    /** In this case, the delete path must be composed by the obj passed, which
-                     * defines the name of the entity to edit and the ID of it. These 2 fields
-                     * must be present in the list
-                     */
-                    path = event.data[deletePath.entityName].toString().toLowerCase() + '/' + event.data[deletePath.entityId];
+
+                    if (typeof deletePath === 'string') {
+                        path = deletePath + '/' + event.data.id;
+                    } else {
+                        /** In this case, the delete path must be composed by the obj passed, which
+                         * defines the name of the entity to edit and the ID of it. These 2 fields
+                         * must be present in the list
+                         */
+                        path = event.data[deletePath.entityName].toString().toLowerCase() + '/' + event.data[deletePath.entityId];
+                    }
                 }
 
                 this._apiService.delete(path)
