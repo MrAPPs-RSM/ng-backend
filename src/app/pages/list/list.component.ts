@@ -30,6 +30,9 @@ export class List implements OnInit, OnDestroy {
         custom: {
             customButtonContent: ''
         },
+        extra: {
+            enableExportCsv: false
+        },
         actions: {},
         columns: {},
         pager: {
@@ -84,6 +87,7 @@ export class List implements OnInit, OnDestroy {
             }
         });
 
+        this.settings.extra.enableExportCsv = "extra" in this.params && "enableExportCsv" in this.params.extra ? this.params.extra.enableExportCsv||false : false;
         this.settings.columns = this.params.table.columns;
         this.settings.actions = actions;
         this.settings.noDataMessage = this.params.table.messages && this.params.table.messages.noData && this.params.table.messages.noData ? this.params.table.messages.noData : 'No data found';
@@ -233,6 +237,22 @@ export class List implements OnInit, OnDestroy {
                         }
                     );
             }
+        }
+    }
+
+    exportCsv(): void {
+        if(this.settings.extra.enableExportCsv) {
+
+            this.source.execExportCsv().then(url => {
+                window.location.href = url;
+                //this._toastManager.success(url);
+                /**
+                 * @TODO
+                 */
+                //alert(data);
+            }).catch(error => {
+                this._toastManager.error(error);
+            });
         }
     }
 }
