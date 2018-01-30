@@ -1,7 +1,7 @@
 import { env } from './app.env';
 
 export let config = Object.assign({}, env, {
-    title: 'Test',
+    title: 'SM-Differenzia',
     setupEndpoint: 'setup',
     auth: {
         config: {
