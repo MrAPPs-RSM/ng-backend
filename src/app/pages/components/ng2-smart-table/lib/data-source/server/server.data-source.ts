@@ -87,6 +87,23 @@ export class ServerDataSource extends LocalDataSource {
         });
     }
 
+    execExportCsv(): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            this._apiService.get(
+                this.conf.api.endpoint + '/export_csv',
+                this.createDataRequestOptions()
+            ).subscribe(
+                data => {
+                    resolve(data);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
     protected createCountRequestOptions(): RequestOptionsArgs {
         let requestOptions = {
             search: new URLSearchParams()

@@ -8,6 +8,7 @@ import {ServerDataSource} from './../components/ng2-smart-table';
 import {TitleChecker, PageRefresh} from '../services';
 import {ListPaging} from './services';
 import {BaThemeSpinner} from '../../theme/services';
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'list',
@@ -29,6 +30,10 @@ export class List implements OnInit, OnDestroy {
         },
         custom: {
             customButtonContent: ''
+        },
+        exportCsv: {
+            enable: false,
+            fileName: ''
         },
         actions: {},
         columns: {},
@@ -83,6 +88,8 @@ export class List implements OnInit, OnDestroy {
                 actions[key] = this.params.table.actions[key];
             }
         });
+
+        if('exportCsv' in this.params) this.settings.exportCsv = this.params.exportCsv;
 
         this.settings.columns = this.params.table.columns;
         this.settings.actions = actions;
@@ -233,6 +240,25 @@ export class List implements OnInit, OnDestroy {
                         }
                     );
             }
+        }
+    }
+
+    exportCsv(): void {
+        if(this.settings.exportCsv.enable) {
+
+            this.source.execExportCsv().then(data => {
+
+                let now = new Date();
+                let fileName = this.settings.exportCsv.fileName+'_'+now.toISOString().substring(0, 19)+'.csv';
+
+                const blob = new Blob([data], { type: 'text/csv' });
+                const file = new File([blob], fileName, { type: 'text/csv' });
+
+                FileSaver.saveAs(file);
+
+            }).catch(error => {
+                this._toastManager.error(error);
+            });
         }
     }
 }
