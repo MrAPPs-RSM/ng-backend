@@ -8,6 +8,7 @@ import {ServerDataSource} from './../components/ng2-smart-table';
 import {TitleChecker, PageRefresh} from '../services';
 import {ListPaging} from './services';
 import {BaThemeSpinner} from '../../theme/services';
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'list',
@@ -30,8 +31,9 @@ export class List implements OnInit, OnDestroy {
         custom: {
             customButtonContent: ''
         },
-        extra: {
-            enableExportCsv: false
+        exportCsv: {
+            enable: false,
+            fileName: ''
         },
         actions: {},
         columns: {},
@@ -87,7 +89,8 @@ export class List implements OnInit, OnDestroy {
             }
         });
 
-        this.settings.extra.enableExportCsv = "extra" in this.params && "enableExportCsv" in this.params.extra ? this.params.extra.enableExportCsv||false : false;
+        if('exportCsv' in this.params) this.settings.exportCsv = this.params.exportCsv;
+
         this.settings.columns = this.params.table.columns;
         this.settings.actions = actions;
         this.settings.noDataMessage = this.params.table.messages && this.params.table.messages.noData && this.params.table.messages.noData ? this.params.table.messages.noData : 'No data found';
@@ -241,15 +244,18 @@ export class List implements OnInit, OnDestroy {
     }
 
     exportCsv(): void {
-        if(this.settings.extra.enableExportCsv) {
+        if(this.settings.exportCsv.enable) {
 
-            this.source.execExportCsv().then(url => {
-                window.location.href = url;
-                //this._toastManager.success(url);
-                /**
-                 * @TODO
-                 */
-                //alert(data);
+            this.source.execExportCsv().then(data => {
+
+                let now = new Date();
+                let fileName = this.settings.exportCsv.fileName+'_'+now.toISOString().substring(0, 19)+'.csv';
+
+                const blob = new Blob([data], { type: 'text/csv' });
+                const file = new File([blob], fileName, { type: 'text/csv' });
+
+                FileSaver.saveAs(file);
+
             }).catch(error => {
                 this._toastManager.error(error);
             });

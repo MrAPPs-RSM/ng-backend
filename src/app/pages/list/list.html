@@ -16,4 +16,4 @@
         </div>
     </div>
 </ba-card>
-<button *ngIf="settings.extra.enableExportCsv" (click)="exportCsv()">Export CSV</button>
+<button class="btn btn-sm" *ngIf="settings.exportCsv.enable" (click)="exportCsv()">Export CSV</button>

@@ -95,8 +95,7 @@ export class ServerDataSource extends LocalDataSource {
                 this.createDataRequestOptions()
             ).subscribe(
                 data => {
-                    let url = "url" in data ? data.url : '';
-                    resolve(url);
+                    resolve(data);
                 },
                 error => {
                     reject(error);
