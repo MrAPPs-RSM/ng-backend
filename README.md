@@ -59,4 +59,4 @@ npm run build:prod
 
 All static HTML files will be generated into /dist directory, then you can simply upload this folder into any web server
 
-For further documentation go and check: [wiki](https://github.com/MrAPPs-RSM/ng-backend/wiki/)
+For further documentation go and check: [docs](https://github.com/MrAPPs-RSM/ng-backend/tree/master/docs)
