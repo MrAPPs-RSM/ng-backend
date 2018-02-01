@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { Http, Response, Headers, URLSearchParams, RequestOptionsArgs } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Http, Response, Headers, URLSearchParams, RequestOptionsArgs} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { config } from '../app.config';
-import { TokenManager, Logout } from '../auth';
+import {config} from '../app.config';
+import {TokenManager, Logout} from '../auth';
 
 @Injectable()
 export class ApiService {
@@ -68,7 +68,7 @@ export class ApiService {
         };
         if (!withoutHeaders) {
             return options;
-        } else {
+        } else {
             delete options.headers;
             return options;
         }
@@ -161,7 +161,7 @@ export class ApiService {
     }
 
     /** Response handlers */
-    private handleError = (error: Response): Observable<any> | any  => {
+    private handleError = (error: Response): Observable<any> | any => {
         if (error.status === 401) { // Unauthorized
             this._logout.logout();
         } else {

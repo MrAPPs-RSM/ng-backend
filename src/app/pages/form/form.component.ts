@@ -146,9 +146,12 @@ export class Form implements OnInit, OnDestroy {
                                 this._toastManager.success(
                                     this.params.form.messages && this.params.form.messages.success ?
                                         this.params.form.messages.success : null);
+
                                 if (this.params.form.options.submit.redirectAfter) {
                                     this._router.navigate(
                                         ['pages/' + this.params.form.options.submit.redirectAfter]);
+                                } else {
+                                    this._location.back();
                                 }
                             },
                             error => {
@@ -201,6 +204,8 @@ export class Form implements OnInit, OnDestroy {
                                 if (this.params.form.options.submit.redirectAfter) {
                                     this._router.navigate(
                                         ['pages/' + this.params.form.options.submit.redirectAfter]);
+                                } else {
+                                    this._location.back();
                                 }
                             },
                             error => {
