@@ -1,5 +1,7 @@
 # Ng2Backend
 
+![alt text](https://github.com/MrAPPs-RSM/ng-backend/blob/master/docs/examples/dashboard.png)
+
 ## Clone & download
 
 ```bash
