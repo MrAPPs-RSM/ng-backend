@@ -82,4 +82,14 @@ Result:
 
 How to start generate menus, forms, lists?
 
+The route that you've defined in **setupEndpoint**, must return a JSON Array that respect some rules.
 
+Each item of that array is a JSON Object which might have the following options.
+
+Please note that the **DASHBOARD** component is required. (An example can be found at the end of this page).
+
+| Name   | Type   | Required | Available options               | Description                                                                                                               |
+|--------|--------|----------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| path   | string | yes      |                                 | The path that the component must match (example: users => www.backend.com/pages/users)                                    |
+| type   | string | yes      | dashboard / list / form / group | Defines which type of component the page must load. If you select a group, then you can define other components inside it |
+| params | Object | yes      |                                 | List of parameters that defines the component behaviour                                                                   |
