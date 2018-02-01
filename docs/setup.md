@@ -43,7 +43,7 @@ Example of the **app.config.ts**
 
 ```json
 {
-  "title": "My new Backend",
+  "title": "Ng2Backend",
   "setupEndpoint": "setup",
   "auth": {
     "config": {
@@ -72,6 +72,11 @@ Example of the **app.config.ts**
   }
 }
 ```
+
+Result:
+
+![alt text](https://github.com/MrAPPs-RSM/ng-backend/blob/master/docs/examples/login.png)
+
 
 # Panel configuration
 
