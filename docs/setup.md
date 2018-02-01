@@ -72,3 +72,9 @@ Example of the **app.config.ts**
   }
 }
 ```
+
+# Panel configuration
+
+How to start generate menus, forms, lists?
+
+
