@@ -88,8 +88,24 @@ Each item of that array is a JSON Object which might have the following options.
 
 Please note that the **DASHBOARD** component is required. (An example can be found at the end of this page).
 
-| Name   | Type   | Required | Available options               | Description                                                                                                               |
-|--------|--------|----------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| path   | string | yes      |                                 | The path that the component must match (example: users => www.backend.com/pages/users)                                    |
-| type   | string | yes      | dashboard / list / form / group | Defines which type of component the page must load. If you select a group, then you can define other components inside it |
-| params | Object | yes      |                                 | List of parameters that defines the component behaviour                                                                   |
+| Name     | Type   | Required | Available options               | Description                                                                                                               |
+|----------|--------|----------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| path     | string | yes      |                                 | The path that the component must match (example: users => www.backend.com/pages/users)                                    |
+| type     | string | yes      | dashboard / list / form / group | Defines which type of component the page must load. If you select a group, then you can define other components inside it |
+| params   | Object | yes      |                                 | List of parameters that defines the component behaviour                                                                   |
+| children | Array  | no       |                                 | Only for type: group, it's an array composed by the same JSON objects that defines components                             |
+
+
+### Params object
+
+**Params** is the main key of the JSON Object. Here are the rules:
+
+| Name                  | Type    | Required | Available options               | Description                                                                                                               |
+|-----------------------|---------|----------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| menu                  | Object  | yes      |                                 | The path that the component must match (example: users => www.backend.com/pages/users)                                    |
+| menu.title            | string  | yes      |                                 | Title that will be displayed in the sidebar menu and as page title                                                        |
+| menu.icon             | string  | no       | fa fa-* / ion-*                 | Icon that will be displayed in the sidebar menu. (FontAwesome or Ionicons)                                                |
+| menu.sidebar          | boolean | yes      | true / false                    | Show/hide page in the sidebar menu                                                                                        |
+| menu.expanded         | boolean | no       | true / false                    | Only if type = group, defines if the sub-menu of the group must be expanded when page loads                               |
+| menu.order            | number  | no       |                                 | Defines the order in which menu item will be displayed in the sidebar                                                     |
+| menu.breadcrumbLevel  | number  | no       |                                 | Defines the element level in the breadcrumb (usually, sub-items have a number > parent-item)                              |
