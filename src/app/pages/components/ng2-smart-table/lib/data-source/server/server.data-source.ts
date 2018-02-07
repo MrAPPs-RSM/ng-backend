@@ -190,7 +190,7 @@ export class ServerDataSource extends LocalDataSource {
             filterOptions[requestFilterKey] = requestFilter[requestFilterKey];
         }
 
-        requestOptions.search.set('filter', (this.conf.api.filter));
+        requestOptions.search.set('filter', JSON.stringify(filterOptions));
 
         return requestOptions;
     }
